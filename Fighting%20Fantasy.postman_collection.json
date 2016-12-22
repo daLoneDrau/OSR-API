@@ -1,0 +1,337 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Fighting Fantasy",
+		"_postman_id": "59629231-1ce6-c165-d640-bc1152da8e0e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Data Entry",
+			"description": "data entry",
+			"item": [
+				{
+					"name": "Attributes",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/attributes/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"name\": \"Stamina\",\r\n    \"code\": \"ST\",\r\n    \"description\": \"Your general constitution, your will to survive, your determination, and overall fitness.\"\r\n  }, {\r\n    \"name\": \"Maximum Stamina\",\r\n    \"code\": \"MST\",\r\n    \"description\": \"Your Maximum Stamina.\"\r\n  }, {\r\n    \"name\": \"Skill\",\r\n    \"code\": \"SK\",\r\n    \"description\": \"Your swordsmanship and general fighting expertise.\"\r\n  }, {\r\n    \"name\": \"Maximum Skill\",\r\n    \"code\": \"MSK\",\r\n    \"description\": \"Your Maximum Skill.\"\r\n  }, {\r\n    \"name\": \"Luck\",\r\n    \"code\": \"LK\",\r\n    \"description\": \"How naturally lucky a person you are.\"\r\n  }, {\r\n    \"name\": \"Maximum Luck\",\r\n    \"code\": \"MLK\",\r\n    \"description\": \"Your Maximum Luck.\"\r\n  }]"
+						},
+						"description": "Insert Attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Directions",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/directions/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"code\": \"NORTH\",\r\n    \"value\": 0\r\n  }, {\r\n    \"code\": \"EAST\",\r\n    \"value\": 1\r\n  }, {\r\n    \"code\": \"SOUTH\",\r\n    \"value\": 2\r\n  }, {\r\n    \"code\": \"WEST\",\r\n    \"value\": 3\r\n  }]"
+						},
+						"description": "bulk insert"
+					},
+					"response": []
+				},
+				{
+					"name": "Equipment Item Elements",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/equipment_element_types/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"code\": \"IO_EQUIPITEM_ELEMENT_STAMINA\",\r\n    \"value\": 0\r\n  }, {\r\n    \"code\": \"IO_EQUIPITEM_ELEMENT_SKILL\",\r\n    \"value\": 1\r\n  }, {\r\n    \"code\": \"IO_EQUIPITEM_ELEMENT_LUCK\",\r\n    \"value\": 2\r\n  }, {\r\n    \"code\": \"IO_EQUIPITEM_ELEMENT_DAMAGES\",\r\n    \"value\": 3\r\n  }, {\r\n    \"code\": \"IO_EQUIPITEM_ELEMENT_AIMTIME\",\r\n    \"value\": 4\r\n  }, {\r\n    \"code\": \"IO_EQUIPITEM_ELEMENT_ARMORCLASS\",\r\n    \"value\": 5\r\n  }]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Equipment Item Modifiers",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/equipment_item_modifiers/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n  \t\"code\": \"two_int\",\r\n    \"percent\": \"false\",\r\n    \"special\": 0,\r\n    \"value\": 2\r\n  }]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Event Types",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/events/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"code\": \"OnEnterRoom\"\r\n  }, {\r\n    \"code\": \"OnExitRoom\"\r\n  }, {\r\n    \"code\": \"OnInit\"\r\n  }, {\r\n    \"code\": \"OnOpen\"\r\n  }, {\r\n    \"code\": \"OnBashDoorFailure\"\r\n  }, {\r\n    \"code\": \"OnBashDoorSuccess\"\r\n  }]"
+						},
+						"description": "insert Event Types"
+					},
+					"response": []
+				},
+				{
+					"name": "Genders",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/genders/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"description\": \"Male\",\r\n    \"name\": \"Male\"\r\n  }, {\r\n    \"description\": \"Female\",\r\n    \"name\": \"Female\"\r\n  }]"
+						},
+						"description": "Insert Genders"
+					},
+					"response": []
+				},
+				{
+					"name": "Object Types",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/object_types/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"code\": \"OBJECT_TYPE_WEAPON\",\r\n    \"flag\": 1\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_DAGGER\",\r\n    \"flag\": 2\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_1H\",\r\n    \"flag\": 4\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_2H\",\r\n    \"flag\": 8\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_BOW\",\r\n    \"flag\": 16\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_SHIELD\",\r\n    \"flag\": 32\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_FOOD\",\r\n    \"flag\": 64\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_GOLD\",\r\n    \"flag\": 128\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_ARMOR\",\r\n    \"flag\": 256\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_HELMET\",\r\n    \"flag\": 512\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_RING\",\r\n    \"flag\": 1024\r\n  }, {\r\n    \"code\": \"OBJECT_TYPE_LEGGINGS\",\r\n    \"flag\": 2048\r\n  }]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Items",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/io_item_data/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"count\": 1,\r\n    \"description\": \"An iron sword.\",\r\n    \"groups\": [\r\n    \t\"BLADE\",\r\n    \t\"ARMORY\"\r\n    \t],\r\n    \"internal_script\": \"IronSword\",\r\n    \"item_name\": \"Iron sword\",\r\n    \"left_ring\": false,\r\n    \"max_owned\": 10,\r\n    \"modifiers\": {\r\n\t\t\"IO_EQUIPITEM_ELEMENT_DAMAGES\": \"two_int\"\r\n    },\r\n    \"price\": 500,\r\n    \"stack_size\": 1,\r\n    \"types\": [{\r\n\t    \"code\": \"OBJECT_TYPE_WEAPON\",\r\n\t    \"flag\": 1\r\n\t}, {\r\n\t    \"code\": \"OBJECT_TYPE_1H\",\r\n\t    \"flag\": 4\r\n\t}],\r\n    \"weight\": 1\r\n  }, {\r\n    \"count\": 1,\r\n    \"description\": \"An enchanted sword.\",\r\n    \"internal_script\": \"EnchantedSword\",\r\n    \"item_name\": \"Enchanted sword\",\r\n    \"left_ring\": false,\r\n    \"max_owned\": 10,\r\n    \"modifiers\": {\r\n\t\t\"IO_EQUIPITEM_ELEMENT_DAMAGES\": \"two_int\",\r\n\t\t\"IO_EQUIPITEM_ELEMENT_SKILL\": \"two_int\"\r\n    },\r\n    \"price\": 1,\r\n    \"stack_size\": 1,\r\n    \"types\": [{\r\n\t    \"code\": \"OBJECT_TYPE_WEAPON\",\r\n\t    \"flag\": 1\r\n\t}, {\r\n\t    \"code\": \"OBJECT_TYPE_1H\",\r\n\t    \"flag\": 4\r\n\t}],\r\n    \"weight\": 1\r\n  }, {\r\n    \"count\": 1,\r\n    \"description\": \"A crude cleaver-style falchion.\",\r\n    \"internal_script\": \"OrcCleaver\",\r\n    \"item_name\": \"Orcish cleaver\",\r\n    \"left_ring\": false,\r\n    \"max_owned\": 10,\r\n    \"modifiers\": {\r\n\t\t\"IO_EQUIPITEM_ELEMENT_DAMAGES\": \"two_int\"\r\n    },\r\n    \"price\": 1,\r\n    \"stack_size\": 1,\r\n    \"types\": [{\r\n\t    \"code\": \"OBJECT_TYPE_WEAPON\",\r\n\t    \"flag\": 1\r\n\t}, {\r\n\t    \"code\": \"OBJECT_TYPE_1H\",\r\n\t    \"flag\": 4\r\n\t}],\r\n    \"weight\": 1\r\n  }]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Script Action Types",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/script_action_types/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"code\": \"CREATE_EXIT\"\r\n  }, {\r\n    \"code\": \"DMG_PLAYER\"\r\n  }, {\r\n    \"code\": \"GO_TO_COMBAT\"\r\n  }, {\r\n    \"code\": \"INIT_ATTRIBUTE\"\r\n  }, {\r\n    \"code\": \"MOVE_PLAYER\"\r\n  }, {\r\n    \"code\": \"PERMALOCK\"\r\n  }, {\r\n    \"code\": \"SET_ROOM_TEXT\"\r\n  }, {\r\n    \"code\": \"SHOW_TEXT\"\r\n  }, {\r\n    \"code\": \"SPAWN_MOB\"\r\n  }, {\r\n    \"code\": \"TEST_YOUR_LUCK\"\r\n  }]"
+						},
+						"description": "Insert script action types"
+					},
+					"response": []
+				},
+				{
+					"name": "Text",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/texts/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"name\": \"header\",\r\n    \"text\": \"\\n<table><title><ioName></title><genText>\\n<genText></table>\\nPlease enter an action: \"\r\n  }, {\r\n    \"name\": \"table_titled\",\r\n    \"text\": \"<table><title><genText></title><genText></table>\"\r\n  }, {\r\n    \"name\": \"table_untitled\",\r\n    \"text\": \"<table><genText></table>\"\r\n  }, {\r\n    \"name\": \"menu_table\",\r\n    \"text\": \"<table><title><genText></title><genText>\\n<genText></table>\\n<genText>\"\r\n  }, {\r\n    \"name\": \"stats_table\",\r\n    \"text\": \"Skill  : <genText>\\nStamina: <genText>\\nLuck   : <genText>\"\r\n  }, {\r\n    \"name\": \"npc_stats_table\",\r\n    \"text\": \"Skill  : <genText>\\nStamina: <genText>\"\r\n  }, {\r\n    \"name\": \"continue\",\r\n    \"text\": \"-- Press [Enter] to Continue --\"\r\n  }, {\r\n    \"name\": \"invalid_input\",\r\n    \"text\": \"I'm sorry, I can't understand what you were trying to do.\"\r\n  }, {\r\n    \"name\": \"invalid_exit\",\r\n    \"text\": \"You can't go that way.\"\r\n  }, {\r\n    \"name\": \"no_doors_to_bash\",\r\n    \"text\": \"There are no locked doors to bash down.\"\r\n  }, {\r\n    \"name\": \"cant_bash_permalock\",\r\n    \"text\": \"Your shoulder throbs in pain as you stare at the door. You don't think one more try is a good idea.\"\r\n  }, {\r\n    \"name\": \"choice\",\r\n    \"text\": \"Please enter your choice: \"\r\n  }, {\r\n    \"name\": \"player_hit\",\r\n    \"text\": \"You lose <genText> <genText> <genText>.\"\r\n  }, {\r\n    \"name\": \"START\",\r\n    \"text\": \"Only a foolhardy adventurer would embark upon such a perilous quest without first finding out as much as possible about the mountain and its treasures. Before your arrival at the foot of Firetop Mountain, you spent several days with the townsfolk of a local village some two days' journey from the base. Being a likeable sort of person, you found it easy to get on with the local peasants. Although they told many stories about the mysterious Warlock's sanctuary, you could not feel sure that all - or indeed any - of these were based on fact. The villagers had seen many adventurers pass through on their way to the mountain, but very few ever returned. The journey ahead was extremely dangerous, that you knew for certain. Of those who returned to the village, none contemplated going back to Firetop Mountain.\\r\\nThere seemed to be some truth in the rumour that the Warlock's treasure was stored in a magnificent chest with two locks, and the keys to these locks were guarded by various creatures within the dungeons. The Warlock himself was a sorcerer of great power. Some described him as old, others as young. Some said his power came from an enchanted deck of cards, others from the silky black gloves that he wore.\\r\\nThe entrance to the mountain was guarded by a pack of warty-faced Goblins, stupid creatures, fond of their food and drink. Towards the inner chambers, the creatures  became more fearsome. To reach the inner chambers you would have to cross a river. The ferry service was regular, but the ferryman enjoyed a good barter, so you should save a Gold Piece for the trip. The locals also encouraged you to keep a good map of your wanderings, for without a map you would end up hopelessly lost within the mountain.\\r\\nWhen it finally came to your day of leaving, the whole village turned out to wish you a safe journey. Tears came to the eyes of many of the women, young and old alike. You couldn't help wondering whether they were tears of sorrow shed by eyes which would never see you alive again...\\r\\n\"\r\n  }, {\r\n    \"name\": \"1\",\r\n    \"text\": \"At last your two-day hike is over, You unsheathe your sword, lay it on the ground and sigh with relief as you lower yourself down on to the mossy rocks to sit for a moment's rest. You stretch, rub your eyes and finally look up at Firetop Mountain.\\r\\nThe very mountain itself looks menacing. The steep face in front of you looks to have been savaged by the claws of some gargantuan beast. Sharp rocky crags jut out at unnatural angles. At the top of the mountain you can see the eerie red colouring - probably some strange vegetation - which has given the mountain its name. Perhaps no one will ever know exactly what grows up there, as climbing the peak must surely be impossible.\\r\\nYour quest lies ahead of you. Across the clearing is a dark cave entrance. You pick up your sword, get to your feet and consider what dangers may lie ahead of you. But with determination, you thrust the sword home into its scabbard and approach the cave.\\r\\nYou peer into the gloom to see dark, slimy walls with pools of water on the stone floor in front of you. The air is cold and dank. You light your lantern and step warily into the blackness. Cobwebs brush your face and you hear the scurrying of tiny feet: rats, most likely. You set off into the cave. After a few yards you arrive at a junction. Passages lead West and East.\"\r\n  }, {\r\n    \"name\": \"1_EAST\",\r\n    \"text\": \"You take the eastern passage.\"\r\n  }, {\r\n    \"name\": \"1_WEST\",\r\n    \"text\": \"You follow the passage leading west.\"\r\n  }, {\r\n    \"name\": \"1_SOUTH\",\r\n    \"text\": \"You would abandon your adventure?!  Shame.  SHAME!  I won't allow it.  Close the tab if you want to leave so bad.\"\r\n  }, {\r\n    \"name\": \"1_SECONDARY\",\r\n    \"text\": \"You are at a junction in a cave passage.  Passages lead further into the cave to the West and East.  There is also a passage to the South, leading both to the cave's exit and to everlasting shame for fleeing from your adventure like a frightened child.\\r\\n\"\r\n  }, {\r\n    \"name\": \"71\",\r\n    \"text\": \"There is a right-hand turn to the north in the passage. Cautiously you approach a sentry post on the corner and, as you look in, you can see a strange Goblin-like creature in leather armour asleep at his post.\\r\\n\"\r\n  }, {\r\n    \"name\": \"71_TEST_YOUR_LUCK_SUCCESS\",\r\n    \"text\": \"There is a right-hand turn to the north in the passage. Cautiously you approach a sentry post on the corner and, as you look in, you can see a strange Goblin-like creature in leather armour asleep at his post. You tiptoe past him as he snores loudly.\\r\\n\"\r\n  }, {\r\n    \"name\": \"71_TEST_YOUR_LUCK_FAILURE\",\r\n    \"text\": \"There is a right-hand turn to the north in the passage. Cautiously you approach a sentry post on the corner and, as you look in, you can see a strange Goblin-like creature in leather armour asleep at his post. As you try to tiptoe past him you step with a crunch on some loose ground and his eyes flick open.\\r\\n\"\r\n  }, {\r\n    \"name\": \"71_ENTER_COMBAT\",\r\n    \"text\": \"The creature scrambles to his feet and turns to grasp at a rope which is probably the alarm bell. You must attack him quickly.\\n\"\r\n  }, {\r\n    \"name\": \"82\",\r\n    \"text\": \"You are in a small, smelly room. In the centre of the room is a rickety wooden table on which stands a lit candle. Underneath the table is a small wooden box.  Asleep on a straw mattress in the far corner of the room is a short, stocky creature with an ugly, warty face; the same sort of creature that you found asleep at the sentry post. He must be the guard for the night watch.\\r\\n\"\r\n  }, {\r\n    \"name\": \"278\",\r\n    \"text\": \"The passageway soon comes to an end at a locked wooden door. You listen at the door but hear nothing.\\r\\n\"\r\n  }, {\r\n    \"name\": \"278_POST_BASH_FAILURE\",\r\n    \"text\": \"The passageway comes to an end at a locked wooden door, obviously the sturdy work of a master craftsman. You listen at the door but hear nothing.\\r\\n\"\r\n  }, {\r\n    \"name\": \"278_POST_BASH_SUCCESS\",\r\n    \"text\": \"You are in an east-west passageway. The passage leads west to a junction, and ends on its eastern side in an empty doorframe. You can see beyond the empty frame a small room whose only feature is a pit.\\r\\n\"\r\n  }, {\r\n    \"name\": \"278_WEST\",\r\n    \"text\": \"You follow the passage west to the junction.\"\r\n  }, {\r\n    \"name\": \"278_BASH_FAILURE\",\r\n    \"text\": \"With a whoop, you charge the door with your shoulder. You slam into it at a high velocity; it barely moves as you bounce off it. You rub your bruised shoulder, shaking your head. That was not smart.\"\r\n  }, {\r\n    \"name\": \"278_BASH_SUCCESS\",\r\n    \"text\": \"With a whoop, you charge the door with your shoulder. You slam into it at a high velocity; the door flies off its hinges, and you and the door land in a heap at the bottom of a pit. Ouch! The pit is less than two metres down; you climb out.\"\r\n  }, {\r\n    \"name\": \"301_OPEN\",\r\n    \"text\": \"You walk through the unlocked door.\\r\\n\"\r\n  }, {\r\n    \"name\": \"301\",\r\n    \"text\": \"To your left, on the west face of the passage, there is a rough-cut wooden door. You listen at the door and can hear a rasping sound which may be some sort of creature snoring.\\r\\n\"\r\n  }, {\r\n    \"name\": \"343\",\r\n    \"text\": \"You are standing in a doorway in front of a two metre-deep pit. A broken door lies at the pit's bottom.  The doorway exits to the west.\\r\\n\"\r\n  }, {\r\n    \"name\": \"343_WEST\",\r\n    \"text\": \"You walk away from the pit trap.\"\r\n  }]"
+						},
+						"description": "Insert text"
+					},
+					"response": []
+				},
+				{
+					"name": "Script Actions",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/script_actions/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n    \"type\": \"CREATE_EXIT\",\r\n    \"name\": \"CREATE_EXIT_278_343\",\r\n    \"destination\": \"343\",\r\n    \"direction\": \"EAST\",\r\n    \"origin\": \"278\"\r\n  }, {\r\n    \"type\": \"CREATE_EXIT\",\r\n    \"name\": \"CREATE_EXIT_301_82\",\r\n    \"destination\": \"82\",\r\n    \"direction\": \"WEST\",\r\n    \"origin\": \"301\"\r\n  }, {\r\n    \"type\": \"DMG_PLAYER\",\r\n    \"name\": \"DMG_PLAYER_ST_1\",\r\n    \"amount\": 1,\r\n    \"attribute\": \"ST\"\r\n  }, {\r\n    \"type\": \"GO_TO_COMBAT\",\r\n    \"name\": \"GO_TO_COMBAT_ORC1\",\r\n    \"mobs\": [\r\n        \"ORC1\"\r\n        ],\r\n    \"text_name\": \"71_ENTER_COMBAT\"\r\n  }, {\r\n    \"type\": \"MOVE_PLAYER\",\r\n    \"name\": \"MOVE_PLAYER_82\",\r\n    \"room_code\": \"82\"\r\n  }, {\r\n    \"type\": \"MOVE_PLAYER\",\r\n    \"name\": \"MOVE_PLAYER_343\",\r\n    \"room_code\": \"343\"\r\n  }, {\r\n    \"type\": \"PERMALOCK\",\r\n    \"name\": \"PERMALOCK_278\",\r\n    \"door_name\": \"278_DOOR\"\r\n  }, {\r\n    \"type\": \"SET_ROOM_TEXT\",\r\n    \"name\": \"SET_ROOM_TEXT_71_TEST_YOUR_LUCK_FAILURE\",\r\n    \"room_code\": \"71\",\r\n    \"text_name\": \"71_TEST_YOUR_LUCK_FAILURE\"\r\n  }, {\r\n    \"type\": \"SET_ROOM_TEXT\",\r\n    \"name\": \"SET_ROOM_TEXT_71_TEST_YOUR_LUCK_SUCCESS\",\r\n    \"room_code\": \"71\",\r\n    \"text_name\": \"71_TEST_YOUR_LUCK_SUCCESS\"\r\n  }, {\r\n    \"type\": \"SET_ROOM_TEXT\",\r\n    \"name\": \"SET_ROOM_TEXT_278_POST_BASH_FAILURE\",\r\n    \"room_code\": \"278\",\r\n    \"text_name\": \"278_POST_BASH_FAILURE\"\r\n  }, {\r\n    \"type\": \"SET_ROOM_TEXT\",\r\n    \"name\": \"SET_ROOM_TEXT_278_POST_BASH_SUCCESS\",\r\n    \"room_code\": \"278\",\r\n    \"text_name\": \"278_POST_BASH_SUCCESS\"\r\n  }, {\r\n    \"type\": \"SHOW_TEXT\",\r\n    \"name\": \"SHOW_TEXT_278_BASH_FAILURE\",\r\n    \"error\": true,\r\n    \"text_name\": \"278_BASH_FAILURE\"\r\n  }, {\r\n    \"type\": \"SHOW_TEXT\",\r\n    \"name\": \"SHOW_TEXT_278_BASH_SUCCESS\",\r\n    \"error\": false,\r\n    \"text_name\": \"278_BASH_SUCCESS\"\r\n  }, {\r\n    \"type\": \"SHOW_TEXT\",\r\n    \"name\": \"SHOW_TEXT_301_OPEN\",\r\n    \"error\": false,\r\n    \"text_name\": \"301_OPEN\"\r\n  }, {\r\n    \"type\": \"SPAWN_MOB\",\r\n    \"name\": \"SPAWN_ORC1\",\r\n    \"mob_code\": \"ORC1\"\r\n  }, {\r\n    \"type\": \"TEST_YOUR_LUCK\",\r\n    \"name\": \"TEST_YOUR_LUCK_71\",\r\n    \"pass_scripts\": \"RM71_TestYourLuckSuccess\",\r\n    \"fail_scripts\": \"RM71_TestYourLuckFailure\"\r\n  }]"
+						},
+						"description": "Insert script actions"
+					},
+					"response": []
+				},
+				{
+					"name": "Script Bundles",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/script_bundles/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n  \t\"name\": \"DR278_OnBashDoorFailure\",\r\n  \t\"scripts\": [{\r\n  \t\t\"name\": \"SHOW_TEXT_278_BASH_FAILURE\"\r\n  \t}, {\r\n  \t    \"name\": \"PERMALOCK_278\"\r\n  \t}, {\r\n  \t    \"name\": \"SET_ROOM_TEXT_278_POST_BASH_FAILURE\"\r\n  \t}]\r\n  }, {\r\n  \t\"name\": \"DR278_OnBashDoorSuccess\",\r\n  \t\"scripts\": [{\r\n  \t\t\"name\": \"CREATE_EXIT_278_343\"\r\n  \t}, {\r\n  \t    \"name\": \"MOVE_PLAYER_343\"\r\n  \t}, {\r\n  \t    \"name\": \"SHOW_TEXT_278_BASH_SUCCESS\"\r\n  \t}, {\r\n  \t    \"name\": \"DMG_PLAYER_ST_1\"\r\n  \t}, {\r\n  \t    \"name\": \"SET_ROOM_TEXT_278_POST_BASH_SUCCESS\"\r\n  \t}]\r\n  }, {\r\n  \t\"name\": \"DR301_OnOpen\",\r\n  \t\"scripts\": [{\r\n  \t\t\"name\": \"CREATE_EXIT_301_82\"\r\n  \t}, {\r\n  \t    \"name\": \"SHOW_TEXT_301_OPEN\"\r\n  \t}, {\r\n  \t    \"name\": \"MOVE_PLAYER_82\"\r\n  \t}]\r\n  }, {\r\n  \t\"name\": \"RM71_OnEnterRoom\",\r\n  \t\"scripts\": [{\r\n  \t\t\"name\": \"TEST_YOUR_LUCK_71\"\r\n  \t}]\r\n  }, {\r\n  \t\"name\": \"RM71_TestYourLuckFailure\",\r\n  \t\"scripts\": [{\r\n  \t\t\"name\": \"SET_ROOM_TEXT_71_TEST_YOUR_LUCK_FAILURE\"\r\n  \t}, {\r\n  \t\t\"name\": \"GO_TO_COMBAT_ORC1\"\r\n  \t}]\r\n  }, {\r\n  \t\"name\": \"RM71_TestYourLuckSuccess\",\r\n  \t\"scripts\": [{\r\n  \t\t\"name\": \"SET_ROOM_TEXT_71_TEST_YOUR_LUCK_SUCCESS\"\r\n  \t}]\r\n  }]"
+						},
+						"description": "Insert script bundles"
+					},
+					"response": []
+				},
+				{
+					"name": "Doors",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/doors/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n  \t\"attribute_test\": \"ST\",\r\n  \t\"direction\": \"EAST\",\r\n  \t\"leads_to\": \"343\",\r\n  \t\"locked\": true,\r\n  \t\"name\": \"278\",\r\n  \t\"num_dice_roll\": 2,\r\n  \t\"title\": \"locked wooden door\",\r\n  \t\"scripted_events\": {\r\n  \t\t\"OnBashDoorFailure\": \"DR278_OnBashDoorFailure\",\r\n  \t\t\"OnBashDoorSuccess\": \"DR278_OnBashDoorSuccess\"\r\n  \t}\r\n  }, {\r\n  \t\"direction\": \"WEST\",\r\n  \t\"leads_to\": \"82\",\r\n  \t\"locked\": false,\r\n  \t\"name\": \"301\",\r\n  \t\"title\": \"rough-cut wooden door\",\r\n  \t\"scripted_events\": {\r\n  \t\t\"OnOpen\": \"DR301_OnOpen\"\r\n  \t}\r\n  }]"
+						},
+						"description": "Insert Doors"
+					},
+					"response": []
+				},
+				{
+					"name": "NPCs",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/io_npc_data/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n  \t\"attributes\": {\r\n  \t\t\"SK\": 6,\r\n  \t\t\"ST\": 5\r\n  \t},\r\n  \t\"behavior\": 0,\r\n  \t\"gender\": {\r\n  \t\t\"name\": \"Male\"\r\n  \t},\r\n  \t\"name\": \"ORC1\",\r\n  \t\"title\": \"Orc\"\r\n  }]"
+						},
+						"description": "Insert NPC Data"
+					},
+					"response": []
+				},
+				{
+					"name": "Rooms",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/rooms/bulk",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n  \t\"code\": \"1\",\r\n  \t\"text\": {\r\n  \t\t\"name\": \"1\"\r\n  \t}\r\n  }, {\r\n  \t\"code\": \"71\",\r\n  \t\"text\": {\r\n  \t\t\"name\": \"71\"\r\n  \t}\r\n  }, {\r\n  \t\"code\": \"278\",\r\n  \t\"doors\": [{\r\n  \t    \"name\": \"278\"\r\n  \t}],\r\n  \t\"text\": {\r\n  \t\t\"name\": \"278\"\r\n  \t}\r\n  }, {\r\n  \t\"code\": \"343\",\r\n  \t\"text\": {\r\n  \t\t\"name\": \"343\"\r\n  \t}\r\n  }]"
+						},
+						"description": "Insert Rooms"
+					},
+					"response": []
+				},
+				{
+					"name": "Rooms Update",
+					"request": {
+						"url": "http://localhost:8080/PracticeSpring/ff/rooms/bulk",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  [{\r\n  \t\"code\": \"1\",\r\n  \t\"exits\": {\r\n  \t    \"EAST\": \"278\",\r\n  \t    \"WEST\": \"71\"\r\n  \t},\r\n  \t\"text\": {\r\n  \t\t\"name\": \"1\"\r\n  \t}\r\n  }, {\r\n  \t\"code\": \"71\",\r\n  \t\"exits\": {\r\n  \t    \"SOUTH\": \"1\"\r\n  \t},\r\n  \t\"scripted_events\": {\r\n  \t\t\"OnEnterRoom\": \"RM71_OnEnterRoom\"\r\n  \t},\r\n  \t\"text\": {\r\n  \t\t\"name\": \"71\"\r\n  \t}\r\n  }, {\r\n  \t\"code\": \"278\",\r\n  \t\"doors\": [{\r\n  \t    \"name\": \"278\"\r\n  \t}],\r\n  \t\"exits\": {\r\n  \t    \"WEST\": \"1\"\r\n  \t},\r\n  \t\"text\": {\r\n  \t\t\"name\": \"278\"\r\n  \t}\r\n  }, {\r\n  \t\"code\": \"343\",\r\n  \t\"exits\": {\r\n  \t    \"WEST\": \"278\"\r\n  \t},\r\n  \t\"text\": {\r\n  \t\t\"name\": \"343\"\r\n  \t}\r\n  }]"
+						},
+						"description": "Update Rooms"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
