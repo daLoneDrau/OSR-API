@@ -12,17 +12,17 @@ import com.osrapi.models.wfrp.WFRPWeaponReloadEntity;
  */
 @Repository
 public interface WFRPWeaponReloadRepository
-		extends CrudRepository<WFRPWeaponReloadEntity, Long> {
-	/**
-	 * Retrieves a list of weapon reloads by their code.
-	 * @param code the code
-	 * @return {@link List}<{@link WFRPWeaponReloadEntity}>
-	 */
-	List<WFRPWeaponReloadEntity> findByCode(Long code);
-	/**
-	 * Retrieves a list of weapon reloads by their name.
-	 * @param name the name
-	 * @return {@link List}<{@link WFRPWeaponReloadEntity}>
-	 */
-	List<WFRPWeaponReloadEntity> findByName(String name);
+        extends CrudRepository<WFRPWeaponReloadEntity, Long> {
+    /**
+     * Retrieves a list of weapon reloads by their code.
+     * @param code the code
+     * @return {@link List}<{@link WFRPWeaponReloadEntity}>
+     */
+    List<WFRPWeaponReloadEntity> findByCode(Long code);
+    /**
+     * Retrieves a list of weapon reloads by their name.
+     * @param name the name
+     * @return {@link List}<{@link WFRPWeaponReloadEntity}>
+     */
+    List<WFRPWeaponReloadEntity> findByName(String name);
 }

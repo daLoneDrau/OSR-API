@@ -12,17 +12,17 @@ import com.osrapi.models.wfrp.WFRPArmourTypeEntity;
  */
 @Repository
 public interface WFRPArmourTypeRepository
-		extends CrudRepository<WFRPArmourTypeEntity, Long> {
-	/**
-	 * Retrieves a list of armour types by their code.
-	 * @param code the code
-	 * @return {@link List}<{@link WFRPArmourTypeEntity}>
-	 */
-	List<WFRPArmourTypeEntity> findByCode(Long code);
-	/**
-	 * Retrieves a list of armour types by their name.
-	 * @param name the name
-	 * @return {@link List}<{@link WFRPArmourTypeEntity}>
-	 */
-	List<WFRPArmourTypeEntity> findByName(String name);
+        extends CrudRepository<WFRPArmourTypeEntity, Long> {
+    /**
+     * Retrieves a list of armour types by their code.
+     * @param code the code
+     * @return {@link List}<{@link WFRPArmourTypeEntity}>
+     */
+    List<WFRPArmourTypeEntity> findByCode(Long code);
+    /**
+     * Retrieves a list of armour types by their name.
+     * @param name the name
+     * @return {@link List}<{@link WFRPArmourTypeEntity}>
+     */
+    List<WFRPArmourTypeEntity> findByName(String name);
 }

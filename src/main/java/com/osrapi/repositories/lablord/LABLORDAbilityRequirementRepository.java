@@ -12,17 +12,17 @@ import com.osrapi.models.lablord.LABLORDAbilityRequirementEntity;
  */
 @Repository
 public interface LABLORDAbilityRequirementRepository
-		extends CrudRepository<LABLORDAbilityRequirementEntity, Long> {
-	/**
-	 * Retrieves a list of ability requirements by their code.
-	 * @param code the code
-	 * @return {@link List}<{@link LABLORDAbilityRequirementEntity}>
-	 */
-	List<LABLORDAbilityRequirementEntity> findByCode(String code);
-	/**
-	 * Retrieves a list of ability requirements by their requirement.
-	 * @param requirement the requirement
-	 * @return {@link List}<{@link LABLORDAbilityRequirementEntity}>
-	 */
-	List<LABLORDAbilityRequirementEntity> findByRequirement(Long requirement);
+        extends CrudRepository<LABLORDAbilityRequirementEntity, Long> {
+    /**
+     * Retrieves a list of ability requirements by their code.
+     * @param code the code
+     * @return {@link List}<{@link LABLORDAbilityRequirementEntity}>
+     */
+    List<LABLORDAbilityRequirementEntity> findByCode(String code);
+    /**
+     * Retrieves a list of ability requirements by their requirement.
+     * @param requirement the requirement
+     * @return {@link List}<{@link LABLORDAbilityRequirementEntity}>
+     */
+    List<LABLORDAbilityRequirementEntity> findByRequirement(Long requirement);
 }

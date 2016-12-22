@@ -12,17 +12,17 @@ import com.osrapi.models.lablord.LABLORDDieRollEntity;
  */
 @Repository
 public interface LABLORDDieRollRepository
-		extends CrudRepository<LABLORDDieRollEntity, Long> {
-	/**
-	 * Retrieves a list of die rolls by their code.
-	 * @param code the code
-	 * @return {@link List}<{@link LABLORDDieRollEntity}>
-	 */
-	List<LABLORDDieRollEntity> findByCode(String code);
-	/**
-	 * Retrieves a list of die rolls by their number.
-	 * @param number the number
-	 * @return {@link List}<{@link LABLORDDieRollEntity}>
-	 */
-	List<LABLORDDieRollEntity> findByNumber(Long number);
+        extends CrudRepository<LABLORDDieRollEntity, Long> {
+    /**
+     * Retrieves a list of die rolls by their code.
+     * @param code the code
+     * @return {@link List}<{@link LABLORDDieRollEntity}>
+     */
+    List<LABLORDDieRollEntity> findByCode(String code);
+    /**
+     * Retrieves a list of die rolls by their number.
+     * @param number the number
+     * @return {@link List}<{@link LABLORDDieRollEntity}>
+     */
+    List<LABLORDDieRollEntity> findByNumber(Long number);
 }

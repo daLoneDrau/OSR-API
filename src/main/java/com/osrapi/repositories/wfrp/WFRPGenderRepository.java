@@ -12,17 +12,17 @@ import com.osrapi.models.wfrp.WFRPGenderEntity;
  */
 @Repository
 public interface WFRPGenderRepository
-		extends CrudRepository<WFRPGenderEntity, Long> {
-	/**
-	 * Retrieves a list of genders by their description.
-	 * @param description the description
-	 * @return {@link List}<{@link WFRPGenderEntity}>
-	 */
-	List<WFRPGenderEntity> findByDescription(String description);
-	/**
-	 * Retrieves a list of genders by their name.
-	 * @param name the name
-	 * @return {@link List}<{@link WFRPGenderEntity}>
-	 */
-	List<WFRPGenderEntity> findByName(String name);
+        extends CrudRepository<WFRPGenderEntity, Long> {
+    /**
+     * Retrieves a list of genders by their description.
+     * @param description the description
+     * @return {@link List}<{@link WFRPGenderEntity}>
+     */
+    List<WFRPGenderEntity> findByDescription(String description);
+    /**
+     * Retrieves a list of genders by their name.
+     * @param name the name
+     * @return {@link List}<{@link WFRPGenderEntity}>
+     */
+    List<WFRPGenderEntity> findByName(String name);
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.ff.FFEquipmentElementTypeEntity;
-
 import com.osrapi.repositories.ff.FFEquipmentElementTypeRepository;
 
 /**
@@ -63,13 +62,35 @@ public class FFEquipmentElementTypeController {
         return resources;
     }
     /**
+     * Gets a list of {@link FFEquipmentElementTypeEntity}s that share a code.
+     * @param code the equipment_element_type' code
+     * @return {@link List}<{@link Resource}<{@link FFEquipmentElementTypeEntity}>>
+     */
+    @RequestMapping(path = "code/{code}",
+            method = RequestMethod.GET)
+    public List<Resource<FFEquipmentElementTypeEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<FFEquipmentElementTypeEntity> iter =
+                repository.findByCode(code)
+                        .iterator();
+        List<Resource<FFEquipmentElementTypeEntity>> resources =
+                new ArrayList<Resource<FFEquipmentElementTypeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getEquipmentElementTypeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a single {@link FFEquipmentElementTypeEntity}.
      * @param id the event type's id
      * @return {@link List}<{@link Resource}<{@link FFEquipmentElementTypeEntity}>>
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<FFEquipmentElementTypeEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         FFEquipmentElementTypeEntity entity = repository.findOne(id);
         List<Resource<FFEquipmentElementTypeEntity>> resources =
                 new ArrayList<Resource<FFEquipmentElementTypeEntity>>();
@@ -78,16 +99,38 @@ public class FFEquipmentElementTypeController {
         return resources;
     }
     /**
+     * Gets a list of {@link FFEquipmentElementTypeEntity}s that share a value.
+     * @param value the equipment_element_type' value
+     * @return {@link List}<{@link Resource}<{@link FFEquipmentElementTypeEntity}>>
+     */
+    @RequestMapping(path = "value/{value}",
+            method = RequestMethod.GET)
+    public List<Resource<FFEquipmentElementTypeEntity>> getByValue(
+            @PathVariable
+            final Long value) {
+        Iterator<FFEquipmentElementTypeEntity> iter =
+                repository.findByValue(value)
+                        .iterator();
+        List<Resource<FFEquipmentElementTypeEntity>> resources =
+                new ArrayList<Resource<FFEquipmentElementTypeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getEquipmentElementTypeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a {@link Resource} instance with links for the
      * {@link FFEquipmentElementTypeEntity}.
      * @param entity the {@link FFEquipmentElementTypeEntity}
      * @return {@link Resource}<{@link FFEquipmentElementTypeEntity}>
      */
-    private Resource<FFEquipmentElementTypeEntity> getEquipmentElementTypeResource(
-            final FFEquipmentElementTypeEntity entity) {
+    private Resource<FFEquipmentElementTypeEntity>
+            getEquipmentElementTypeResource(
+                    final FFEquipmentElementTypeEntity entity) {
         Resource<FFEquipmentElementTypeEntity> resource =
                 new Resource<FFEquipmentElementTypeEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -96,13 +139,31 @@ public class FFEquipmentElementTypeController {
         return resource;
     }
     /**
+     * Saves a single {@link FFEquipmentElementTypeEntity}.
+     * @param entity the {@link FFEquipmentElementTypeEntity} instance
+     * @return {@link List}<{@link Resource}<{@link FFEquipmentElementTypeEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<FFEquipmentElementTypeEntity>> save(
+            @RequestBody
+            final FFEquipmentElementTypeEntity entity) {
+
+        FFEquipmentElementTypeEntity savedEntity = repository.save(entity);
+        List<Resource<FFEquipmentElementTypeEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link FFEquipmentElementTypeEntity}s.
-     * @param entities the list of {@link FFEquipmentElementTypeEntity} instances
+     * @param entities the list of {@link FFEquipmentElementTypeEntity}
+     *            instances
      * @return {@link List}<{@link Resource}<{@link FFEquipmentElementTypeEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<FFEquipmentElementTypeEntity>> save(
-            @RequestBody final List<FFEquipmentElementTypeEntity> entities) {
+            @RequestBody
+            final List<FFEquipmentElementTypeEntity> entities) {
         List<Resource<FFEquipmentElementTypeEntity>> resources =
                 new ArrayList<Resource<FFEquipmentElementTypeEntity>>();
         Iterator<FFEquipmentElementTypeEntity> iter = entities.iterator();
@@ -113,27 +174,12 @@ public class FFEquipmentElementTypeController {
         return resources;
     }
     /**
-     * Saves a single {@link FFEquipmentElementTypeEntity}.
-     * @param entity the {@link FFEquipmentElementTypeEntity} instance
-     * @return {@link List}<{@link Resource}<{@link FFEquipmentElementTypeEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<FFEquipmentElementTypeEntity>> save(
-            @RequestBody final FFEquipmentElementTypeEntity entity) {
-    
-    
-        FFEquipmentElementTypeEntity savedEntity = repository.save(entity);
-        List<Resource<FFEquipmentElementTypeEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
-    }
-    /**
      * Tries to set the Id for an entity to be saved by locating it in the
      * repository.
      * @param entity the {@link FFEquipmentElementTypeEntity} instance
      */
-    private void setIdFromRepository(final FFEquipmentElementTypeEntity entity) {
+    private void
+            setIdFromRepository(final FFEquipmentElementTypeEntity entity) {
         List<FFEquipmentElementTypeEntity> old = null;
         try {
             Method method = null;
@@ -141,7 +187,8 @@ public class FFEquipmentElementTypeController {
             try {
                 method = repository.getClass().getDeclaredMethod(
                         "findByName", new Class[] { String.class });
-                field = FFEquipmentElementTypeEntity.class.getDeclaredField("name");
+                field = FFEquipmentElementTypeEntity.class
+                        .getDeclaredField("name");
             } catch (NoSuchMethodException | NoSuchFieldException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -151,12 +198,12 @@ public class FFEquipmentElementTypeController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<FFEquipmentElementTypeEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -170,8 +217,9 @@ public class FFEquipmentElementTypeController {
                         && field != null) {
                     field.setAccessible(true);
                     if (field.get(entity) != null) {
-                        old = (List<FFEquipmentElementTypeEntity>) method.invoke(
-                                repository, (String) field.get(entity));
+                        old = (List<FFEquipmentElementTypeEntity>) method
+                                .invoke(
+                                        repository, (String) field.get(entity));
                     }
                 }
             }
@@ -186,24 +234,9 @@ public class FFEquipmentElementTypeController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
+        old = null;
     }
-    /**
-     * Updates multiple {@link FFEquipmentElementTypeEntity}s.
-     * @param entities the list of {@link FFEquipmentElementTypeEntity} instances
-     * @return {@link List}<{@link Resource}<{@link FFEquipmentElementTypeEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<FFEquipmentElementTypeEntity>> update(
-            @RequestBody final List<FFEquipmentElementTypeEntity> entities) {
-        List<Resource<FFEquipmentElementTypeEntity>> resources = new ArrayList<Resource<FFEquipmentElementTypeEntity>>();
-        Iterator<FFEquipmentElementTypeEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
-    }
+
     /**
      * Updates a single {@link FFEquipmentElementTypeEntity}.
      * @param entity the {@link FFEquipmentElementTypeEntity} instance
@@ -211,53 +244,33 @@ public class FFEquipmentElementTypeController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<FFEquipmentElementTypeEntity>> update(
-            @RequestBody final FFEquipmentElementTypeEntity entity) {        
+            @RequestBody
+            final FFEquipmentElementTypeEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
-    
-    
+
         FFEquipmentElementTypeEntity savedEntity = repository.save(entity);
         List<Resource<FFEquipmentElementTypeEntity>> list = getById(
                 savedEntity.getId());
         savedEntity = null;
         return list;
     }
-
     /**
-     * Gets a list of {@link FFEquipmentElementTypeEntity}s that share a code.
-     * @param code the equipment_element_type' code
+     * Updates multiple {@link FFEquipmentElementTypeEntity}s.
+     * @param entities the list of {@link FFEquipmentElementTypeEntity}
+     *            instances
      * @return {@link List}<{@link Resource}<{@link FFEquipmentElementTypeEntity}>>
      */
-    @RequestMapping(path = "code/{code}",
-            method = RequestMethod.GET)
-    public List<Resource<FFEquipmentElementTypeEntity>> getByCode(
-            @PathVariable final String code) {
-        Iterator<FFEquipmentElementTypeEntity> iter = repository.findByCode(code)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<FFEquipmentElementTypeEntity>> update(
+            @RequestBody
+            final List<FFEquipmentElementTypeEntity> entities) {
         List<Resource<FFEquipmentElementTypeEntity>> resources =
                 new ArrayList<Resource<FFEquipmentElementTypeEntity>>();
+        Iterator<FFEquipmentElementTypeEntity> iter = entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getEquipmentElementTypeResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFEquipmentElementTypeEntity}s that share a value.
-     * @param value the equipment_element_type' value
-     * @return {@link List}<{@link Resource}<{@link FFEquipmentElementTypeEntity}>>
-     */
-    @RequestMapping(path = "value/{value}",
-            method = RequestMethod.GET)
-    public List<Resource<FFEquipmentElementTypeEntity>> getByValue(
-            @PathVariable final Long value) {
-        Iterator<FFEquipmentElementTypeEntity> iter = repository.findByValue(value)
-                .iterator();
-        List<Resource<FFEquipmentElementTypeEntity>> resources =
-                new ArrayList<Resource<FFEquipmentElementTypeEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getEquipmentElementTypeResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

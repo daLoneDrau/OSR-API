@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.basic_dnd.BASIC_DNDEquipmentItemModifierEntity;
-
 import com.osrapi.repositories.basic_dnd.BASIC_DNDEquipmentItemModifierRepository;
 
 /**
@@ -29,7 +28,9 @@ import com.osrapi.repositories.basic_dnd.BASIC_DNDEquipmentItemModifierRepositor
 @RequestMapping(path = "/basic_dnd/equipment_item_modifiers")
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class BASIC_DNDEquipmentItemModifierController {
-    /** the static instance of {@link BASIC_DNDEquipmentItemModifierController}. */
+    /**
+     * the static instance of {@link BASIC_DNDEquipmentItemModifierController}.
+     */
     private static BASIC_DNDEquipmentItemModifierController instance;
     /**
      * Gets the static instance.
@@ -44,7 +45,10 @@ public class BASIC_DNDEquipmentItemModifierController {
     /** the data repository. */
     @Autowired
     private BASIC_DNDEquipmentItemModifierRepository repository;
-    /** Creates a new instance of {@link BASIC_DNDEquipmentItemModifierController}. */
+    /**
+     * Creates a new instance of
+     * {@link BASIC_DNDEquipmentItemModifierController}.
+     */
     public BASIC_DNDEquipmentItemModifierController() {
         instance = this;
     }
@@ -54,8 +58,31 @@ public class BASIC_DNDEquipmentItemModifierController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getAll() {
-        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter = repository.findAll()
-                .iterator();
+        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter =
+                repository.findAll()
+                        .iterator();
+        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getEquipmentItemModifierResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDEquipmentItemModifierEntity}s that share a
+     * code.
+     * @param code the equipment_item_modifier' code
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
+     */
+    @RequestMapping(path = "code/{code}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter =
+                repository.findByCode(code)
+                        .iterator();
         List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
         while (iter.hasNext()) {
@@ -71,7 +98,8 @@ public class BASIC_DNDEquipmentItemModifierController {
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         BASIC_DNDEquipmentItemModifierEntity entity = repository.findOne(id);
         List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
@@ -80,16 +108,83 @@ public class BASIC_DNDEquipmentItemModifierController {
         return resources;
     }
     /**
+     * Gets a list of {@link BASIC_DNDEquipmentItemModifierEntity}s that share a
+     * percent.
+     * @param percent the equipment_item_modifier' percent
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
+     */
+    @RequestMapping(path = "percent/{percent}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getByPercent(
+            @PathVariable
+            final Boolean percent) {
+        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter =
+                repository.findByPercent(percent)
+                        .iterator();
+        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getEquipmentItemModifierResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDEquipmentItemModifierEntity}s that share a
+     * special.
+     * @param special the equipment_item_modifier' special
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
+     */
+    @RequestMapping(path = "special/{special}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getBySpecial(
+            @PathVariable
+            final Long special) {
+        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter =
+                repository.findBySpecial(special)
+                        .iterator();
+        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getEquipmentItemModifierResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDEquipmentItemModifierEntity}s that share a
+     * value.
+     * @param value the equipment_item_modifier' value
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
+     */
+    @RequestMapping(path = "value/{value}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getByValue(
+            @PathVariable
+            final float value) {
+        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter =
+                repository.findByValue(value)
+                        .iterator();
+        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getEquipmentItemModifierResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a {@link Resource} instance with links for the
      * {@link BASIC_DNDEquipmentItemModifierEntity}.
      * @param entity the {@link BASIC_DNDEquipmentItemModifierEntity}
      * @return {@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>
      */
-    private Resource<BASIC_DNDEquipmentItemModifierEntity> getEquipmentItemModifierResource(
-            final BASIC_DNDEquipmentItemModifierEntity entity) {
+    private Resource<BASIC_DNDEquipmentItemModifierEntity>
+            getEquipmentItemModifierResource(
+                    final BASIC_DNDEquipmentItemModifierEntity entity) {
         Resource<BASIC_DNDEquipmentItemModifierEntity> resource =
                 new Resource<BASIC_DNDEquipmentItemModifierEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -98,16 +193,37 @@ public class BASIC_DNDEquipmentItemModifierController {
         return resource;
     }
     /**
+     * Saves a single {@link BASIC_DNDEquipmentItemModifierEntity}.
+     * @param entity the {@link BASIC_DNDEquipmentItemModifierEntity} instance
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> save(
+            @RequestBody
+            final BASIC_DNDEquipmentItemModifierEntity entity) {
+
+        BASIC_DNDEquipmentItemModifierEntity savedEntity =
+                repository.save(entity);
+        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+
+    /**
      * Saves multiple {@link BASIC_DNDEquipmentItemModifierEntity}s.
-     * @param entities the list of {@link BASIC_DNDEquipmentItemModifierEntity} instances
+     * @param entities the list of {@link BASIC_DNDEquipmentItemModifierEntity}
+     *            instances
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> save(
-            @RequestBody final List<BASIC_DNDEquipmentItemModifierEntity> entities) {
+            @RequestBody
+            final List<BASIC_DNDEquipmentItemModifierEntity> entities) {
         List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
-        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter = entities.iterator();
+        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter =
+                entities.iterator();
         while (iter.hasNext()) {
             resources.add(save(iter.next()).get(0));
         }
@@ -115,27 +231,12 @@ public class BASIC_DNDEquipmentItemModifierController {
         return resources;
     }
     /**
-     * Saves a single {@link BASIC_DNDEquipmentItemModifierEntity}.
-     * @param entity the {@link BASIC_DNDEquipmentItemModifierEntity} instance
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> save(
-            @RequestBody final BASIC_DNDEquipmentItemModifierEntity entity) {
-    
-    
-        BASIC_DNDEquipmentItemModifierEntity savedEntity = repository.save(entity);
-        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
-    }
-    /**
      * Tries to set the Id for an entity to be saved by locating it in the
      * repository.
      * @param entity the {@link BASIC_DNDEquipmentItemModifierEntity} instance
      */
-    private void setIdFromRepository(final BASIC_DNDEquipmentItemModifierEntity entity) {
+    private void setIdFromRepository(
+            final BASIC_DNDEquipmentItemModifierEntity entity) {
         List<BASIC_DNDEquipmentItemModifierEntity> old = null;
         try {
             Method method = null;
@@ -143,7 +244,8 @@ public class BASIC_DNDEquipmentItemModifierController {
             try {
                 method = repository.getClass().getDeclaredMethod(
                         "findByName", new Class[] { String.class });
-                field = BASIC_DNDEquipmentItemModifierEntity.class.getDeclaredField("name");
+                field = BASIC_DNDEquipmentItemModifierEntity.class
+                        .getDeclaredField("name");
             } catch (NoSuchMethodException | NoSuchFieldException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -152,18 +254,20 @@ public class BASIC_DNDEquipmentItemModifierController {
                     && field != null) {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
-                    old = (List<BASIC_DNDEquipmentItemModifierEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                    old = (List<BASIC_DNDEquipmentItemModifierEntity>) method
+                            .invoke(
+                                    repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
-                    field = BASIC_DNDEquipmentItemModifierEntity.class.getDeclaredField(
-                            "code");
+                    field = BASIC_DNDEquipmentItemModifierEntity.class
+                            .getDeclaredField(
+                                    "code");
                 } catch (NoSuchMethodException | NoSuchFieldException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -172,8 +276,11 @@ public class BASIC_DNDEquipmentItemModifierController {
                         && field != null) {
                     field.setAccessible(true);
                     if (field.get(entity) != null) {
-                        old = (List<BASIC_DNDEquipmentItemModifierEntity>) method.invoke(
-                                repository, (String) field.get(entity));
+                        old = (List<
+                                BASIC_DNDEquipmentItemModifierEntity>) method
+                                        .invoke(
+                                                repository,
+                                                (String) field.get(entity));
                     }
                 }
             }
@@ -188,23 +295,7 @@ public class BASIC_DNDEquipmentItemModifierController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
-    }
-    /**
-     * Updates multiple {@link BASIC_DNDEquipmentItemModifierEntity}s.
-     * @param entities the list of {@link BASIC_DNDEquipmentItemModifierEntity} instances
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> update(
-            @RequestBody final List<BASIC_DNDEquipmentItemModifierEntity> entities) {
-        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources = new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
-        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
+        old = null;
     }
     /**
      * Updates a single {@link BASIC_DNDEquipmentItemModifierEntity}.
@@ -213,91 +304,35 @@ public class BASIC_DNDEquipmentItemModifierController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> update(
-            @RequestBody final BASIC_DNDEquipmentItemModifierEntity entity) {        
+            @RequestBody
+            final BASIC_DNDEquipmentItemModifierEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
-    
-    
-        BASIC_DNDEquipmentItemModifierEntity savedEntity = repository.save(entity);
+
+        BASIC_DNDEquipmentItemModifierEntity savedEntity =
+                repository.save(entity);
         List<Resource<BASIC_DNDEquipmentItemModifierEntity>> list = getById(
                 savedEntity.getId());
         savedEntity = null;
         return list;
     }
-
     /**
-     * Gets a list of {@link BASIC_DNDEquipmentItemModifierEntity}s that share a code.
-     * @param code the equipment_item_modifier' code
+     * Updates multiple {@link BASIC_DNDEquipmentItemModifierEntity}s.
+     * @param entities the list of {@link BASIC_DNDEquipmentItemModifierEntity}
+     *            instances
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
      */
-    @RequestMapping(path = "code/{code}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getByCode(
-            @PathVariable final String code) {
-        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter = repository.findByCode(code)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> update(
+            @RequestBody
+            final List<BASIC_DNDEquipmentItemModifierEntity> entities) {
         List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
+        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter =
+                entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getEquipmentItemModifierResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDEquipmentItemModifierEntity}s that share a percent.
-     * @param percent the equipment_item_modifier' percent
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
-     */
-    @RequestMapping(path = "percent/{percent}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getByPercent(
-            @PathVariable final Boolean percent) {
-        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter = repository.findByPercent(percent)
-                .iterator();
-        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getEquipmentItemModifierResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDEquipmentItemModifierEntity}s that share a special.
-     * @param special the equipment_item_modifier' special
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
-     */
-    @RequestMapping(path = "special/{special}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getBySpecial(
-            @PathVariable final Long special) {
-        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter = repository.findBySpecial(special)
-                .iterator();
-        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getEquipmentItemModifierResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDEquipmentItemModifierEntity}s that share a value.
-     * @param value the equipment_item_modifier' value
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDEquipmentItemModifierEntity}>>
-     */
-    @RequestMapping(path = "value/{value}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDEquipmentItemModifierEntity>> getByValue(
-            @PathVariable final float value) {
-        Iterator<BASIC_DNDEquipmentItemModifierEntity> iter = repository.findByValue(value)
-                .iterator();
-        List<Resource<BASIC_DNDEquipmentItemModifierEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDEquipmentItemModifierEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getEquipmentItemModifierResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

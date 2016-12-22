@@ -12,11 +12,11 @@ import com.osrapi.models.lablord.LABLORDArmorEntity;
  */
 @Repository
 public interface LABLORDArmorRepository
-		extends CrudRepository<LABLORDArmorEntity, Long> {
-	/**
-	 * Retrieves a list of armors by their ac.
-	 * @param ac the ac
-	 * @return {@link List}<{@link LABLORDArmorEntity}>
-	 */
-	List<LABLORDArmorEntity> findByAc(Long ac);
+        extends CrudRepository<LABLORDArmorEntity, Long> {
+    /**
+     * Retrieves a list of armors by their ac.
+     * @param ac the ac
+     * @return {@link List}<{@link LABLORDArmorEntity}>
+     */
+    List<LABLORDArmorEntity> findByAc(Long ac);
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.ff.FFObjectTypeEntity;
-
 import com.osrapi.repositories.ff.FFObjectTypeRepository;
 
 /**
@@ -63,13 +62,54 @@ public class FFObjectTypeController {
         return resources;
     }
     /**
+     * Gets a list of {@link FFObjectTypeEntity}s that share a code.
+     * @param code the object_type' code
+     * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
+     */
+    @RequestMapping(path = "code/{code}",
+            method = RequestMethod.GET)
+    public List<Resource<FFObjectTypeEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<FFObjectTypeEntity> iter = repository.findByCode(code)
+                .iterator();
+        List<Resource<FFObjectTypeEntity>> resources =
+                new ArrayList<Resource<FFObjectTypeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getObjectTypeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFObjectTypeEntity}s that share a flag.
+     * @param flag the object_type' flag
+     * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
+     */
+    @RequestMapping(path = "flag/{flag}",
+            method = RequestMethod.GET)
+    public List<Resource<FFObjectTypeEntity>> getByFlag(
+            @PathVariable
+            final Long flag) {
+        Iterator<FFObjectTypeEntity> iter = repository.findByFlag(flag)
+                .iterator();
+        List<Resource<FFObjectTypeEntity>> resources =
+                new ArrayList<Resource<FFObjectTypeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getObjectTypeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a single {@link FFObjectTypeEntity}.
      * @param id the event type's id
      * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<FFObjectTypeEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         FFObjectTypeEntity entity = repository.findOne(id);
         List<Resource<FFObjectTypeEntity>> resources =
                 new ArrayList<Resource<FFObjectTypeEntity>>();
@@ -87,7 +127,7 @@ public class FFObjectTypeController {
             final FFObjectTypeEntity entity) {
         Resource<FFObjectTypeEntity> resource =
                 new Resource<FFObjectTypeEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -96,13 +136,30 @@ public class FFObjectTypeController {
         return resource;
     }
     /**
+     * Saves a single {@link FFObjectTypeEntity}.
+     * @param entity the {@link FFObjectTypeEntity} instance
+     * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<FFObjectTypeEntity>> save(
+            @RequestBody
+            final FFObjectTypeEntity entity) {
+
+        FFObjectTypeEntity savedEntity = repository.save(entity);
+        List<Resource<FFObjectTypeEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link FFObjectTypeEntity}s.
      * @param entities the list of {@link FFObjectTypeEntity} instances
      * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<FFObjectTypeEntity>> save(
-            @RequestBody final List<FFObjectTypeEntity> entities) {
+            @RequestBody
+            final List<FFObjectTypeEntity> entities) {
         List<Resource<FFObjectTypeEntity>> resources =
                 new ArrayList<Resource<FFObjectTypeEntity>>();
         Iterator<FFObjectTypeEntity> iter = entities.iterator();
@@ -111,22 +168,6 @@ public class FFObjectTypeController {
         }
         iter = null;
         return resources;
-    }
-    /**
-     * Saves a single {@link FFObjectTypeEntity}.
-     * @param entity the {@link FFObjectTypeEntity} instance
-     * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<FFObjectTypeEntity>> save(
-            @RequestBody final FFObjectTypeEntity entity) {
-    
-    
-        FFObjectTypeEntity savedEntity = repository.save(entity);
-        List<Resource<FFObjectTypeEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -151,12 +192,12 @@ public class FFObjectTypeController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<FFObjectTypeEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -186,7 +227,27 @@ public class FFObjectTypeController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
+        old = null;
+    }
+
+    /**
+     * Updates a single {@link FFObjectTypeEntity}.
+     * @param entity the {@link FFObjectTypeEntity} instance
+     * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public List<Resource<FFObjectTypeEntity>> update(
+            @RequestBody
+            final FFObjectTypeEntity entity) {
+        if (entity.getId() == null) {
+            setIdFromRepository(entity);
+        }
+
+        FFObjectTypeEntity savedEntity = repository.save(entity);
+        List<Resource<FFObjectTypeEntity>> list = getById(
+                savedEntity.getId());
+        savedEntity = null;
+        return list;
     }
     /**
      * Updates multiple {@link FFObjectTypeEntity}s.
@@ -195,69 +256,13 @@ public class FFObjectTypeController {
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
     public List<Resource<FFObjectTypeEntity>> update(
-            @RequestBody final List<FFObjectTypeEntity> entities) {
-        List<Resource<FFObjectTypeEntity>> resources = new ArrayList<Resource<FFObjectTypeEntity>>();
+            @RequestBody
+            final List<FFObjectTypeEntity> entities) {
+        List<Resource<FFObjectTypeEntity>> resources =
+                new ArrayList<Resource<FFObjectTypeEntity>>();
         Iterator<FFObjectTypeEntity> iter = entities.iterator();
         while (iter.hasNext()) {
             resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Updates a single {@link FFObjectTypeEntity}.
-     * @param entity the {@link FFObjectTypeEntity} instance
-     * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.PUT)
-    public List<Resource<FFObjectTypeEntity>> update(
-            @RequestBody final FFObjectTypeEntity entity) {        
-        if (entity.getId() == null) {
-            setIdFromRepository(entity);
-        }
-    
-    
-        FFObjectTypeEntity savedEntity = repository.save(entity);
-        List<Resource<FFObjectTypeEntity>> list = getById(
-                savedEntity.getId());
-        savedEntity = null;
-        return list;
-    }
-
-    /**
-     * Gets a list of {@link FFObjectTypeEntity}s that share a code.
-     * @param code the object_type' code
-     * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
-     */
-    @RequestMapping(path = "code/{code}",
-            method = RequestMethod.GET)
-    public List<Resource<FFObjectTypeEntity>> getByCode(
-            @PathVariable final String code) {
-        Iterator<FFObjectTypeEntity> iter = repository.findByCode(code)
-                .iterator();
-        List<Resource<FFObjectTypeEntity>> resources =
-                new ArrayList<Resource<FFObjectTypeEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getObjectTypeResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFObjectTypeEntity}s that share a flag.
-     * @param flag the object_type' flag
-     * @return {@link List}<{@link Resource}<{@link FFObjectTypeEntity}>>
-     */
-    @RequestMapping(path = "flag/{flag}",
-            method = RequestMethod.GET)
-    public List<Resource<FFObjectTypeEntity>> getByFlag(
-            @PathVariable final Long flag) {
-        Iterator<FFObjectTypeEntity> iter = repository.findByFlag(flag)
-                .iterator();
-        List<Resource<FFObjectTypeEntity>> resources =
-                new ArrayList<Resource<FFObjectTypeEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getObjectTypeResource(iter.next()));
         }
         iter = null;
         return resources;

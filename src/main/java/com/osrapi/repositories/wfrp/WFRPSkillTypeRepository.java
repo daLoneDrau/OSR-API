@@ -12,17 +12,17 @@ import com.osrapi.models.wfrp.WFRPSkillTypeEntity;
  */
 @Repository
 public interface WFRPSkillTypeRepository
-		extends CrudRepository<WFRPSkillTypeEntity, Long> {
-	/**
-	 * Retrieves a list of skill types by their code.
-	 * @param code the code
-	 * @return {@link List}<{@link WFRPSkillTypeEntity}>
-	 */
-	List<WFRPSkillTypeEntity> findByCode(Long code);
-	/**
-	 * Retrieves a list of skill types by their name.
-	 * @param name the name
-	 * @return {@link List}<{@link WFRPSkillTypeEntity}>
-	 */
-	List<WFRPSkillTypeEntity> findByName(String name);
+        extends CrudRepository<WFRPSkillTypeEntity, Long> {
+    /**
+     * Retrieves a list of skill types by their code.
+     * @param code the code
+     * @return {@link List}<{@link WFRPSkillTypeEntity}>
+     */
+    List<WFRPSkillTypeEntity> findByCode(Long code);
+    /**
+     * Retrieves a list of skill types by their name.
+     * @param name the name
+     * @return {@link List}<{@link WFRPSkillTypeEntity}>
+     */
+    List<WFRPSkillTypeEntity> findByName(String name);
 }

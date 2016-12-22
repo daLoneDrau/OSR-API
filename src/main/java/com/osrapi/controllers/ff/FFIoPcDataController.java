@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.osrapi.models.ff.FFIoPcDataEntity;
 import com.osrapi.models.ff.FFGenderEntity;
-
+import com.osrapi.models.ff.FFIoPcDataEntity;
 import com.osrapi.repositories.ff.FFIoPcDataRepository;
 
 /**
@@ -64,18 +63,204 @@ public class FFIoPcDataController {
         return resources;
     }
     /**
+     * Gets a list of {@link FFIoPcDataEntity}s that share a flags.
+     * @param flags the io_pc_data' flags
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "flags/{flags}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoPcDataEntity>> getByFlags(
+            @PathVariable
+            final Long flags) {
+        Iterator<FFIoPcDataEntity> iter = repository.findByFlags(flags)
+                .iterator();
+        List<Resource<FFIoPcDataEntity>> resources =
+                new ArrayList<Resource<FFIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoPcDataEntity}s that share a gold.
+     * @param gold the io_pc_data' gold
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "gold/{gold}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoPcDataEntity>> getByGold(
+            @PathVariable
+            final Float gold) {
+        Iterator<FFIoPcDataEntity> iter = repository.findByGold(gold)
+                .iterator();
+        List<Resource<FFIoPcDataEntity>> resources =
+                new ArrayList<Resource<FFIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a single {@link FFIoPcDataEntity}.
      * @param id the event type's id
      * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<FFIoPcDataEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         FFIoPcDataEntity entity = repository.findOne(id);
         List<Resource<FFIoPcDataEntity>> resources =
                 new ArrayList<Resource<FFIoPcDataEntity>>();
         resources.add(getIoPcDataResource(entity));
         entity = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoPcDataEntity}s that share a interfaceFlags.
+     * @param interfaceFlags the io_pc_data' interfaceFlags
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "interface_flags/{interfaceFlags}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoPcDataEntity>> getByInterfaceFlags(
+            @PathVariable
+            final Long interfaceFlags) {
+        Iterator<FFIoPcDataEntity> iter =
+                repository.findByInterfaceFlags(interfaceFlags)
+                        .iterator();
+        List<Resource<FFIoPcDataEntity>> resources =
+                new ArrayList<Resource<FFIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoPcDataEntity}s that share a internalScript.
+     * @param internalScript the io_pc_data' internalScript
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "internal_script/{internalScript}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoPcDataEntity>> getByInternalScript(
+            @PathVariable
+            final String internalScript) {
+        Iterator<FFIoPcDataEntity> iter =
+                repository.findByInternalScript(internalScript)
+                        .iterator();
+        List<Resource<FFIoPcDataEntity>> resources =
+                new ArrayList<Resource<FFIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoPcDataEntity}s that share a level.
+     * @param level the io_pc_data' level
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "level/{level}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoPcDataEntity>> getByLevel(
+            @PathVariable
+            final Long level) {
+        Iterator<FFIoPcDataEntity> iter = repository.findByLevel(level)
+                .iterator();
+        List<Resource<FFIoPcDataEntity>> resources =
+                new ArrayList<Resource<FFIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoPcDataEntity}s that share a name.
+     * @param name the io_pc_data' name
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "name/{name}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoPcDataEntity>> getByName(
+            @PathVariable
+            final String name) {
+        Iterator<FFIoPcDataEntity> iter = repository.findByName(name)
+                .iterator();
+        List<Resource<FFIoPcDataEntity>> resources =
+                new ArrayList<Resource<FFIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+
+    /**
+     * Gets a list of {@link FFIoPcDataEntity}s that share a profession.
+     * @param profession the io_pc_data' profession
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "profession/{profession}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoPcDataEntity>> getByProfession(
+            @PathVariable
+            final Long profession) {
+        Iterator<FFIoPcDataEntity> iter =
+                repository.findByProfession(profession)
+                        .iterator();
+        List<Resource<FFIoPcDataEntity>> resources =
+                new ArrayList<Resource<FFIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+
+    /**
+     * Gets a list of {@link FFIoPcDataEntity}s that share a race.
+     * @param race the io_pc_data' race
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "race/{race}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoPcDataEntity>> getByRace(
+            @PathVariable
+            final Long race) {
+        Iterator<FFIoPcDataEntity> iter = repository.findByRace(race)
+                .iterator();
+        List<Resource<FFIoPcDataEntity>> resources =
+                new ArrayList<Resource<FFIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoPcDataEntity}s that share a xp.
+     * @param xp the io_pc_data' xp
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "xp/{xp}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoPcDataEntity>> getByXp(
+            @PathVariable
+            final Long xp) {
+        Iterator<FFIoPcDataEntity> iter = repository.findByXp(xp)
+                .iterator();
+        List<Resource<FFIoPcDataEntity>> resources =
+                new ArrayList<Resource<FFIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
         return resources;
     }
     /**
@@ -88,7 +273,7 @@ public class FFIoPcDataController {
             final FFIoPcDataEntity entity) {
         Resource<FFIoPcDataEntity> resource =
                 new Resource<FFIoPcDataEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -97,13 +282,34 @@ public class FFIoPcDataController {
         return resource;
     }
     /**
+     * Saves a single {@link FFIoPcDataEntity}.
+     * @param entity the {@link FFIoPcDataEntity} instance
+     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<FFIoPcDataEntity>> save(
+            @RequestBody
+            final FFIoPcDataEntity entity) {
+        if (entity.getGender() != null
+                && entity.getGender().getId() == null) {
+            setGenderIdFromRepository(entity);
+        }
+
+        FFIoPcDataEntity savedEntity = repository.save(entity);
+        List<Resource<FFIoPcDataEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link FFIoPcDataEntity}s.
      * @param entities the list of {@link FFIoPcDataEntity} instances
      * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<FFIoPcDataEntity>> save(
-            @RequestBody final List<FFIoPcDataEntity> entities) {
+            @RequestBody
+            final List<FFIoPcDataEntity> entities) {
         List<Resource<FFIoPcDataEntity>> resources =
                 new ArrayList<Resource<FFIoPcDataEntity>>();
         Iterator<FFIoPcDataEntity> iter = entities.iterator();
@@ -113,26 +319,64 @@ public class FFIoPcDataController {
         iter = null;
         return resources;
     }
-    /**
-     * Saves a single {@link FFIoPcDataEntity}.
-     * @param entity the {@link FFIoPcDataEntity} instance
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<FFIoPcDataEntity>> save(
-            @RequestBody final FFIoPcDataEntity entity) {
-            if (entity.getGender() != null
-        && entity.getGender().getId() == null) {
-      setGenderIdFromRepository(entity);
+    private void setGenderIdFromRepository(
+            final FFIoPcDataEntity entity) {
+        FFGenderEntity memberEntity = null;
+        List<Resource<FFGenderEntity>> list = null;
+        try {
+            Method method = null;
+            Field field = null;
+            try {
+                method = FFGenderController.class.getDeclaredMethod(
+                        "getByName", new Class[] { String.class });
+                field = FFGenderEntity.class.getDeclaredField("name");
+            } catch (NoSuchMethodException | NoSuchFieldException e) {}
+            if (method != null
+                    && field != null) {
+                field.setAccessible(true);
+                if (field.get(entity.getGender()) != null) {
+                    list = (List<Resource<FFGenderEntity>>) method
+                            .invoke(
+                                    FFGenderController.getInstance(),
+                                    (String) field
+                                            .get(entity.getGender()));
+                }
+            }
+            if (list == null) {
+                try {
+                    method = FFGenderController.class.getDeclaredMethod(
+                            "getByCode", new Class[] { String.class });
+                    field = FFGenderEntity.class
+                            .getDeclaredField("code");
+                } catch (NoSuchMethodException | NoSuchFieldException e) {}
+                if (method != null
+                        && field != null) {
+                    field.setAccessible(true);
+                    if (field.get(entity.getGender()) != null) {
+                        list = (List<Resource<FFGenderEntity>>) method
+                                .invoke(FFGenderController
+                                        .getInstance(), (String) field.get(
+                                                entity.getGender()));
+                    }
+                }
+            }
+            method = null;
+            field = null;
+        } catch (SecurityException | IllegalArgumentException
+                | IllegalAccessException
+                | InvocationTargetException e) {}
+        if (list != null
+                && !list.isEmpty()) {
+            memberEntity = list.get(0).getContent();
         }
-
-
-    
-        FFIoPcDataEntity savedEntity = repository.save(entity);
-        List<Resource<FFIoPcDataEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
+        if (memberEntity == null) {
+            memberEntity = (FFGenderEntity) ((Resource) FFGenderController
+                    .getInstance().save(
+                            entity.getGender())
+                    .get(0)).getContent();
+        }
+        entity.setGender(memberEntity);
+        list = null;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -157,12 +401,12 @@ public class FFIoPcDataController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<FFIoPcDataEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -192,23 +436,7 @@ public class FFIoPcDataController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
-    }
-    /**
-     * Updates multiple {@link FFIoPcDataEntity}s.
-     * @param entities the list of {@link FFIoPcDataEntity} instances
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<FFIoPcDataEntity>> update(
-            @RequestBody final List<FFIoPcDataEntity> entities) {
-        List<Resource<FFIoPcDataEntity>> resources = new ArrayList<Resource<FFIoPcDataEntity>>();
-        Iterator<FFIoPcDataEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
+        old = null;
     }
     /**
      * Updates a single {@link FFIoPcDataEntity}.
@@ -217,254 +445,36 @@ public class FFIoPcDataController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<FFIoPcDataEntity>> update(
-            @RequestBody final FFIoPcDataEntity entity) {        
+            @RequestBody
+            final FFIoPcDataEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
-            if (entity.getGender() != null
-        && entity.getGender().getId() == null) {
-      setGenderIdFromRepository(entity);
+        if (entity.getGender() != null
+                && entity.getGender().getId() == null) {
+            setGenderIdFromRepository(entity);
         }
 
-
-    
         FFIoPcDataEntity savedEntity = repository.save(entity);
         List<Resource<FFIoPcDataEntity>> list = getById(
                 savedEntity.getId());
         savedEntity = null;
         return list;
     }
-
-  private void setGenderIdFromRepository(
-      final FFIoPcDataEntity entity) {
-    FFGenderEntity memberEntity = null;
-    List<Resource<FFGenderEntity>> list = null;
-    try {
-      Method method = null;
-      Field field = null;
-      try {
-        method = FFGenderController.class.getDeclaredMethod(
-            "getByName", new Class[] { String.class });
-        field = FFGenderEntity.class.getDeclaredField("name");
-      } catch (NoSuchMethodException | NoSuchFieldException e) {
-      }
-      if (method != null
-          && field != null) {
-        field.setAccessible(true);
-        if (field.get(entity.getGender()) != null) {
-          list = (List<Resource<FFGenderEntity>>) method
-              .invoke(
-                  FFGenderController.getInstance(),
-                  (String) field
-                      .get(entity.getGender()));
-        }
-      }
-      if (list == null) {
-        try {
-          method = FFGenderController.class.getDeclaredMethod(
-              "getByCode", new Class[] { String.class });
-          field = FFGenderEntity.class
-              .getDeclaredField("code");
-        } catch (NoSuchMethodException | NoSuchFieldException e) {
-        }
-        if (method != null
-            && field != null) {
-          field.setAccessible(true);
-          if (field.get(entity.getGender()) != null) {
-            list = (List<Resource<FFGenderEntity>>)
-                method.invoke(FFGenderController
-                    .getInstance(),(String) field.get(
-                        entity.getGender()));
-          }
-        }
-      }
-      method = null;
-      field = null;
-    } catch (SecurityException | IllegalArgumentException
-        | IllegalAccessException
-        | InvocationTargetException e) {
-    }
-    if (list != null
-        && !list.isEmpty()) {
-      memberEntity = list.get(0).getContent();
-    }
-    if (memberEntity == null) {
-      memberEntity = (FFGenderEntity)
-          ((Resource) FFGenderController.getInstance().save(
-              entity.getGender()).get(0)).getContent();
-    }
-    entity.setGender(memberEntity);
-    list = null;
-    }
-
-
     /**
-     * Gets a list of {@link FFIoPcDataEntity}s that share a flags.
-     * @param flags the io_pc_data' flags
+     * Updates multiple {@link FFIoPcDataEntity}s.
+     * @param entities the list of {@link FFIoPcDataEntity} instances
      * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
      */
-    @RequestMapping(path = "flags/{flags}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoPcDataEntity>> getByFlags(
-            @PathVariable final Long flags) {
-        Iterator<FFIoPcDataEntity> iter = repository.findByFlags(flags)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<FFIoPcDataEntity>> update(
+            @RequestBody
+            final List<FFIoPcDataEntity> entities) {
         List<Resource<FFIoPcDataEntity>> resources =
                 new ArrayList<Resource<FFIoPcDataEntity>>();
+        Iterator<FFIoPcDataEntity> iter = entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoPcDataEntity}s that share a gold.
-     * @param gold the io_pc_data' gold
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "gold/{gold}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoPcDataEntity>> getByGold(
-            @PathVariable final Float gold) {
-        Iterator<FFIoPcDataEntity> iter = repository.findByGold(gold)
-                .iterator();
-        List<Resource<FFIoPcDataEntity>> resources =
-                new ArrayList<Resource<FFIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoPcDataEntity}s that share a interfaceFlags.
-     * @param interfaceFlags the io_pc_data' interfaceFlags
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "interface_flags/{interfaceFlags}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoPcDataEntity>> getByInterfaceFlags(
-            @PathVariable final Long interfaceFlags) {
-        Iterator<FFIoPcDataEntity> iter = repository.findByInterfaceFlags(interfaceFlags)
-                .iterator();
-        List<Resource<FFIoPcDataEntity>> resources =
-                new ArrayList<Resource<FFIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoPcDataEntity}s that share a internalScript.
-     * @param internalScript the io_pc_data' internalScript
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "internal_script/{internalScript}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoPcDataEntity>> getByInternalScript(
-            @PathVariable final String internalScript) {
-        Iterator<FFIoPcDataEntity> iter = repository.findByInternalScript(internalScript)
-                .iterator();
-        List<Resource<FFIoPcDataEntity>> resources =
-                new ArrayList<Resource<FFIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoPcDataEntity}s that share a level.
-     * @param level the io_pc_data' level
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "level/{level}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoPcDataEntity>> getByLevel(
-            @PathVariable final Long level) {
-        Iterator<FFIoPcDataEntity> iter = repository.findByLevel(level)
-                .iterator();
-        List<Resource<FFIoPcDataEntity>> resources =
-                new ArrayList<Resource<FFIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoPcDataEntity}s that share a name.
-     * @param name the io_pc_data' name
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "name/{name}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoPcDataEntity>> getByName(
-            @PathVariable final String name) {
-        Iterator<FFIoPcDataEntity> iter = repository.findByName(name)
-                .iterator();
-        List<Resource<FFIoPcDataEntity>> resources =
-                new ArrayList<Resource<FFIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoPcDataEntity}s that share a profession.
-     * @param profession the io_pc_data' profession
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "profession/{profession}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoPcDataEntity>> getByProfession(
-            @PathVariable final Long profession) {
-        Iterator<FFIoPcDataEntity> iter = repository.findByProfession(profession)
-                .iterator();
-        List<Resource<FFIoPcDataEntity>> resources =
-                new ArrayList<Resource<FFIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoPcDataEntity}s that share a race.
-     * @param race the io_pc_data' race
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "race/{race}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoPcDataEntity>> getByRace(
-            @PathVariable final Long race) {
-        Iterator<FFIoPcDataEntity> iter = repository.findByRace(race)
-                .iterator();
-        List<Resource<FFIoPcDataEntity>> resources =
-                new ArrayList<Resource<FFIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoPcDataEntity}s that share a xp.
-     * @param xp the io_pc_data' xp
-     * @return {@link List}<{@link Resource}<{@link FFIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "xp/{xp}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoPcDataEntity>> getByXp(
-            @PathVariable final Long xp) {
-        Iterator<FFIoPcDataEntity> iter = repository.findByXp(xp)
-                .iterator();
-        List<Resource<FFIoPcDataEntity>> resources =
-                new ArrayList<Resource<FFIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

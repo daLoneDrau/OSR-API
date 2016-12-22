@@ -12,17 +12,17 @@ import com.osrapi.models.wfrp.WFRPTalentEntity;
  */
 @Repository
 public interface WFRPTalentRepository
-		extends CrudRepository<WFRPTalentEntity, Long> {
-	/**
-	 * Retrieves a list of talents by their description.
-	 * @param description the description
-	 * @return {@link List}<{@link WFRPTalentEntity}>
-	 */
-	List<WFRPTalentEntity> findByDescription(String description);
-	/**
-	 * Retrieves a list of talents by their name.
-	 * @param name the name
-	 * @return {@link List}<{@link WFRPTalentEntity}>
-	 */
-	List<WFRPTalentEntity> findByName(String name);
+        extends CrudRepository<WFRPTalentEntity, Long> {
+    /**
+     * Retrieves a list of talents by their description.
+     * @param description the description
+     * @return {@link List}<{@link WFRPTalentEntity}>
+     */
+    List<WFRPTalentEntity> findByDescription(String description);
+    /**
+     * Retrieves a list of talents by their name.
+     * @param name the name
+     * @return {@link List}<{@link WFRPTalentEntity}>
+     */
+    List<WFRPTalentEntity> findByName(String name);
 }

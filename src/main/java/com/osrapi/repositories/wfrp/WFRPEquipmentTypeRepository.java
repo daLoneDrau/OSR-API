@@ -12,17 +12,17 @@ import com.osrapi.models.wfrp.WFRPEquipmentTypeEntity;
  */
 @Repository
 public interface WFRPEquipmentTypeRepository
-		extends CrudRepository<WFRPEquipmentTypeEntity, Long> {
-	/**
-	 * Retrieves a list of equipment types by their code.
-	 * @param code the code
-	 * @return {@link List}<{@link WFRPEquipmentTypeEntity}>
-	 */
-	List<WFRPEquipmentTypeEntity> findByCode(Long code);
-	/**
-	 * Retrieves a list of equipment types by their name.
-	 * @param name the name
-	 * @return {@link List}<{@link WFRPEquipmentTypeEntity}>
-	 */
-	List<WFRPEquipmentTypeEntity> findByName(String name);
+        extends CrudRepository<WFRPEquipmentTypeEntity, Long> {
+    /**
+     * Retrieves a list of equipment types by their code.
+     * @param code the code
+     * @return {@link List}<{@link WFRPEquipmentTypeEntity}>
+     */
+    List<WFRPEquipmentTypeEntity> findByCode(Long code);
+    /**
+     * Retrieves a list of equipment types by their name.
+     * @param name the name
+     * @return {@link List}<{@link WFRPEquipmentTypeEntity}>
+     */
+    List<WFRPEquipmentTypeEntity> findByName(String name);
 }

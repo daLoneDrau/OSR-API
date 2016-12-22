@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.crypts_things.CRYPTS_THINGSDieEntity;
-
 import com.osrapi.repositories.crypts_things.CRYPTS_THINGSDieRepository;
 
 /**
@@ -65,18 +64,59 @@ public class CRYPTS_THINGSDieController {
         return resources;
     }
     /**
+     * Gets a list of {@link CRYPTS_THINGSDieEntity}s that share a code.
+     * @param code the die' code
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
+     */
+    @RequestMapping(path = "code/{code}",
+            method = RequestMethod.GET)
+    public List<Resource<CRYPTS_THINGSDieEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<CRYPTS_THINGSDieEntity> iter = repository.findByCode(code)
+                .iterator();
+        List<Resource<CRYPTS_THINGSDieEntity>> resources =
+                new ArrayList<Resource<CRYPTS_THINGSDieEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getDieResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a single {@link CRYPTS_THINGSDieEntity}.
      * @param id the event type's id
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<CRYPTS_THINGSDieEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         CRYPTS_THINGSDieEntity entity = repository.findOne(id);
         List<Resource<CRYPTS_THINGSDieEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSDieEntity>>();
         resources.add(getDieResource(entity));
         entity = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CRYPTS_THINGSDieEntity}s that share a value.
+     * @param value the die' value
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
+     */
+    @RequestMapping(path = "value/{value}",
+            method = RequestMethod.GET)
+    public List<Resource<CRYPTS_THINGSDieEntity>> getByValue(
+            @PathVariable
+            final Long value) {
+        Iterator<CRYPTS_THINGSDieEntity> iter = repository.findByValue(value)
+                .iterator();
+        List<Resource<CRYPTS_THINGSDieEntity>> resources =
+                new ArrayList<Resource<CRYPTS_THINGSDieEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getDieResource(iter.next()));
+        }
+        iter = null;
         return resources;
     }
     /**
@@ -89,7 +129,7 @@ public class CRYPTS_THINGSDieController {
             final CRYPTS_THINGSDieEntity entity) {
         Resource<CRYPTS_THINGSDieEntity> resource =
                 new Resource<CRYPTS_THINGSDieEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -98,13 +138,30 @@ public class CRYPTS_THINGSDieController {
         return resource;
     }
     /**
+     * Saves a single {@link CRYPTS_THINGSDieEntity}.
+     * @param entity the {@link CRYPTS_THINGSDieEntity} instance
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<CRYPTS_THINGSDieEntity>> save(
+            @RequestBody
+            final CRYPTS_THINGSDieEntity entity) {
+
+        CRYPTS_THINGSDieEntity savedEntity = repository.save(entity);
+        List<Resource<CRYPTS_THINGSDieEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link CRYPTS_THINGSDieEntity}s.
      * @param entities the list of {@link CRYPTS_THINGSDieEntity} instances
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<CRYPTS_THINGSDieEntity>> save(
-            @RequestBody final List<CRYPTS_THINGSDieEntity> entities) {
+            @RequestBody
+            final List<CRYPTS_THINGSDieEntity> entities) {
         List<Resource<CRYPTS_THINGSDieEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSDieEntity>>();
         Iterator<CRYPTS_THINGSDieEntity> iter = entities.iterator();
@@ -113,22 +170,6 @@ public class CRYPTS_THINGSDieController {
         }
         iter = null;
         return resources;
-    }
-    /**
-     * Saves a single {@link CRYPTS_THINGSDieEntity}.
-     * @param entity the {@link CRYPTS_THINGSDieEntity} instance
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<CRYPTS_THINGSDieEntity>> save(
-            @RequestBody final CRYPTS_THINGSDieEntity entity) {
-    
-    
-        CRYPTS_THINGSDieEntity savedEntity = repository.save(entity);
-        List<Resource<CRYPTS_THINGSDieEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -153,12 +194,12 @@ public class CRYPTS_THINGSDieController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<CRYPTS_THINGSDieEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -188,7 +229,27 @@ public class CRYPTS_THINGSDieController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
+        old = null;
+    }
+
+    /**
+     * Updates a single {@link CRYPTS_THINGSDieEntity}.
+     * @param entity the {@link CRYPTS_THINGSDieEntity} instance
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public List<Resource<CRYPTS_THINGSDieEntity>> update(
+            @RequestBody
+            final CRYPTS_THINGSDieEntity entity) {
+        if (entity.getId() == null) {
+            setIdFromRepository(entity);
+        }
+
+        CRYPTS_THINGSDieEntity savedEntity = repository.save(entity);
+        List<Resource<CRYPTS_THINGSDieEntity>> list = getById(
+                savedEntity.getId());
+        savedEntity = null;
+        return list;
     }
     /**
      * Updates multiple {@link CRYPTS_THINGSDieEntity}s.
@@ -197,69 +258,13 @@ public class CRYPTS_THINGSDieController {
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
     public List<Resource<CRYPTS_THINGSDieEntity>> update(
-            @RequestBody final List<CRYPTS_THINGSDieEntity> entities) {
-        List<Resource<CRYPTS_THINGSDieEntity>> resources = new ArrayList<Resource<CRYPTS_THINGSDieEntity>>();
+            @RequestBody
+            final List<CRYPTS_THINGSDieEntity> entities) {
+        List<Resource<CRYPTS_THINGSDieEntity>> resources =
+                new ArrayList<Resource<CRYPTS_THINGSDieEntity>>();
         Iterator<CRYPTS_THINGSDieEntity> iter = entities.iterator();
         while (iter.hasNext()) {
             resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Updates a single {@link CRYPTS_THINGSDieEntity}.
-     * @param entity the {@link CRYPTS_THINGSDieEntity} instance
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.PUT)
-    public List<Resource<CRYPTS_THINGSDieEntity>> update(
-            @RequestBody final CRYPTS_THINGSDieEntity entity) {        
-        if (entity.getId() == null) {
-            setIdFromRepository(entity);
-        }
-    
-    
-        CRYPTS_THINGSDieEntity savedEntity = repository.save(entity);
-        List<Resource<CRYPTS_THINGSDieEntity>> list = getById(
-                savedEntity.getId());
-        savedEntity = null;
-        return list;
-    }
-
-    /**
-     * Gets a list of {@link CRYPTS_THINGSDieEntity}s that share a code.
-     * @param code the die' code
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
-     */
-    @RequestMapping(path = "code/{code}",
-            method = RequestMethod.GET)
-    public List<Resource<CRYPTS_THINGSDieEntity>> getByCode(
-            @PathVariable final String code) {
-        Iterator<CRYPTS_THINGSDieEntity> iter = repository.findByCode(code)
-                .iterator();
-        List<Resource<CRYPTS_THINGSDieEntity>> resources =
-                new ArrayList<Resource<CRYPTS_THINGSDieEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getDieResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link CRYPTS_THINGSDieEntity}s that share a value.
-     * @param value the die' value
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSDieEntity}>>
-     */
-    @RequestMapping(path = "value/{value}",
-            method = RequestMethod.GET)
-    public List<Resource<CRYPTS_THINGSDieEntity>> getByValue(
-            @PathVariable final Long value) {
-        Iterator<CRYPTS_THINGSDieEntity> iter = repository.findByValue(value)
-                .iterator();
-        List<Resource<CRYPTS_THINGSDieEntity>> resources =
-                new ArrayList<Resource<CRYPTS_THINGSDieEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getDieResource(iter.next()));
         }
         iter = null;
         return resources;

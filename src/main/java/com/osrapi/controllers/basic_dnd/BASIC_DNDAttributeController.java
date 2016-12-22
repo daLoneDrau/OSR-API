@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.basic_dnd.BASIC_DNDAttributeEntity;
-
 import com.osrapi.repositories.basic_dnd.BASIC_DNDAttributeRepository;
 
 /**
@@ -65,22 +64,6 @@ public class BASIC_DNDAttributeController {
         return resources;
     }
     /**
-     * Gets a single {@link BASIC_DNDAttributeEntity}.
-     * @param id the event type's id
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
-     */
-    @CrossOrigin
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDAttributeEntity>> getById(
-            @PathVariable final Long id) {
-        BASIC_DNDAttributeEntity entity = repository.findOne(id);
-        List<Resource<BASIC_DNDAttributeEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
-        resources.add(getAttributeResource(entity));
-        entity = null;
-        return resources;
-    }
-    /**
      * Gets a {@link Resource} instance with links for the
      * {@link BASIC_DNDAttributeEntity}.
      * @param entity the {@link BASIC_DNDAttributeEntity}
@@ -90,7 +73,7 @@ public class BASIC_DNDAttributeController {
             final BASIC_DNDAttributeEntity entity) {
         Resource<BASIC_DNDAttributeEntity> resource =
                 new Resource<BASIC_DNDAttributeEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -99,19 +82,83 @@ public class BASIC_DNDAttributeController {
         return resource;
     }
     /**
-     * Saves multiple {@link BASIC_DNDAttributeEntity}s.
-     * @param entities the list of {@link BASIC_DNDAttributeEntity} instances
+     * Gets a list of {@link BASIC_DNDAttributeEntity}s that share a code.
+     * @param code the attribute' code
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
      */
     @CrossOrigin
-    @RequestMapping(path = "/bulk", method = RequestMethod.POST)
-    public List<Resource<BASIC_DNDAttributeEntity>> save(
-            @RequestBody final List<BASIC_DNDAttributeEntity> entities) {
+    @RequestMapping(path = "code/{code}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDAttributeEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<BASIC_DNDAttributeEntity> iter = repository.findByCode(code)
+                .iterator();
         List<Resource<BASIC_DNDAttributeEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
-        Iterator<BASIC_DNDAttributeEntity> iter = entities.iterator();
         while (iter.hasNext()) {
-            resources.add(save(iter.next()).get(0));
+            resources.add(getAttributeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDAttributeEntity}s that share a
+     * description.
+     * @param description the attribute' description
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
+     */
+    @CrossOrigin
+    @RequestMapping(path = "description/{description}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDAttributeEntity>> getByDescription(
+            @PathVariable
+            final String description) {
+        Iterator<BASIC_DNDAttributeEntity> iter =
+                repository.findByDescription(description)
+                        .iterator();
+        List<Resource<BASIC_DNDAttributeEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getAttributeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a single {@link BASIC_DNDAttributeEntity}.
+     * @param id the event type's id
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
+     */
+    @CrossOrigin
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDAttributeEntity>> getById(
+            @PathVariable
+            final Long id) {
+        BASIC_DNDAttributeEntity entity = repository.findOne(id);
+        List<Resource<BASIC_DNDAttributeEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
+        resources.add(getAttributeResource(entity));
+        entity = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDAttributeEntity}s that share a name.
+     * @param name the attribute' name
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
+     */
+    @CrossOrigin
+    @RequestMapping(path = "name/{name}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDAttributeEntity>> getByName(
+            @PathVariable
+            final String name) {
+        Iterator<BASIC_DNDAttributeEntity> iter = repository.findByName(name)
+                .iterator();
+        List<Resource<BASIC_DNDAttributeEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getAttributeResource(iter.next()));
         }
         iter = null;
         return resources;
@@ -124,15 +171,35 @@ public class BASIC_DNDAttributeController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     public List<Resource<BASIC_DNDAttributeEntity>> save(
-            @RequestBody final BASIC_DNDAttributeEntity entity) {
-    
-    
+            @RequestBody
+            final BASIC_DNDAttributeEntity entity) {
+
         BASIC_DNDAttributeEntity savedEntity = repository.save(entity);
         List<Resource<BASIC_DNDAttributeEntity>> list =
                 getById(savedEntity.getId());
         savedEntity = null;
         return list;
     }
+    /**
+     * Saves multiple {@link BASIC_DNDAttributeEntity}s.
+     * @param entities the list of {@link BASIC_DNDAttributeEntity} instances
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
+     */
+    @CrossOrigin
+    @RequestMapping(path = "/bulk", method = RequestMethod.POST)
+    public List<Resource<BASIC_DNDAttributeEntity>> save(
+            @RequestBody
+            final List<BASIC_DNDAttributeEntity> entities) {
+        List<Resource<BASIC_DNDAttributeEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
+        Iterator<BASIC_DNDAttributeEntity> iter = entities.iterator();
+        while (iter.hasNext()) {
+            resources.add(save(iter.next()).get(0));
+        }
+        iter = null;
+        return resources;
+    }
+
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
      * repository.
@@ -156,12 +223,12 @@ public class BASIC_DNDAttributeController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<BASIC_DNDAttributeEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -191,24 +258,7 @@ public class BASIC_DNDAttributeController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
-    }
-    /**
-     * Updates multiple {@link BASIC_DNDAttributeEntity}s.
-     * @param entities the list of {@link BASIC_DNDAttributeEntity} instances
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
-     */
-    @CrossOrigin
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<BASIC_DNDAttributeEntity>> update(
-            @RequestBody final List<BASIC_DNDAttributeEntity> entities) {
-        List<Resource<BASIC_DNDAttributeEntity>> resources = new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
-        Iterator<BASIC_DNDAttributeEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
+        old = null;
     }
     /**
      * Updates a single {@link BASIC_DNDAttributeEntity}.
@@ -218,75 +268,33 @@ public class BASIC_DNDAttributeController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<BASIC_DNDAttributeEntity>> update(
-            @RequestBody final BASIC_DNDAttributeEntity entity) {        
+            @RequestBody
+            final BASIC_DNDAttributeEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
-    
-    
+
         BASIC_DNDAttributeEntity savedEntity = repository.save(entity);
         List<Resource<BASIC_DNDAttributeEntity>> list = getById(
                 savedEntity.getId());
         savedEntity = null;
         return list;
     }
-
     /**
-     * Gets a list of {@link BASIC_DNDAttributeEntity}s that share a code.
-     * @param code the attribute' code
+     * Updates multiple {@link BASIC_DNDAttributeEntity}s.
+     * @param entities the list of {@link BASIC_DNDAttributeEntity} instances
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
      */
     @CrossOrigin
-    @RequestMapping(path = "code/{code}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDAttributeEntity>> getByCode(
-            @PathVariable final String code) {
-        Iterator<BASIC_DNDAttributeEntity> iter = repository.findByCode(code)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<BASIC_DNDAttributeEntity>> update(
+            @RequestBody
+            final List<BASIC_DNDAttributeEntity> entities) {
         List<Resource<BASIC_DNDAttributeEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
+        Iterator<BASIC_DNDAttributeEntity> iter = entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getAttributeResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDAttributeEntity}s that share a description.
-     * @param description the attribute' description
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
-     */
-    @CrossOrigin
-    @RequestMapping(path = "description/{description}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDAttributeEntity>> getByDescription(
-            @PathVariable final String description) {
-        Iterator<BASIC_DNDAttributeEntity> iter = repository.findByDescription(description)
-                .iterator();
-        List<Resource<BASIC_DNDAttributeEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getAttributeResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDAttributeEntity}s that share a name.
-     * @param name the attribute' name
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDAttributeEntity}>>
-     */
-    @CrossOrigin
-    @RequestMapping(path = "name/{name}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDAttributeEntity>> getByName(
-            @PathVariable final String name) {
-        Iterator<BASIC_DNDAttributeEntity> iter = repository.findByName(name)
-                .iterator();
-        List<Resource<BASIC_DNDAttributeEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDAttributeEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getAttributeResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

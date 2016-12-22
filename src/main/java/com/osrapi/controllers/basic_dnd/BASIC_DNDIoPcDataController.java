@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.osrapi.models.basic_dnd.BASIC_DNDIoPcDataEntity;
 import com.osrapi.models.basic_dnd.BASIC_DNDGroupEntity;
-
+import com.osrapi.models.basic_dnd.BASIC_DNDIoPcDataEntity;
 import com.osrapi.repositories.basic_dnd.BASIC_DNDIoPcDataRepository;
 
 /**
@@ -66,18 +65,184 @@ public class BASIC_DNDIoPcDataController {
         return resources;
     }
     /**
+     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a bags.
+     * @param bags the io_pc_data' bags
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "bags/{bags}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> getByBags(
+            @PathVariable
+            final Long bags) {
+        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByBags(bags)
+                .iterator();
+        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a flags.
+     * @param flags the io_pc_data' flags
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "flags/{flags}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> getByFlags(
+            @PathVariable
+            final Long flags) {
+        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByFlags(flags)
+                .iterator();
+        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a gender.
+     * @param gender the io_pc_data' gender
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "gender/{gender}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> getByGender(
+            @PathVariable
+            final Long gender) {
+        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByGender(gender)
+                .iterator();
+        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a gold.
+     * @param gold the io_pc_data' gold
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "gold/{gold}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> getByGold(
+            @PathVariable
+            final float gold) {
+        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByGold(gold)
+                .iterator();
+        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a single {@link BASIC_DNDIoPcDataEntity}.
      * @param id the event type's id
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<BASIC_DNDIoPcDataEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         BASIC_DNDIoPcDataEntity entity = repository.findOne(id);
         List<Resource<BASIC_DNDIoPcDataEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
         resources.add(getIoPcDataResource(entity));
         entity = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a
+     * interfaceFlags.
+     * @param interfaceFlags the io_pc_data' interfaceFlags
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "interface_flags/{interfaceFlags}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> getByInterfaceFlags(
+            @PathVariable
+            final Long interfaceFlags) {
+        Iterator<BASIC_DNDIoPcDataEntity> iter =
+                repository.findByInterfaceFlags(interfaceFlags)
+                        .iterator();
+        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a
+     * internalScript.
+     * @param internalScript the io_pc_data' internalScript
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "internal_script/{internalScript}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> getByInternalScript(
+            @PathVariable
+            final String internalScript) {
+        Iterator<BASIC_DNDIoPcDataEntity> iter =
+                repository.findByInternalScript(internalScript)
+                        .iterator();
+        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+
+    /**
+     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a level.
+     * @param level the io_pc_data' level
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "level/{level}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> getByLevel(
+            @PathVariable
+            final Long level) {
+        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByLevel(level)
+                .iterator();
+        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a xp.
+     * @param xp the io_pc_data' xp
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "xp/{xp}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> getByXp(
+            @PathVariable
+            final Long xp) {
+        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByXp(xp)
+                .iterator();
+        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoPcDataResource(iter.next()));
+        }
+        iter = null;
         return resources;
     }
     /**
@@ -90,7 +255,7 @@ public class BASIC_DNDIoPcDataController {
             final BASIC_DNDIoPcDataEntity entity) {
         Resource<BASIC_DNDIoPcDataEntity> resource =
                 new Resource<BASIC_DNDIoPcDataEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -99,30 +264,14 @@ public class BASIC_DNDIoPcDataController {
         return resource;
     }
     /**
-     * Saves multiple {@link BASIC_DNDIoPcDataEntity}s.
-     * @param entities the list of {@link BASIC_DNDIoPcDataEntity} instances
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.POST)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> save(
-            @RequestBody final List<BASIC_DNDIoPcDataEntity> entities) {
-        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
-        Iterator<BASIC_DNDIoPcDataEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(save(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
      * Saves a single {@link BASIC_DNDIoPcDataEntity}.
      * @param entity the {@link BASIC_DNDIoPcDataEntity} instance
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
      */
     @RequestMapping(method = RequestMethod.POST)
     public List<Resource<BASIC_DNDIoPcDataEntity>> save(
-            @RequestBody final BASIC_DNDIoPcDataEntity entity) {
+            @RequestBody
+            final BASIC_DNDIoPcDataEntity entity) {
         if (entity.getGroups() != null
                 && !entity.getGroups().isEmpty()) {
             for (int i = entity.getGroups().size() - 1; i >= 0; i--) {
@@ -130,17 +279,19 @@ public class BASIC_DNDIoPcDataController {
                 List<Resource<BASIC_DNDGroupEntity>> list = null;
                 try {
                     Method method = null;
-          try {
-            method = BASIC_DNDGroupController.class.getDeclaredMethod(
-                "getByName", new Class[] { String.class });
-          } catch (NoSuchMethodException e) {
+                    try {
+                        method = BASIC_DNDGroupController.class
+                                .getDeclaredMethod(
+                                        "getByName",
+                                        new Class[] { String.class });
+                    } catch (NoSuchMethodException e) {
                         e.printStackTrace();
                     }
                     Field field = null;
-          try {
-            field = BASIC_DNDGroupEntity.class
-                .getDeclaredField("name");
-          } catch (NoSuchFieldException e) {
+                    try {
+                        field = BASIC_DNDGroupEntity.class
+                                .getDeclaredField("name");
+                    } catch (NoSuchFieldException e) {
                         e.printStackTrace();
                     }
                     if (method != null
@@ -149,33 +300,40 @@ public class BASIC_DNDIoPcDataController {
                         if (field.get(entity.getGroups().get(i)) != null) {
                             list = (List<Resource<BASIC_DNDGroupEntity>>) method
                                     .invoke(
-                                            BASIC_DNDGroupController.getInstance(),
-                                            (String) field.get(entity.getGroups().get(i)));
+                                            BASIC_DNDGroupController
+                                                    .getInstance(),
+                                            (String) field.get(
+                                                    entity.getGroups().get(i)));
                         }
                     }
                     if (list == null) {
-            try {
-              method = BASIC_DNDGroupController.class.getDeclaredMethod(
-                  "getByCode", new Class[] { String.class });
-            } catch (NoSuchMethodException e) {
-              e.printStackTrace();
-            }
-            try {
-              field = BASIC_DNDGroupEntity.class.getDeclaredField(
-                  "code");
-            } catch (NoSuchFieldException e) {
-              e.printStackTrace();
-            }
+                        try {
+                            method = BASIC_DNDGroupController.class
+                                    .getDeclaredMethod(
+                                            "getByCode",
+                                            new Class[] { String.class });
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            field = BASIC_DNDGroupEntity.class.getDeclaredField(
+                                    "code");
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
                         if (method != null
                                 && field != null) {
                             field.setAccessible(true);
                             if (field.get(entity.getGroups().get(i)) != null) {
-                                list = (List<Resource<BASIC_DNDGroupEntity>>) method
-                                        .invoke(
-                                                BASIC_DNDGroupController
-                                                        .getInstance(),
-                                                (String) field
-                                                        .get(entity.getGroups().get(i)));
+                                list = (List<
+                                        Resource<BASIC_DNDGroupEntity>>) method
+                                                .invoke(
+                                                        BASIC_DNDGroupController
+                                                                .getInstance(),
+                                                        (String) field
+                                                                .get(entity
+                                                                        .getGroups()
+                                                                        .get(i)));
                             }
                         }
                     }
@@ -193,20 +351,37 @@ public class BASIC_DNDIoPcDataController {
                 if (groups == null) {
                     groups = (BASIC_DNDGroupEntity) ((Resource) BASIC_DNDGroupController
                             .getInstance()
-                            .save(entity.getGroups().get(i)).get(0)).getContent();
+                            .save(entity.getGroups().get(i)).get(0))
+                                    .getContent();
                 }
                 entity.getGroups().set(i, groups);
                 list = null;
             }
         }
 
-
-    
         BASIC_DNDIoPcDataEntity savedEntity = repository.save(entity);
         List<Resource<BASIC_DNDIoPcDataEntity>> list =
                 getById(savedEntity.getId());
         savedEntity = null;
         return list;
+    }
+    /**
+     * Saves multiple {@link BASIC_DNDIoPcDataEntity}s.
+     * @param entities the list of {@link BASIC_DNDIoPcDataEntity} instances
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
+     */
+    @RequestMapping(path = "/bulk", method = RequestMethod.POST)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> save(
+            @RequestBody
+            final List<BASIC_DNDIoPcDataEntity> entities) {
+        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        Iterator<BASIC_DNDIoPcDataEntity> iter = entities.iterator();
+        while (iter.hasNext()) {
+            resources.add(save(iter.next()).get(0));
+        }
+        iter = null;
+        return resources;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -231,12 +406,12 @@ public class BASIC_DNDIoPcDataController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<BASIC_DNDIoPcDataEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -266,23 +441,7 @@ public class BASIC_DNDIoPcDataController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
-    }
-    /**
-     * Updates multiple {@link BASIC_DNDIoPcDataEntity}s.
-     * @param entities the list of {@link BASIC_DNDIoPcDataEntity} instances
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> update(
-            @RequestBody final List<BASIC_DNDIoPcDataEntity> entities) {
-        List<Resource<BASIC_DNDIoPcDataEntity>> resources = new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
-        Iterator<BASIC_DNDIoPcDataEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
+        old = null;
     }
     /**
      * Updates a single {@link BASIC_DNDIoPcDataEntity}.
@@ -291,7 +450,8 @@ public class BASIC_DNDIoPcDataController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<BASIC_DNDIoPcDataEntity>> update(
-            @RequestBody final BASIC_DNDIoPcDataEntity entity) {        
+            @RequestBody
+            final BASIC_DNDIoPcDataEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
@@ -302,17 +462,19 @@ public class BASIC_DNDIoPcDataController {
                 List<Resource<BASIC_DNDGroupEntity>> list = null;
                 try {
                     Method method = null;
-          try {
-            method = BASIC_DNDGroupController.class.getDeclaredMethod(
-                "getByName", new Class[] { String.class });
-          } catch (NoSuchMethodException e) {
+                    try {
+                        method = BASIC_DNDGroupController.class
+                                .getDeclaredMethod(
+                                        "getByName",
+                                        new Class[] { String.class });
+                    } catch (NoSuchMethodException e) {
                         e.printStackTrace();
                     }
                     Field field = null;
-          try {
-            field = BASIC_DNDGroupEntity.class
-                .getDeclaredField("name");
-          } catch (NoSuchFieldException e) {
+                    try {
+                        field = BASIC_DNDGroupEntity.class
+                                .getDeclaredField("name");
+                    } catch (NoSuchFieldException e) {
                         e.printStackTrace();
                     }
                     if (method != null
@@ -321,33 +483,40 @@ public class BASIC_DNDIoPcDataController {
                         if (field.get(entity.getGroups().get(i)) != null) {
                             list = (List<Resource<BASIC_DNDGroupEntity>>) method
                                     .invoke(
-                                            BASIC_DNDGroupController.getInstance(),
-                                            (String) field.get(entity.getGroups().get(i)));
+                                            BASIC_DNDGroupController
+                                                    .getInstance(),
+                                            (String) field.get(
+                                                    entity.getGroups().get(i)));
                         }
                     }
                     if (list == null) {
-            try {
-              method = BASIC_DNDGroupController.class.getDeclaredMethod(
-                  "getByCode", new Class[] { String.class });
-            } catch (NoSuchMethodException e) {
-              e.printStackTrace();
-            }
-            try {
-              field = BASIC_DNDGroupEntity.class.getDeclaredField(
-                  "code");
-            } catch (NoSuchFieldException e) {
-              e.printStackTrace();
-            }
+                        try {
+                            method = BASIC_DNDGroupController.class
+                                    .getDeclaredMethod(
+                                            "getByCode",
+                                            new Class[] { String.class });
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            field = BASIC_DNDGroupEntity.class.getDeclaredField(
+                                    "code");
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
                         if (method != null
                                 && field != null) {
                             field.setAccessible(true);
                             if (field.get(entity.getGroups().get(i)) != null) {
-                                list = (List<Resource<BASIC_DNDGroupEntity>>) method
-                                        .invoke(
-                                                BASIC_DNDGroupController
-                                                        .getInstance(),
-                                                (String) field
-                                                        .get(entity.getGroups().get(i)));
+                                list = (List<
+                                        Resource<BASIC_DNDGroupEntity>>) method
+                                                .invoke(
+                                                        BASIC_DNDGroupController
+                                                                .getInstance(),
+                                                        (String) field
+                                                                .get(entity
+                                                                        .getGroups()
+                                                                        .get(i)));
                             }
                         }
                     }
@@ -365,170 +534,34 @@ public class BASIC_DNDIoPcDataController {
                 if (groups == null) {
                     groups = (BASIC_DNDGroupEntity) ((Resource) BASIC_DNDGroupController
                             .getInstance()
-                            .save(entity.getGroups().get(i)).get(0)).getContent();
+                            .save(entity.getGroups().get(i)).get(0))
+                                    .getContent();
                 }
                 entity.getGroups().set(i, groups);
                 list = null;
             }
         }
 
-
-    
         BASIC_DNDIoPcDataEntity savedEntity = repository.save(entity);
         List<Resource<BASIC_DNDIoPcDataEntity>> list = getById(
                 savedEntity.getId());
         savedEntity = null;
         return list;
     }
-
     /**
-     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a bags.
-     * @param bags the io_pc_data' bags
+     * Updates multiple {@link BASIC_DNDIoPcDataEntity}s.
+     * @param entities the list of {@link BASIC_DNDIoPcDataEntity} instances
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
      */
-    @RequestMapping(path = "bags/{bags}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> getByBags(
-            @PathVariable final Long bags) {
-        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByBags(bags)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<BASIC_DNDIoPcDataEntity>> update(
+            @RequestBody
+            final List<BASIC_DNDIoPcDataEntity> entities) {
         List<Resource<BASIC_DNDIoPcDataEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
+        Iterator<BASIC_DNDIoPcDataEntity> iter = entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a flags.
-     * @param flags the io_pc_data' flags
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "flags/{flags}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> getByFlags(
-            @PathVariable final Long flags) {
-        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByFlags(flags)
-                .iterator();
-        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a gender.
-     * @param gender the io_pc_data' gender
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "gender/{gender}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> getByGender(
-            @PathVariable final Long gender) {
-        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByGender(gender)
-                .iterator();
-        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a gold.
-     * @param gold the io_pc_data' gold
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "gold/{gold}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> getByGold(
-            @PathVariable final float gold) {
-        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByGold(gold)
-                .iterator();
-        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a interfaceFlags.
-     * @param interfaceFlags the io_pc_data' interfaceFlags
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "interface_flags/{interfaceFlags}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> getByInterfaceFlags(
-            @PathVariable final Long interfaceFlags) {
-        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByInterfaceFlags(interfaceFlags)
-                .iterator();
-        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a internalScript.
-     * @param internalScript the io_pc_data' internalScript
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "internal_script/{internalScript}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> getByInternalScript(
-            @PathVariable final String internalScript) {
-        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByInternalScript(internalScript)
-                .iterator();
-        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a level.
-     * @param level the io_pc_data' level
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "level/{level}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> getByLevel(
-            @PathVariable final Long level) {
-        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByLevel(level)
-                .iterator();
-        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDIoPcDataEntity}s that share a xp.
-     * @param xp the io_pc_data' xp
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDIoPcDataEntity}>>
-     */
-    @RequestMapping(path = "xp/{xp}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDIoPcDataEntity>> getByXp(
-            @PathVariable final Long xp) {
-        Iterator<BASIC_DNDIoPcDataEntity> iter = repository.findByXp(xp)
-                .iterator();
-        List<Resource<BASIC_DNDIoPcDataEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDIoPcDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoPcDataResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

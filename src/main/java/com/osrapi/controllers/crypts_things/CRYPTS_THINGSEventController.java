@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.crypts_things.CRYPTS_THINGSEventEntity;
-
 import com.osrapi.repositories.crypts_things.CRYPTS_THINGSEventRepository;
 
 /**
@@ -65,13 +64,34 @@ public class CRYPTS_THINGSEventController {
         return resources;
     }
     /**
+     * Gets a list of {@link CRYPTS_THINGSEventEntity}s that share a code.
+     * @param code the event' code
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEventEntity}>>
+     */
+    @RequestMapping(path = "code/{code}",
+            method = RequestMethod.GET)
+    public List<Resource<CRYPTS_THINGSEventEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<CRYPTS_THINGSEventEntity> iter = repository.findByCode(code)
+                .iterator();
+        List<Resource<CRYPTS_THINGSEventEntity>> resources =
+                new ArrayList<Resource<CRYPTS_THINGSEventEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getEventResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a single {@link CRYPTS_THINGSEventEntity}.
      * @param id the event type's id
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEventEntity}>>
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<CRYPTS_THINGSEventEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         CRYPTS_THINGSEventEntity entity = repository.findOne(id);
         List<Resource<CRYPTS_THINGSEventEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSEventEntity>>();
@@ -89,7 +109,7 @@ public class CRYPTS_THINGSEventController {
             final CRYPTS_THINGSEventEntity entity) {
         Resource<CRYPTS_THINGSEventEntity> resource =
                 new Resource<CRYPTS_THINGSEventEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -98,13 +118,30 @@ public class CRYPTS_THINGSEventController {
         return resource;
     }
     /**
+     * Saves a single {@link CRYPTS_THINGSEventEntity}.
+     * @param entity the {@link CRYPTS_THINGSEventEntity} instance
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEventEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<CRYPTS_THINGSEventEntity>> save(
+            @RequestBody
+            final CRYPTS_THINGSEventEntity entity) {
+
+        CRYPTS_THINGSEventEntity savedEntity = repository.save(entity);
+        List<Resource<CRYPTS_THINGSEventEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link CRYPTS_THINGSEventEntity}s.
      * @param entities the list of {@link CRYPTS_THINGSEventEntity} instances
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEventEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<CRYPTS_THINGSEventEntity>> save(
-            @RequestBody final List<CRYPTS_THINGSEventEntity> entities) {
+            @RequestBody
+            final List<CRYPTS_THINGSEventEntity> entities) {
         List<Resource<CRYPTS_THINGSEventEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSEventEntity>>();
         Iterator<CRYPTS_THINGSEventEntity> iter = entities.iterator();
@@ -113,22 +150,6 @@ public class CRYPTS_THINGSEventController {
         }
         iter = null;
         return resources;
-    }
-    /**
-     * Saves a single {@link CRYPTS_THINGSEventEntity}.
-     * @param entity the {@link CRYPTS_THINGSEventEntity} instance
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEventEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<CRYPTS_THINGSEventEntity>> save(
-            @RequestBody final CRYPTS_THINGSEventEntity entity) {
-    
-    
-        CRYPTS_THINGSEventEntity savedEntity = repository.save(entity);
-        List<Resource<CRYPTS_THINGSEventEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -153,12 +174,12 @@ public class CRYPTS_THINGSEventController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<CRYPTS_THINGSEventEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -188,23 +209,7 @@ public class CRYPTS_THINGSEventController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
-    }
-    /**
-     * Updates multiple {@link CRYPTS_THINGSEventEntity}s.
-     * @param entities the list of {@link CRYPTS_THINGSEventEntity} instances
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEventEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<CRYPTS_THINGSEventEntity>> update(
-            @RequestBody final List<CRYPTS_THINGSEventEntity> entities) {
-        List<Resource<CRYPTS_THINGSEventEntity>> resources = new ArrayList<Resource<CRYPTS_THINGSEventEntity>>();
-        Iterator<CRYPTS_THINGSEventEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
+        old = null;
     }
     /**
      * Updates a single {@link CRYPTS_THINGSEventEntity}.
@@ -213,12 +218,12 @@ public class CRYPTS_THINGSEventController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<CRYPTS_THINGSEventEntity>> update(
-            @RequestBody final CRYPTS_THINGSEventEntity entity) {        
+            @RequestBody
+            final CRYPTS_THINGSEventEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
-    
-    
+
         CRYPTS_THINGSEventEntity savedEntity = repository.save(entity);
         List<Resource<CRYPTS_THINGSEventEntity>> list = getById(
                 savedEntity.getId());
@@ -227,20 +232,19 @@ public class CRYPTS_THINGSEventController {
     }
 
     /**
-     * Gets a list of {@link CRYPTS_THINGSEventEntity}s that share a code.
-     * @param code the event' code
+     * Updates multiple {@link CRYPTS_THINGSEventEntity}s.
+     * @param entities the list of {@link CRYPTS_THINGSEventEntity} instances
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEventEntity}>>
      */
-    @RequestMapping(path = "code/{code}",
-            method = RequestMethod.GET)
-    public List<Resource<CRYPTS_THINGSEventEntity>> getByCode(
-            @PathVariable final String code) {
-        Iterator<CRYPTS_THINGSEventEntity> iter = repository.findByCode(code)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<CRYPTS_THINGSEventEntity>> update(
+            @RequestBody
+            final List<CRYPTS_THINGSEventEntity> entities) {
         List<Resource<CRYPTS_THINGSEventEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSEventEntity>>();
+        Iterator<CRYPTS_THINGSEventEntity> iter = entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getEventResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

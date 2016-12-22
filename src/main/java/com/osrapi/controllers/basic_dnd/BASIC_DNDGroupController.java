@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.basic_dnd.BASIC_DNDGroupEntity;
-
 import com.osrapi.repositories.basic_dnd.BASIC_DNDGroupRepository;
 
 /**
@@ -72,12 +71,34 @@ public class BASIC_DNDGroupController {
     @CrossOrigin
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<BASIC_DNDGroupEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         BASIC_DNDGroupEntity entity = repository.findOne(id);
         List<Resource<BASIC_DNDGroupEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDGroupEntity>>();
         resources.add(getGroupResource(entity));
         entity = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDGroupEntity}s that share a name.
+     * @param name the group' name
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDGroupEntity}>>
+     */
+    @CrossOrigin
+    @RequestMapping(path = "name/{name}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDGroupEntity>> getByName(
+            @PathVariable
+            final String name) {
+        Iterator<BASIC_DNDGroupEntity> iter = repository.findByName(name)
+                .iterator();
+        List<Resource<BASIC_DNDGroupEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDGroupEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getGroupResource(iter.next()));
+        }
+        iter = null;
         return resources;
     }
     /**
@@ -90,31 +111,13 @@ public class BASIC_DNDGroupController {
             final BASIC_DNDGroupEntity entity) {
         Resource<BASIC_DNDGroupEntity> resource =
                 new Resource<BASIC_DNDGroupEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
                         entity.getId()))
                 .withSelfRel());
         return resource;
-    }
-    /**
-     * Saves multiple {@link BASIC_DNDGroupEntity}s.
-     * @param entities the list of {@link BASIC_DNDGroupEntity} instances
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDGroupEntity}>>
-     */
-    @CrossOrigin
-    @RequestMapping(path = "/bulk", method = RequestMethod.POST)
-    public List<Resource<BASIC_DNDGroupEntity>> save(
-            @RequestBody final List<BASIC_DNDGroupEntity> entities) {
-        List<Resource<BASIC_DNDGroupEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDGroupEntity>>();
-        Iterator<BASIC_DNDGroupEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(save(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
     }
     /**
      * Saves a single {@link BASIC_DNDGroupEntity}.
@@ -124,14 +127,33 @@ public class BASIC_DNDGroupController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     public List<Resource<BASIC_DNDGroupEntity>> save(
-            @RequestBody final BASIC_DNDGroupEntity entity) {
-    
-    
+            @RequestBody
+            final BASIC_DNDGroupEntity entity) {
+
         BASIC_DNDGroupEntity savedEntity = repository.save(entity);
         List<Resource<BASIC_DNDGroupEntity>> list =
                 getById(savedEntity.getId());
         savedEntity = null;
         return list;
+    }
+    /**
+     * Saves multiple {@link BASIC_DNDGroupEntity}s.
+     * @param entities the list of {@link BASIC_DNDGroupEntity} instances
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDGroupEntity}>>
+     */
+    @CrossOrigin
+    @RequestMapping(path = "/bulk", method = RequestMethod.POST)
+    public List<Resource<BASIC_DNDGroupEntity>> save(
+            @RequestBody
+            final List<BASIC_DNDGroupEntity> entities) {
+        List<Resource<BASIC_DNDGroupEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDGroupEntity>>();
+        Iterator<BASIC_DNDGroupEntity> iter = entities.iterator();
+        while (iter.hasNext()) {
+            resources.add(save(iter.next()).get(0));
+        }
+        iter = null;
+        return resources;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -156,12 +178,12 @@ public class BASIC_DNDGroupController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<BASIC_DNDGroupEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -191,24 +213,7 @@ public class BASIC_DNDGroupController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
-    }
-    /**
-     * Updates multiple {@link BASIC_DNDGroupEntity}s.
-     * @param entities the list of {@link BASIC_DNDGroupEntity} instances
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDGroupEntity}>>
-     */
-    @CrossOrigin
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<BASIC_DNDGroupEntity>> update(
-            @RequestBody final List<BASIC_DNDGroupEntity> entities) {
-        List<Resource<BASIC_DNDGroupEntity>> resources = new ArrayList<Resource<BASIC_DNDGroupEntity>>();
-        Iterator<BASIC_DNDGroupEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
+        old = null;
     }
     /**
      * Updates a single {@link BASIC_DNDGroupEntity}.
@@ -218,12 +223,12 @@ public class BASIC_DNDGroupController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<BASIC_DNDGroupEntity>> update(
-            @RequestBody final BASIC_DNDGroupEntity entity) {        
+            @RequestBody
+            final BASIC_DNDGroupEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
-    
-    
+
         BASIC_DNDGroupEntity savedEntity = repository.save(entity);
         List<Resource<BASIC_DNDGroupEntity>> list = getById(
                 savedEntity.getId());
@@ -232,21 +237,20 @@ public class BASIC_DNDGroupController {
     }
 
     /**
-     * Gets a list of {@link BASIC_DNDGroupEntity}s that share a name.
-     * @param name the group' name
+     * Updates multiple {@link BASIC_DNDGroupEntity}s.
+     * @param entities the list of {@link BASIC_DNDGroupEntity} instances
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDGroupEntity}>>
      */
     @CrossOrigin
-    @RequestMapping(path = "name/{name}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDGroupEntity>> getByName(
-            @PathVariable final String name) {
-        Iterator<BASIC_DNDGroupEntity> iter = repository.findByName(name)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<BASIC_DNDGroupEntity>> update(
+            @RequestBody
+            final List<BASIC_DNDGroupEntity> entities) {
         List<Resource<BASIC_DNDGroupEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDGroupEntity>>();
+        Iterator<BASIC_DNDGroupEntity> iter = entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getGroupResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.crypts_things.CRYPTS_THINGSEquipmentElementTypeEntity;
-
 import com.osrapi.repositories.crypts_things.CRYPTS_THINGSEquipmentElementTypeRepository;
 
 /**
@@ -29,7 +28,10 @@ import com.osrapi.repositories.crypts_things.CRYPTS_THINGSEquipmentElementTypeRe
 @RequestMapping(path = "/crypts_things/equipment_element_types")
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class CRYPTS_THINGSEquipmentElementTypeController {
-    /** the static instance of {@link CRYPTS_THINGSEquipmentElementTypeController}. */
+    /**
+     * the static instance of
+     * {@link CRYPTS_THINGSEquipmentElementTypeController}.
+     */
     private static CRYPTS_THINGSEquipmentElementTypeController instance;
     /**
      * Gets the static instance.
@@ -44,7 +46,10 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
     /** the data repository. */
     @Autowired
     private CRYPTS_THINGSEquipmentElementTypeRepository repository;
-    /** Creates a new instance of {@link CRYPTS_THINGSEquipmentElementTypeController}. */
+    /**
+     * Creates a new instance of
+     * {@link CRYPTS_THINGSEquipmentElementTypeController}.
+     */
     public CRYPTS_THINGSEquipmentElementTypeController() {
         instance = this;
     }
@@ -54,10 +59,35 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> getAll() {
-        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter = repository.findAll()
-                .iterator();
+        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter =
+                repository.findAll()
+                        .iterator();
         List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> resources =
-                new ArrayList<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
+                new ArrayList<
+                        Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getEquipmentElementTypeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CRYPTS_THINGSEquipmentElementTypeEntity}s that
+     * share a code.
+     * @param code the equipment_element_type' code
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>>
+     */
+    @RequestMapping(path = "code/{code}",
+            method = RequestMethod.GET)
+    public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter =
+                repository.findByCode(code)
+                        .iterator();
+        List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> resources =
+                new ArrayList<
+                        Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
         while (iter.hasNext()) {
             resources.add(getEquipmentElementTypeResource(iter.next()));
         }
@@ -71,12 +101,37 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         CRYPTS_THINGSEquipmentElementTypeEntity entity = repository.findOne(id);
         List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> resources =
-                new ArrayList<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
+                new ArrayList<
+                        Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
         resources.add(getEquipmentElementTypeResource(entity));
         entity = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CRYPTS_THINGSEquipmentElementTypeEntity}s that
+     * share a value.
+     * @param value the equipment_element_type' value
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>>
+     */
+    @RequestMapping(path = "value/{value}",
+            method = RequestMethod.GET)
+    public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> getByValue(
+            @PathVariable
+            final Long value) {
+        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter =
+                repository.findByValue(value)
+                        .iterator();
+        List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> resources =
+                new ArrayList<
+                        Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getEquipmentElementTypeResource(iter.next()));
+        }
+        iter = null;
         return resources;
     }
     /**
@@ -85,11 +140,12 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
      * @param entity the {@link CRYPTS_THINGSEquipmentElementTypeEntity}
      * @return {@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>
      */
-    private Resource<CRYPTS_THINGSEquipmentElementTypeEntity> getEquipmentElementTypeResource(
-            final CRYPTS_THINGSEquipmentElementTypeEntity entity) {
+    private Resource<CRYPTS_THINGSEquipmentElementTypeEntity>
+            getEquipmentElementTypeResource(
+                    final CRYPTS_THINGSEquipmentElementTypeEntity entity) {
         Resource<CRYPTS_THINGSEquipmentElementTypeEntity> resource =
                 new Resource<CRYPTS_THINGSEquipmentElementTypeEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -98,16 +154,38 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
         return resource;
     }
     /**
+     * Saves a single {@link CRYPTS_THINGSEquipmentElementTypeEntity}.
+     * @param entity the {@link CRYPTS_THINGSEquipmentElementTypeEntity}
+     *            instance
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> save(
+            @RequestBody
+            final CRYPTS_THINGSEquipmentElementTypeEntity entity) {
+
+        CRYPTS_THINGSEquipmentElementTypeEntity savedEntity =
+                repository.save(entity);
+        List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link CRYPTS_THINGSEquipmentElementTypeEntity}s.
-     * @param entities the list of {@link CRYPTS_THINGSEquipmentElementTypeEntity} instances
+     * @param entities the list of
+     *            {@link CRYPTS_THINGSEquipmentElementTypeEntity} instances
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> save(
-            @RequestBody final List<CRYPTS_THINGSEquipmentElementTypeEntity> entities) {
+            @RequestBody
+            final List<CRYPTS_THINGSEquipmentElementTypeEntity> entities) {
         List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> resources =
-                new ArrayList<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
-        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter = entities.iterator();
+                new ArrayList<
+                        Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
+        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter =
+                entities.iterator();
         while (iter.hasNext()) {
             resources.add(save(iter.next()).get(0));
         }
@@ -115,27 +193,13 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
         return resources;
     }
     /**
-     * Saves a single {@link CRYPTS_THINGSEquipmentElementTypeEntity}.
-     * @param entity the {@link CRYPTS_THINGSEquipmentElementTypeEntity} instance
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> save(
-            @RequestBody final CRYPTS_THINGSEquipmentElementTypeEntity entity) {
-    
-    
-        CRYPTS_THINGSEquipmentElementTypeEntity savedEntity = repository.save(entity);
-        List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
-    }
-    /**
      * Tries to set the Id for an entity to be saved by locating it in the
      * repository.
-     * @param entity the {@link CRYPTS_THINGSEquipmentElementTypeEntity} instance
+     * @param entity the {@link CRYPTS_THINGSEquipmentElementTypeEntity}
+     *            instance
      */
-    private void setIdFromRepository(final CRYPTS_THINGSEquipmentElementTypeEntity entity) {
+    private void setIdFromRepository(
+            final CRYPTS_THINGSEquipmentElementTypeEntity entity) {
         List<CRYPTS_THINGSEquipmentElementTypeEntity> old = null;
         try {
             Method method = null;
@@ -143,7 +207,8 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
             try {
                 method = repository.getClass().getDeclaredMethod(
                         "findByName", new Class[] { String.class });
-                field = CRYPTS_THINGSEquipmentElementTypeEntity.class.getDeclaredField("name");
+                field = CRYPTS_THINGSEquipmentElementTypeEntity.class
+                        .getDeclaredField("name");
             } catch (NoSuchMethodException | NoSuchFieldException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -152,18 +217,20 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
                     && field != null) {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
-                    old = (List<CRYPTS_THINGSEquipmentElementTypeEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                    old = (List<CRYPTS_THINGSEquipmentElementTypeEntity>) method
+                            .invoke(
+                                    repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
-                    field = CRYPTS_THINGSEquipmentElementTypeEntity.class.getDeclaredField(
-                            "code");
+                    field = CRYPTS_THINGSEquipmentElementTypeEntity.class
+                            .getDeclaredField(
+                                    "code");
                 } catch (NoSuchMethodException | NoSuchFieldException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -172,8 +239,11 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
                         && field != null) {
                     field.setAccessible(true);
                     if (field.get(entity) != null) {
-                        old = (List<CRYPTS_THINGSEquipmentElementTypeEntity>) method.invoke(
-                                repository, (String) field.get(entity));
+                        old = (List<
+                                CRYPTS_THINGSEquipmentElementTypeEntity>) method
+                                        .invoke(
+                                                repository,
+                                                (String) field.get(entity));
                     }
                 }
             }
@@ -188,78 +258,47 @@ public class CRYPTS_THINGSEquipmentElementTypeController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
+        old = null;
     }
-    /**
-     * Updates multiple {@link CRYPTS_THINGSEquipmentElementTypeEntity}s.
-     * @param entities the list of {@link CRYPTS_THINGSEquipmentElementTypeEntity} instances
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> update(
-            @RequestBody final List<CRYPTS_THINGSEquipmentElementTypeEntity> entities) {
-        List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> resources = new ArrayList<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
-        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
-    }
+
     /**
      * Updates a single {@link CRYPTS_THINGSEquipmentElementTypeEntity}.
-     * @param entity the {@link CRYPTS_THINGSEquipmentElementTypeEntity} instance
+     * @param entity the {@link CRYPTS_THINGSEquipmentElementTypeEntity}
+     *            instance
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>>
      */
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> update(
-            @RequestBody final CRYPTS_THINGSEquipmentElementTypeEntity entity) {        
+            @RequestBody
+            final CRYPTS_THINGSEquipmentElementTypeEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
-    
-    
-        CRYPTS_THINGSEquipmentElementTypeEntity savedEntity = repository.save(entity);
+
+        CRYPTS_THINGSEquipmentElementTypeEntity savedEntity =
+                repository.save(entity);
         List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> list = getById(
                 savedEntity.getId());
         savedEntity = null;
         return list;
     }
-
     /**
-     * Gets a list of {@link CRYPTS_THINGSEquipmentElementTypeEntity}s that share a code.
-     * @param code the equipment_element_type' code
+     * Updates multiple {@link CRYPTS_THINGSEquipmentElementTypeEntity}s.
+     * @param entities the list of
+     *            {@link CRYPTS_THINGSEquipmentElementTypeEntity} instances
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>>
      */
-    @RequestMapping(path = "code/{code}",
-            method = RequestMethod.GET)
-    public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> getByCode(
-            @PathVariable final String code) {
-        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter = repository.findByCode(code)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> update(
+            @RequestBody
+            final List<CRYPTS_THINGSEquipmentElementTypeEntity> entities) {
         List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> resources =
-                new ArrayList<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
+                new ArrayList<
+                        Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
+        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter =
+                entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getEquipmentElementTypeResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link CRYPTS_THINGSEquipmentElementTypeEntity}s that share a value.
-     * @param value the equipment_element_type' value
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSEquipmentElementTypeEntity}>>
-     */
-    @RequestMapping(path = "value/{value}",
-            method = RequestMethod.GET)
-    public List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> getByValue(
-            @PathVariable final Long value) {
-        Iterator<CRYPTS_THINGSEquipmentElementTypeEntity> iter = repository.findByValue(value)
-                .iterator();
-        List<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>> resources =
-                new ArrayList<Resource<CRYPTS_THINGSEquipmentElementTypeEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getEquipmentElementTypeResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

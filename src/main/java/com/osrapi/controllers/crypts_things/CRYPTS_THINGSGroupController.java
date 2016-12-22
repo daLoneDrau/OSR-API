@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.crypts_things.CRYPTS_THINGSGroupEntity;
-
 import com.osrapi.repositories.crypts_things.CRYPTS_THINGSGroupRepository;
 
 /**
@@ -71,12 +70,33 @@ public class CRYPTS_THINGSGroupController {
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<CRYPTS_THINGSGroupEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         CRYPTS_THINGSGroupEntity entity = repository.findOne(id);
         List<Resource<CRYPTS_THINGSGroupEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSGroupEntity>>();
         resources.add(getGroupResource(entity));
         entity = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CRYPTS_THINGSGroupEntity}s that share a name.
+     * @param name the group' name
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSGroupEntity}>>
+     */
+    @RequestMapping(path = "name/{name}",
+            method = RequestMethod.GET)
+    public List<Resource<CRYPTS_THINGSGroupEntity>> getByName(
+            @PathVariable
+            final String name) {
+        Iterator<CRYPTS_THINGSGroupEntity> iter = repository.findByName(name)
+                .iterator();
+        List<Resource<CRYPTS_THINGSGroupEntity>> resources =
+                new ArrayList<Resource<CRYPTS_THINGSGroupEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getGroupResource(iter.next()));
+        }
+        iter = null;
         return resources;
     }
     /**
@@ -89,7 +109,7 @@ public class CRYPTS_THINGSGroupController {
             final CRYPTS_THINGSGroupEntity entity) {
         Resource<CRYPTS_THINGSGroupEntity> resource =
                 new Resource<CRYPTS_THINGSGroupEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -98,13 +118,30 @@ public class CRYPTS_THINGSGroupController {
         return resource;
     }
     /**
+     * Saves a single {@link CRYPTS_THINGSGroupEntity}.
+     * @param entity the {@link CRYPTS_THINGSGroupEntity} instance
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSGroupEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<CRYPTS_THINGSGroupEntity>> save(
+            @RequestBody
+            final CRYPTS_THINGSGroupEntity entity) {
+
+        CRYPTS_THINGSGroupEntity savedEntity = repository.save(entity);
+        List<Resource<CRYPTS_THINGSGroupEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link CRYPTS_THINGSGroupEntity}s.
      * @param entities the list of {@link CRYPTS_THINGSGroupEntity} instances
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSGroupEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<CRYPTS_THINGSGroupEntity>> save(
-            @RequestBody final List<CRYPTS_THINGSGroupEntity> entities) {
+            @RequestBody
+            final List<CRYPTS_THINGSGroupEntity> entities) {
         List<Resource<CRYPTS_THINGSGroupEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSGroupEntity>>();
         Iterator<CRYPTS_THINGSGroupEntity> iter = entities.iterator();
@@ -113,22 +150,6 @@ public class CRYPTS_THINGSGroupController {
         }
         iter = null;
         return resources;
-    }
-    /**
-     * Saves a single {@link CRYPTS_THINGSGroupEntity}.
-     * @param entity the {@link CRYPTS_THINGSGroupEntity} instance
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSGroupEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<CRYPTS_THINGSGroupEntity>> save(
-            @RequestBody final CRYPTS_THINGSGroupEntity entity) {
-    
-    
-        CRYPTS_THINGSGroupEntity savedEntity = repository.save(entity);
-        List<Resource<CRYPTS_THINGSGroupEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -153,12 +174,12 @@ public class CRYPTS_THINGSGroupController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<CRYPTS_THINGSGroupEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -188,23 +209,7 @@ public class CRYPTS_THINGSGroupController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
-    }
-    /**
-     * Updates multiple {@link CRYPTS_THINGSGroupEntity}s.
-     * @param entities the list of {@link CRYPTS_THINGSGroupEntity} instances
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSGroupEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<CRYPTS_THINGSGroupEntity>> update(
-            @RequestBody final List<CRYPTS_THINGSGroupEntity> entities) {
-        List<Resource<CRYPTS_THINGSGroupEntity>> resources = new ArrayList<Resource<CRYPTS_THINGSGroupEntity>>();
-        Iterator<CRYPTS_THINGSGroupEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
+        old = null;
     }
     /**
      * Updates a single {@link CRYPTS_THINGSGroupEntity}.
@@ -213,12 +218,12 @@ public class CRYPTS_THINGSGroupController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<CRYPTS_THINGSGroupEntity>> update(
-            @RequestBody final CRYPTS_THINGSGroupEntity entity) {        
+            @RequestBody
+            final CRYPTS_THINGSGroupEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
-    
-    
+
         CRYPTS_THINGSGroupEntity savedEntity = repository.save(entity);
         List<Resource<CRYPTS_THINGSGroupEntity>> list = getById(
                 savedEntity.getId());
@@ -227,20 +232,19 @@ public class CRYPTS_THINGSGroupController {
     }
 
     /**
-     * Gets a list of {@link CRYPTS_THINGSGroupEntity}s that share a name.
-     * @param name the group' name
+     * Updates multiple {@link CRYPTS_THINGSGroupEntity}s.
+     * @param entities the list of {@link CRYPTS_THINGSGroupEntity} instances
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSGroupEntity}>>
      */
-    @RequestMapping(path = "name/{name}",
-            method = RequestMethod.GET)
-    public List<Resource<CRYPTS_THINGSGroupEntity>> getByName(
-            @PathVariable final String name) {
-        Iterator<CRYPTS_THINGSGroupEntity> iter = repository.findByName(name)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<CRYPTS_THINGSGroupEntity>> update(
+            @RequestBody
+            final List<CRYPTS_THINGSGroupEntity> entities) {
         List<Resource<CRYPTS_THINGSGroupEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSGroupEntity>>();
+        Iterator<CRYPTS_THINGSGroupEntity> iter = entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getGroupResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

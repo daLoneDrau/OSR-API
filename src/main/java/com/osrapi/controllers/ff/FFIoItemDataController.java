@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.ff.FFIoItemDataEntity;
 import com.osrapi.models.ff.FFObjectTypeEntity;
-
 import com.osrapi.repositories.ff.FFIoItemDataRepository;
 
 /**
@@ -64,18 +63,309 @@ public class FFIoItemDataController {
         return resources;
     }
     /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a
+     * classRestrictions.
+     * @param classRestrictions the io_item_data' classRestrictions
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "class_restrictions/{classRestrictions}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByClassRestrictions(
+            @PathVariable
+            final Long classRestrictions) {
+        Iterator<FFIoItemDataEntity> iter =
+                repository.findByClassRestrictions(classRestrictions)
+                        .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a count.
+     * @param count the io_item_data' count
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "count/{count}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByCount(
+            @PathVariable
+            final Long count) {
+        Iterator<FFIoItemDataEntity> iter = repository.findByCount(count)
+                .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a description.
+     * @param description the io_item_data' description
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "description/{description}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByDescription(
+            @PathVariable
+            final String description) {
+        Iterator<FFIoItemDataEntity> iter =
+                repository.findByDescription(description)
+                        .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a foodValue.
+     * @param foodValue the io_item_data' foodValue
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "food_value/{foodValue}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByFoodValue(
+            @PathVariable
+            final Long foodValue) {
+        Iterator<FFIoItemDataEntity> iter =
+                repository.findByFoodValue(foodValue)
+                        .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a single {@link FFIoItemDataEntity}.
      * @param id the event type's id
      * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<FFIoItemDataEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         FFIoItemDataEntity entity = repository.findOne(id);
         List<Resource<FFIoItemDataEntity>> resources =
                 new ArrayList<Resource<FFIoItemDataEntity>>();
         resources.add(getIoItemDataResource(entity));
         entity = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a internalScript.
+     * @param internalScript the io_item_data' internalScript
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "internal_script/{internalScript}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByInternalScript(
+            @PathVariable
+            final String internalScript) {
+        Iterator<FFIoItemDataEntity> iter =
+                repository.findByInternalScript(internalScript)
+                        .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a itemName.
+     * @param itemName the io_item_data' itemName
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "item_name/{itemName}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByItemName(
+            @PathVariable
+            final String itemName) {
+        Iterator<FFIoItemDataEntity> iter = repository.findByItemName(itemName)
+                .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a leftRing.
+     * @param leftRing the io_item_data' leftRing
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "left_ring/{leftRing}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByLeftRing(
+            @PathVariable
+            final Boolean leftRing) {
+        Iterator<FFIoItemDataEntity> iter = repository.findByLeftRing(leftRing)
+                .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a lightValue.
+     * @param lightValue the io_item_data' lightValue
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "light_value/{lightValue}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByLightValue(
+            @PathVariable
+            final Long lightValue) {
+        Iterator<FFIoItemDataEntity> iter =
+                repository.findByLightValue(lightValue)
+                        .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a maxOwned.
+     * @param maxOwned the io_item_data' maxOwned
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "max_owned/{maxOwned}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByMaxOwned(
+            @PathVariable
+            final Long maxOwned) {
+        Iterator<FFIoItemDataEntity> iter = repository.findByMaxOwned(maxOwned)
+                .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a price.
+     * @param price the io_item_data' price
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "price/{price}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByPrice(
+            @PathVariable
+            final Long price) {
+        Iterator<FFIoItemDataEntity> iter = repository.findByPrice(price)
+                .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a raceRestrictions.
+     * @param raceRestrictions the io_item_data' raceRestrictions
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "race_restrictions/{raceRestrictions}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByRaceRestrictions(
+            @PathVariable
+            final Long raceRestrictions) {
+        Iterator<FFIoItemDataEntity> iter =
+                repository.findByRaceRestrictions(raceRestrictions)
+                        .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a stackSize.
+     * @param stackSize the io_item_data' stackSize
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "stack_size/{stackSize}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByStackSize(
+            @PathVariable
+            final Long stackSize) {
+        Iterator<FFIoItemDataEntity> iter =
+                repository.findByStackSize(stackSize)
+                        .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a stealValue.
+     * @param stealValue the io_item_data' stealValue
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "steal_value/{stealValue}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByStealValue(
+            @PathVariable
+            final Long stealValue) {
+        Iterator<FFIoItemDataEntity> iter =
+                repository.findByStealValue(stealValue)
+                        .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFIoItemDataEntity}s that share a weight.
+     * @param weight the io_item_data' weight
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "weight/{weight}",
+            method = RequestMethod.GET)
+    public List<Resource<FFIoItemDataEntity>> getByWeight(
+            @PathVariable
+            final Long weight) {
+        Iterator<FFIoItemDataEntity> iter = repository.findByWeight(weight)
+                .iterator();
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getIoItemDataResource(iter.next()));
+        }
+        iter = null;
         return resources;
     }
     /**
@@ -88,7 +378,7 @@ public class FFIoItemDataController {
             final FFIoItemDataEntity entity) {
         Resource<FFIoItemDataEntity> resource =
                 new Resource<FFIoItemDataEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -97,30 +387,14 @@ public class FFIoItemDataController {
         return resource;
     }
     /**
-     * Saves multiple {@link FFIoItemDataEntity}s.
-     * @param entities the list of {@link FFIoItemDataEntity} instances
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.POST)
-    public List<Resource<FFIoItemDataEntity>> save(
-            @RequestBody final List<FFIoItemDataEntity> entities) {
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        Iterator<FFIoItemDataEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(save(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
      * Saves a single {@link FFIoItemDataEntity}.
      * @param entity the {@link FFIoItemDataEntity} instance
      * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
      */
     @RequestMapping(method = RequestMethod.POST)
     public List<Resource<FFIoItemDataEntity>> save(
-            @RequestBody final FFIoItemDataEntity entity) {
+            @RequestBody
+            final FFIoItemDataEntity entity) {
         if (entity.getTypes() != null
                 && !entity.getTypes().isEmpty()) {
             for (int i = entity.getTypes().size() - 1; i >= 0; i--) {
@@ -128,17 +402,17 @@ public class FFIoItemDataController {
                 List<Resource<FFObjectTypeEntity>> list = null;
                 try {
                     Method method = null;
-          try {
-            method = FFObjectTypeController.class.getDeclaredMethod(
-                "getByName", new Class[] { String.class });
-          } catch (NoSuchMethodException e) {
+                    try {
+                        method = FFObjectTypeController.class.getDeclaredMethod(
+                                "getByName", new Class[] { String.class });
+                    } catch (NoSuchMethodException e) {
                         e.printStackTrace();
                     }
                     Field field = null;
-          try {
-            field = FFObjectTypeEntity.class
-                .getDeclaredField("name");
-          } catch (NoSuchFieldException e) {
+                    try {
+                        field = FFObjectTypeEntity.class
+                                .getDeclaredField("name");
+                    } catch (NoSuchFieldException e) {
                         e.printStackTrace();
                     }
                     if (method != null
@@ -147,33 +421,40 @@ public class FFIoItemDataController {
                         if (field.get(entity.getTypes().get(i)) != null) {
                             list = (List<Resource<FFObjectTypeEntity>>) method
                                     .invoke(
-                                            FFObjectTypeController.getInstance(),
-                                            (String) field.get(entity.getTypes().get(i)));
+                                            FFObjectTypeController
+                                                    .getInstance(),
+                                            (String) field.get(
+                                                    entity.getTypes().get(i)));
                         }
                     }
                     if (list == null) {
-            try {
-              method = FFObjectTypeController.class.getDeclaredMethod(
-                  "getByCode", new Class[] { String.class });
-            } catch (NoSuchMethodException e) {
-              e.printStackTrace();
-            }
-            try {
-              field = FFObjectTypeEntity.class.getDeclaredField(
-                  "code");
-            } catch (NoSuchFieldException e) {
-              e.printStackTrace();
-            }
+                        try {
+                            method = FFObjectTypeController.class
+                                    .getDeclaredMethod(
+                                            "getByCode",
+                                            new Class[] { String.class });
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            field = FFObjectTypeEntity.class.getDeclaredField(
+                                    "code");
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
                         if (method != null
                                 && field != null) {
                             field.setAccessible(true);
                             if (field.get(entity.getTypes().get(i)) != null) {
-                                list = (List<Resource<FFObjectTypeEntity>>) method
-                                        .invoke(
-                                                FFObjectTypeController
-                                                        .getInstance(),
-                                                (String) field
-                                                        .get(entity.getTypes().get(i)));
+                                list = (List<
+                                        Resource<FFObjectTypeEntity>>) method
+                                                .invoke(
+                                                        FFObjectTypeController
+                                                                .getInstance(),
+                                                        (String) field
+                                                                .get(entity
+                                                                        .getTypes()
+                                                                        .get(i)));
                             }
                         }
                     }
@@ -191,20 +472,37 @@ public class FFIoItemDataController {
                 if (types == null) {
                     types = (FFObjectTypeEntity) ((Resource) FFObjectTypeController
                             .getInstance()
-                            .save(entity.getTypes().get(i)).get(0)).getContent();
+                            .save(entity.getTypes().get(i)).get(0))
+                                    .getContent();
                 }
                 entity.getTypes().set(i, types);
                 list = null;
             }
         }
 
-
-    
         FFIoItemDataEntity savedEntity = repository.save(entity);
         List<Resource<FFIoItemDataEntity>> list =
                 getById(savedEntity.getId());
         savedEntity = null;
         return list;
+    }
+    /**
+     * Saves multiple {@link FFIoItemDataEntity}s.
+     * @param entities the list of {@link FFIoItemDataEntity} instances
+     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
+     */
+    @RequestMapping(path = "/bulk", method = RequestMethod.POST)
+    public List<Resource<FFIoItemDataEntity>> save(
+            @RequestBody
+            final List<FFIoItemDataEntity> entities) {
+        List<Resource<FFIoItemDataEntity>> resources =
+                new ArrayList<Resource<FFIoItemDataEntity>>();
+        Iterator<FFIoItemDataEntity> iter = entities.iterator();
+        while (iter.hasNext()) {
+            resources.add(save(iter.next()).get(0));
+        }
+        iter = null;
+        return resources;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -229,12 +527,12 @@ public class FFIoItemDataController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<FFIoItemDataEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -264,23 +562,7 @@ public class FFIoItemDataController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
-    }
-    /**
-     * Updates multiple {@link FFIoItemDataEntity}s.
-     * @param entities the list of {@link FFIoItemDataEntity} instances
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<FFIoItemDataEntity>> update(
-            @RequestBody final List<FFIoItemDataEntity> entities) {
-        List<Resource<FFIoItemDataEntity>> resources = new ArrayList<Resource<FFIoItemDataEntity>>();
-        Iterator<FFIoItemDataEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
+        old = null;
     }
     /**
      * Updates a single {@link FFIoItemDataEntity}.
@@ -289,7 +571,8 @@ public class FFIoItemDataController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<FFIoItemDataEntity>> update(
-            @RequestBody final FFIoItemDataEntity entity) {        
+            @RequestBody
+            final FFIoItemDataEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
@@ -300,17 +583,17 @@ public class FFIoItemDataController {
                 List<Resource<FFObjectTypeEntity>> list = null;
                 try {
                     Method method = null;
-          try {
-            method = FFObjectTypeController.class.getDeclaredMethod(
-                "getByName", new Class[] { String.class });
-          } catch (NoSuchMethodException e) {
+                    try {
+                        method = FFObjectTypeController.class.getDeclaredMethod(
+                                "getByName", new Class[] { String.class });
+                    } catch (NoSuchMethodException e) {
                         e.printStackTrace();
                     }
                     Field field = null;
-          try {
-            field = FFObjectTypeEntity.class
-                .getDeclaredField("name");
-          } catch (NoSuchFieldException e) {
+                    try {
+                        field = FFObjectTypeEntity.class
+                                .getDeclaredField("name");
+                    } catch (NoSuchFieldException e) {
                         e.printStackTrace();
                     }
                     if (method != null
@@ -319,33 +602,40 @@ public class FFIoItemDataController {
                         if (field.get(entity.getTypes().get(i)) != null) {
                             list = (List<Resource<FFObjectTypeEntity>>) method
                                     .invoke(
-                                            FFObjectTypeController.getInstance(),
-                                            (String) field.get(entity.getTypes().get(i)));
+                                            FFObjectTypeController
+                                                    .getInstance(),
+                                            (String) field.get(
+                                                    entity.getTypes().get(i)));
                         }
                     }
                     if (list == null) {
-            try {
-              method = FFObjectTypeController.class.getDeclaredMethod(
-                  "getByCode", new Class[] { String.class });
-            } catch (NoSuchMethodException e) {
-              e.printStackTrace();
-            }
-            try {
-              field = FFObjectTypeEntity.class.getDeclaredField(
-                  "code");
-            } catch (NoSuchFieldException e) {
-              e.printStackTrace();
-            }
+                        try {
+                            method = FFObjectTypeController.class
+                                    .getDeclaredMethod(
+                                            "getByCode",
+                                            new Class[] { String.class });
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            field = FFObjectTypeEntity.class.getDeclaredField(
+                                    "code");
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
                         if (method != null
                                 && field != null) {
                             field.setAccessible(true);
                             if (field.get(entity.getTypes().get(i)) != null) {
-                                list = (List<Resource<FFObjectTypeEntity>>) method
-                                        .invoke(
-                                                FFObjectTypeController
-                                                        .getInstance(),
-                                                (String) field
-                                                        .get(entity.getTypes().get(i)));
+                                list = (List<
+                                        Resource<FFObjectTypeEntity>>) method
+                                                .invoke(
+                                                        FFObjectTypeController
+                                                                .getInstance(),
+                                                        (String) field
+                                                                .get(entity
+                                                                        .getTypes()
+                                                                        .get(i)));
                             }
                         }
                     }
@@ -363,284 +653,34 @@ public class FFIoItemDataController {
                 if (types == null) {
                     types = (FFObjectTypeEntity) ((Resource) FFObjectTypeController
                             .getInstance()
-                            .save(entity.getTypes().get(i)).get(0)).getContent();
+                            .save(entity.getTypes().get(i)).get(0))
+                                    .getContent();
                 }
                 entity.getTypes().set(i, types);
                 list = null;
             }
         }
 
-
-    
         FFIoItemDataEntity savedEntity = repository.save(entity);
         List<Resource<FFIoItemDataEntity>> list = getById(
                 savedEntity.getId());
         savedEntity = null;
         return list;
     }
-
     /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a internalScript.
-     * @param internalScript the io_item_data' internalScript
+     * Updates multiple {@link FFIoItemDataEntity}s.
+     * @param entities the list of {@link FFIoItemDataEntity} instances
      * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
      */
-    @RequestMapping(path = "internal_script/{internalScript}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByInternalScript(
-            @PathVariable final String internalScript) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByInternalScript(internalScript)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<FFIoItemDataEntity>> update(
+            @RequestBody
+            final List<FFIoItemDataEntity> entities) {
         List<Resource<FFIoItemDataEntity>> resources =
                 new ArrayList<Resource<FFIoItemDataEntity>>();
+        Iterator<FFIoItemDataEntity> iter = entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a classRestrictions.
-     * @param classRestrictions the io_item_data' classRestrictions
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "class_restrictions/{classRestrictions}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByClassRestrictions(
-            @PathVariable final Long classRestrictions) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByClassRestrictions(classRestrictions)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a count.
-     * @param count the io_item_data' count
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "count/{count}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByCount(
-            @PathVariable final Long count) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByCount(count)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a description.
-     * @param description the io_item_data' description
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "description/{description}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByDescription(
-            @PathVariable final String description) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByDescription(description)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a foodValue.
-     * @param foodValue the io_item_data' foodValue
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "food_value/{foodValue}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByFoodValue(
-            @PathVariable final Long foodValue) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByFoodValue(foodValue)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a itemName.
-     * @param itemName the io_item_data' itemName
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "item_name/{itemName}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByItemName(
-            @PathVariable final String itemName) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByItemName(itemName)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a leftRing.
-     * @param leftRing the io_item_data' leftRing
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "left_ring/{leftRing}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByLeftRing(
-            @PathVariable final Boolean leftRing) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByLeftRing(leftRing)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a lightValue.
-     * @param lightValue the io_item_data' lightValue
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "light_value/{lightValue}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByLightValue(
-            @PathVariable final Long lightValue) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByLightValue(lightValue)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a maxOwned.
-     * @param maxOwned the io_item_data' maxOwned
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "max_owned/{maxOwned}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByMaxOwned(
-            @PathVariable final Long maxOwned) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByMaxOwned(maxOwned)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a price.
-     * @param price the io_item_data' price
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "price/{price}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByPrice(
-            @PathVariable final Long price) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByPrice(price)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a raceRestrictions.
-     * @param raceRestrictions the io_item_data' raceRestrictions
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "race_restrictions/{raceRestrictions}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByRaceRestrictions(
-            @PathVariable final Long raceRestrictions) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByRaceRestrictions(raceRestrictions)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a stackSize.
-     * @param stackSize the io_item_data' stackSize
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "stack_size/{stackSize}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByStackSize(
-            @PathVariable final Long stackSize) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByStackSize(stackSize)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a stealValue.
-     * @param stealValue the io_item_data' stealValue
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "steal_value/{stealValue}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByStealValue(
-            @PathVariable final Long stealValue) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByStealValue(stealValue)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFIoItemDataEntity}s that share a weight.
-     * @param weight the io_item_data' weight
-     * @return {@link List}<{@link Resource}<{@link FFIoItemDataEntity}>>
-     */
-    @RequestMapping(path = "weight/{weight}",
-            method = RequestMethod.GET)
-    public List<Resource<FFIoItemDataEntity>> getByWeight(
-            @PathVariable final Long weight) {
-        Iterator<FFIoItemDataEntity> iter = repository.findByWeight(weight)
-                .iterator();
-        List<Resource<FFIoItemDataEntity>> resources =
-                new ArrayList<Resource<FFIoItemDataEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getIoItemDataResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

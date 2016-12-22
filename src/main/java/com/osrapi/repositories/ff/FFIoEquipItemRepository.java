@@ -10,5 +10,4 @@ import com.osrapi.models.ff.FFIoEquipItemEntity;
  */
 @Repository
 public interface FFIoEquipItemRepository
-		extends CrudRepository<FFIoEquipItemEntity, Long> {
-}
+        extends CrudRepository<FFIoEquipItemEntity, Long> {}

@@ -12,11 +12,11 @@ import com.osrapi.models.lablord.LABLORDHitDiceEntity;
  */
 @Repository
 public interface LABLORDHitDiceRepository
-		extends CrudRepository<LABLORDHitDiceEntity, Long> {
-	/**
-	 * Retrieves a list of hit dices by their number.
-	 * @param number the number
-	 * @return {@link List}<{@link LABLORDHitDiceEntity}>
-	 */
-	List<LABLORDHitDiceEntity> findByNumber(Long number);
+        extends CrudRepository<LABLORDHitDiceEntity, Long> {
+    /**
+     * Retrieves a list of hit dices by their number.
+     * @param number the number
+     * @return {@link List}<{@link LABLORDHitDiceEntity}>
+     */
+    List<LABLORDHitDiceEntity> findByNumber(Long number);
 }

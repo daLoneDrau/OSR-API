@@ -12,17 +12,17 @@ import com.osrapi.models.wfrp.WFRPWeaponQualityEntity;
  */
 @Repository
 public interface WFRPWeaponQualityRepository
-		extends CrudRepository<WFRPWeaponQualityEntity, Long> {
-	/**
-	 * Retrieves a list of weapon qualitys by their code.
-	 * @param code the code
-	 * @return {@link List}<{@link WFRPWeaponQualityEntity}>
-	 */
-	List<WFRPWeaponQualityEntity> findByCode(Long code);
-	/**
-	 * Retrieves a list of weapon qualitys by their name.
-	 * @param name the name
-	 * @return {@link List}<{@link WFRPWeaponQualityEntity}>
-	 */
-	List<WFRPWeaponQualityEntity> findByName(String name);
+        extends CrudRepository<WFRPWeaponQualityEntity, Long> {
+    /**
+     * Retrieves a list of weapon qualitys by their code.
+     * @param code the code
+     * @return {@link List}<{@link WFRPWeaponQualityEntity}>
+     */
+    List<WFRPWeaponQualityEntity> findByCode(Long code);
+    /**
+     * Retrieves a list of weapon qualitys by their name.
+     * @param name the name
+     * @return {@link List}<{@link WFRPWeaponQualityEntity}>
+     */
+    List<WFRPWeaponQualityEntity> findByName(String name);
 }

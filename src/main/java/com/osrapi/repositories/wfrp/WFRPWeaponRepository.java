@@ -12,17 +12,17 @@ import com.osrapi.models.wfrp.WFRPWeaponEntity;
  */
 @Repository
 public interface WFRPWeaponRepository
-		extends CrudRepository<WFRPWeaponEntity, Long> {
-	/**
-	 * Retrieves a list of weapons by their name.
-	 * @param name the name
-	 * @return {@link List}<{@link WFRPWeaponEntity}>
-	 */
-	List<WFRPWeaponEntity> findByName(String name);
-	/**
-	 * Retrieves a list of weapons by their twoHanded.
-	 * @param twoHanded the twoHanded
-	 * @return {@link List}<{@link WFRPWeaponEntity}>
-	 */
-	List<WFRPWeaponEntity> findByTwoHanded(Boolean twoHanded);
+        extends CrudRepository<WFRPWeaponEntity, Long> {
+    /**
+     * Retrieves a list of weapons by their name.
+     * @param name the name
+     * @return {@link List}<{@link WFRPWeaponEntity}>
+     */
+    List<WFRPWeaponEntity> findByName(String name);
+    /**
+     * Retrieves a list of weapons by their twoHanded.
+     * @param twoHanded the twoHanded
+     * @return {@link List}<{@link WFRPWeaponEntity}>
+     */
+    List<WFRPWeaponEntity> findByTwoHanded(Boolean twoHanded);
 }

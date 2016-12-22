@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.ff.FFTextEntity;
-
 import com.osrapi.repositories.ff.FFTextRepository;
 
 /**
@@ -69,7 +68,8 @@ public class FFTextController {
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<FFTextEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         FFTextEntity entity = repository.findOne(id);
         List<Resource<FFTextEntity>> resources =
                 new ArrayList<Resource<FFTextEntity>>();
@@ -78,8 +78,47 @@ public class FFTextController {
         return resources;
     }
     /**
-     * Gets a {@link Resource} instance with links for the
-     * {@link FFTextEntity}.
+     * Gets a list of {@link FFTextEntity}s that share a name.
+     * @param name the text' name
+     * @return {@link List}<{@link Resource}<{@link FFTextEntity}>>
+     */
+    @RequestMapping(path = "name/{name}",
+            method = RequestMethod.GET)
+    public List<Resource<FFTextEntity>> getByName(
+            @PathVariable
+            final String name) {
+        Iterator<FFTextEntity> iter = repository.findByName(name)
+                .iterator();
+        List<Resource<FFTextEntity>> resources =
+                new ArrayList<Resource<FFTextEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getTextResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link FFTextEntity}s that share a text.
+     * @param text the text' text
+     * @return {@link List}<{@link Resource}<{@link FFTextEntity}>>
+     */
+    @RequestMapping(path = "text/{text}",
+            method = RequestMethod.GET)
+    public List<Resource<FFTextEntity>> getByText(
+            @PathVariable
+            final String text) {
+        Iterator<FFTextEntity> iter = repository.findByText(text)
+                .iterator();
+        List<Resource<FFTextEntity>> resources =
+                new ArrayList<Resource<FFTextEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getTextResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a {@link Resource} instance with links for the {@link FFTextEntity}.
      * @param entity the {@link FFTextEntity}
      * @return {@link Resource}<{@link FFTextEntity}>
      */
@@ -87,7 +126,7 @@ public class FFTextController {
             final FFTextEntity entity) {
         Resource<FFTextEntity> resource =
                 new Resource<FFTextEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -96,13 +135,30 @@ public class FFTextController {
         return resource;
     }
     /**
+     * Saves a single {@link FFTextEntity}.
+     * @param entity the {@link FFTextEntity} instance
+     * @return {@link List}<{@link Resource}<{@link FFTextEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<FFTextEntity>> save(
+            @RequestBody
+            final FFTextEntity entity) {
+
+        FFTextEntity savedEntity = repository.save(entity);
+        List<Resource<FFTextEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link FFTextEntity}s.
      * @param entities the list of {@link FFTextEntity} instances
      * @return {@link List}<{@link Resource}<{@link FFTextEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<FFTextEntity>> save(
-            @RequestBody final List<FFTextEntity> entities) {
+            @RequestBody
+            final List<FFTextEntity> entities) {
         List<Resource<FFTextEntity>> resources =
                 new ArrayList<Resource<FFTextEntity>>();
         Iterator<FFTextEntity> iter = entities.iterator();
@@ -111,22 +167,6 @@ public class FFTextController {
         }
         iter = null;
         return resources;
-    }
-    /**
-     * Saves a single {@link FFTextEntity}.
-     * @param entity the {@link FFTextEntity} instance
-     * @return {@link List}<{@link Resource}<{@link FFTextEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<FFTextEntity>> save(
-            @RequestBody final FFTextEntity entity) {
-    
-    
-        FFTextEntity savedEntity = repository.save(entity);
-        List<Resource<FFTextEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -151,12 +191,12 @@ public class FFTextController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<FFTextEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -186,7 +226,27 @@ public class FFTextController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
+        old = null;
+    }
+
+    /**
+     * Updates a single {@link FFTextEntity}.
+     * @param entity the {@link FFTextEntity} instance
+     * @return {@link List}<{@link Resource}<{@link FFTextEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public List<Resource<FFTextEntity>> update(
+            @RequestBody
+            final FFTextEntity entity) {
+        if (entity.getId() == null) {
+            setIdFromRepository(entity);
+        }
+
+        FFTextEntity savedEntity = repository.save(entity);
+        List<Resource<FFTextEntity>> list = getById(
+                savedEntity.getId());
+        savedEntity = null;
+        return list;
     }
     /**
      * Updates multiple {@link FFTextEntity}s.
@@ -195,69 +255,13 @@ public class FFTextController {
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
     public List<Resource<FFTextEntity>> update(
-            @RequestBody final List<FFTextEntity> entities) {
-        List<Resource<FFTextEntity>> resources = new ArrayList<Resource<FFTextEntity>>();
+            @RequestBody
+            final List<FFTextEntity> entities) {
+        List<Resource<FFTextEntity>> resources =
+                new ArrayList<Resource<FFTextEntity>>();
         Iterator<FFTextEntity> iter = entities.iterator();
         while (iter.hasNext()) {
             resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Updates a single {@link FFTextEntity}.
-     * @param entity the {@link FFTextEntity} instance
-     * @return {@link List}<{@link Resource}<{@link FFTextEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.PUT)
-    public List<Resource<FFTextEntity>> update(
-            @RequestBody final FFTextEntity entity) {        
-        if (entity.getId() == null) {
-            setIdFromRepository(entity);
-        }
-    
-    
-        FFTextEntity savedEntity = repository.save(entity);
-        List<Resource<FFTextEntity>> list = getById(
-                savedEntity.getId());
-        savedEntity = null;
-        return list;
-    }
-
-    /**
-     * Gets a list of {@link FFTextEntity}s that share a name.
-     * @param name the text' name
-     * @return {@link List}<{@link Resource}<{@link FFTextEntity}>>
-     */
-    @RequestMapping(path = "name/{name}",
-            method = RequestMethod.GET)
-    public List<Resource<FFTextEntity>> getByName(
-            @PathVariable final String name) {
-        Iterator<FFTextEntity> iter = repository.findByName(name)
-                .iterator();
-        List<Resource<FFTextEntity>> resources =
-                new ArrayList<Resource<FFTextEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getTextResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link FFTextEntity}s that share a text.
-     * @param text the text' text
-     * @return {@link List}<{@link Resource}<{@link FFTextEntity}>>
-     */
-    @RequestMapping(path = "text/{text}",
-            method = RequestMethod.GET)
-    public List<Resource<FFTextEntity>> getByText(
-            @PathVariable final String text) {
-        Iterator<FFTextEntity> iter = repository.findByText(text)
-                .iterator();
-        List<Resource<FFTextEntity>> resources =
-                new ArrayList<Resource<FFTextEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getTextResource(iter.next()));
         }
         iter = null;
         return resources;

@@ -12,23 +12,23 @@ import com.osrapi.models.lablord.LABLORDClassAbilityEntity;
  */
 @Repository
 public interface LABLORDClassAbilityRepository
-		extends CrudRepository<LABLORDClassAbilityEntity, Long> {
-	/**
-	 * Retrieves a list of class abilitys by their code.
-	 * @param code the code
-	 * @return {@link List}<{@link LABLORDClassAbilityEntity}>
-	 */
-	List<LABLORDClassAbilityEntity> findByCode(Long code);
-	/**
-	 * Retrieves a list of class abilitys by their description.
-	 * @param description the description
-	 * @return {@link List}<{@link LABLORDClassAbilityEntity}>
-	 */
-	List<LABLORDClassAbilityEntity> findByDescription(String description);
-	/**
-	 * Retrieves a list of class abilitys by their name.
-	 * @param name the name
-	 * @return {@link List}<{@link LABLORDClassAbilityEntity}>
-	 */
-	List<LABLORDClassAbilityEntity> findByName(String name);
+        extends CrudRepository<LABLORDClassAbilityEntity, Long> {
+    /**
+     * Retrieves a list of class abilitys by their code.
+     * @param code the code
+     * @return {@link List}<{@link LABLORDClassAbilityEntity}>
+     */
+    List<LABLORDClassAbilityEntity> findByCode(Long code);
+    /**
+     * Retrieves a list of class abilitys by their description.
+     * @param description the description
+     * @return {@link List}<{@link LABLORDClassAbilityEntity}>
+     */
+    List<LABLORDClassAbilityEntity> findByDescription(String description);
+    /**
+     * Retrieves a list of class abilitys by their name.
+     * @param name the name
+     * @return {@link List}<{@link LABLORDClassAbilityEntity}>
+     */
+    List<LABLORDClassAbilityEntity> findByName(String name);
 }

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.basic_dnd.BASIC_DNDObjectTypeEntity;
-
 import com.osrapi.repositories.basic_dnd.BASIC_DNDObjectTypeRepository;
 
 /**
@@ -65,13 +64,54 @@ public class BASIC_DNDObjectTypeController {
         return resources;
     }
     /**
+     * Gets a list of {@link BASIC_DNDObjectTypeEntity}s that share a code.
+     * @param code the object_type' code
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
+     */
+    @RequestMapping(path = "code/{code}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDObjectTypeEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<BASIC_DNDObjectTypeEntity> iter = repository.findByCode(code)
+                .iterator();
+        List<Resource<BASIC_DNDObjectTypeEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDObjectTypeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getObjectTypeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link BASIC_DNDObjectTypeEntity}s that share a flag.
+     * @param flag the object_type' flag
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
+     */
+    @RequestMapping(path = "flag/{flag}",
+            method = RequestMethod.GET)
+    public List<Resource<BASIC_DNDObjectTypeEntity>> getByFlag(
+            @PathVariable
+            final Long flag) {
+        Iterator<BASIC_DNDObjectTypeEntity> iter = repository.findByFlag(flag)
+                .iterator();
+        List<Resource<BASIC_DNDObjectTypeEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDObjectTypeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getObjectTypeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
      * Gets a single {@link BASIC_DNDObjectTypeEntity}.
      * @param id the event type's id
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<BASIC_DNDObjectTypeEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         BASIC_DNDObjectTypeEntity entity = repository.findOne(id);
         List<Resource<BASIC_DNDObjectTypeEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDObjectTypeEntity>>();
@@ -89,7 +129,7 @@ public class BASIC_DNDObjectTypeController {
             final BASIC_DNDObjectTypeEntity entity) {
         Resource<BASIC_DNDObjectTypeEntity> resource =
                 new Resource<BASIC_DNDObjectTypeEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -98,13 +138,30 @@ public class BASIC_DNDObjectTypeController {
         return resource;
     }
     /**
+     * Saves a single {@link BASIC_DNDObjectTypeEntity}.
+     * @param entity the {@link BASIC_DNDObjectTypeEntity} instance
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<BASIC_DNDObjectTypeEntity>> save(
+            @RequestBody
+            final BASIC_DNDObjectTypeEntity entity) {
+
+        BASIC_DNDObjectTypeEntity savedEntity = repository.save(entity);
+        List<Resource<BASIC_DNDObjectTypeEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link BASIC_DNDObjectTypeEntity}s.
      * @param entities the list of {@link BASIC_DNDObjectTypeEntity} instances
      * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<BASIC_DNDObjectTypeEntity>> save(
-            @RequestBody final List<BASIC_DNDObjectTypeEntity> entities) {
+            @RequestBody
+            final List<BASIC_DNDObjectTypeEntity> entities) {
         List<Resource<BASIC_DNDObjectTypeEntity>> resources =
                 new ArrayList<Resource<BASIC_DNDObjectTypeEntity>>();
         Iterator<BASIC_DNDObjectTypeEntity> iter = entities.iterator();
@@ -113,22 +170,6 @@ public class BASIC_DNDObjectTypeController {
         }
         iter = null;
         return resources;
-    }
-    /**
-     * Saves a single {@link BASIC_DNDObjectTypeEntity}.
-     * @param entity the {@link BASIC_DNDObjectTypeEntity} instance
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<BASIC_DNDObjectTypeEntity>> save(
-            @RequestBody final BASIC_DNDObjectTypeEntity entity) {
-    
-    
-        BASIC_DNDObjectTypeEntity savedEntity = repository.save(entity);
-        List<Resource<BASIC_DNDObjectTypeEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
     }
     /**
      * Tries to set the Id for an entity to be saved by locating it in the
@@ -143,7 +184,8 @@ public class BASIC_DNDObjectTypeController {
             try {
                 method = repository.getClass().getDeclaredMethod(
                         "findByName", new Class[] { String.class });
-                field = BASIC_DNDObjectTypeEntity.class.getDeclaredField("name");
+                field = BASIC_DNDObjectTypeEntity.class
+                        .getDeclaredField("name");
             } catch (NoSuchMethodException | NoSuchFieldException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -153,12 +195,12 @@ public class BASIC_DNDObjectTypeController {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
                     old = (List<BASIC_DNDObjectTypeEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                            repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
@@ -188,7 +230,27 @@ public class BASIC_DNDObjectTypeController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
+        old = null;
+    }
+
+    /**
+     * Updates a single {@link BASIC_DNDObjectTypeEntity}.
+     * @param entity the {@link BASIC_DNDObjectTypeEntity} instance
+     * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public List<Resource<BASIC_DNDObjectTypeEntity>> update(
+            @RequestBody
+            final BASIC_DNDObjectTypeEntity entity) {
+        if (entity.getId() == null) {
+            setIdFromRepository(entity);
+        }
+
+        BASIC_DNDObjectTypeEntity savedEntity = repository.save(entity);
+        List<Resource<BASIC_DNDObjectTypeEntity>> list = getById(
+                savedEntity.getId());
+        savedEntity = null;
+        return list;
     }
     /**
      * Updates multiple {@link BASIC_DNDObjectTypeEntity}s.
@@ -197,69 +259,13 @@ public class BASIC_DNDObjectTypeController {
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
     public List<Resource<BASIC_DNDObjectTypeEntity>> update(
-            @RequestBody final List<BASIC_DNDObjectTypeEntity> entities) {
-        List<Resource<BASIC_DNDObjectTypeEntity>> resources = new ArrayList<Resource<BASIC_DNDObjectTypeEntity>>();
+            @RequestBody
+            final List<BASIC_DNDObjectTypeEntity> entities) {
+        List<Resource<BASIC_DNDObjectTypeEntity>> resources =
+                new ArrayList<Resource<BASIC_DNDObjectTypeEntity>>();
         Iterator<BASIC_DNDObjectTypeEntity> iter = entities.iterator();
         while (iter.hasNext()) {
             resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Updates a single {@link BASIC_DNDObjectTypeEntity}.
-     * @param entity the {@link BASIC_DNDObjectTypeEntity} instance
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.PUT)
-    public List<Resource<BASIC_DNDObjectTypeEntity>> update(
-            @RequestBody final BASIC_DNDObjectTypeEntity entity) {        
-        if (entity.getId() == null) {
-            setIdFromRepository(entity);
-        }
-    
-    
-        BASIC_DNDObjectTypeEntity savedEntity = repository.save(entity);
-        List<Resource<BASIC_DNDObjectTypeEntity>> list = getById(
-                savedEntity.getId());
-        savedEntity = null;
-        return list;
-    }
-
-    /**
-     * Gets a list of {@link BASIC_DNDObjectTypeEntity}s that share a code.
-     * @param code the object_type' code
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
-     */
-    @RequestMapping(path = "code/{code}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDObjectTypeEntity>> getByCode(
-            @PathVariable final String code) {
-        Iterator<BASIC_DNDObjectTypeEntity> iter = repository.findByCode(code)
-                .iterator();
-        List<Resource<BASIC_DNDObjectTypeEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDObjectTypeEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getObjectTypeResource(iter.next()));
-        }
-        iter = null;
-        return resources;
-    }
-    /**
-     * Gets a list of {@link BASIC_DNDObjectTypeEntity}s that share a flag.
-     * @param flag the object_type' flag
-     * @return {@link List}<{@link Resource}<{@link BASIC_DNDObjectTypeEntity}>>
-     */
-    @RequestMapping(path = "flag/{flag}",
-            method = RequestMethod.GET)
-    public List<Resource<BASIC_DNDObjectTypeEntity>> getByFlag(
-            @PathVariable final Long flag) {
-        Iterator<BASIC_DNDObjectTypeEntity> iter = repository.findByFlag(flag)
-                .iterator();
-        List<Resource<BASIC_DNDObjectTypeEntity>> resources =
-                new ArrayList<Resource<BASIC_DNDObjectTypeEntity>>();
-        while (iter.hasNext()) {
-            resources.add(getObjectTypeResource(iter.next()));
         }
         iter = null;
         return resources;

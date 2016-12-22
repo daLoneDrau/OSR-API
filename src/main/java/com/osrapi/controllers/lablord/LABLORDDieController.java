@@ -26,228 +26,241 @@ import com.osrapi.repositories.lablord.LABLORDDieRepository;
 @RequestMapping(path = "/lablord/dies")
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class LABLORDDieController {
-	/** the static instance of {@link LABLORDDieController}. */
-	private static LABLORDDieController instance;
-	/**
-	 * Gets the static instance.
-	 * @return {@link LABLORDDieController}
-	 */
-	public static LABLORDDieController getInstance() {
-		if (instance == null) {
-			new LABLORDDieController();
-		}
-		return instance;
-	}
-	/** the data repository. */
-	@Autowired
-	private LABLORDDieRepository repository;
-	/** Creates a new instance of {@link LABLORDDieController}. */
-	public LABLORDDieController() {
-		instance = this;
-	}
-	/**
-	 * Gets a list of {@link LABLORDDieEntity}s.
-	 * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public List<Resource<LABLORDDieEntity>> getAll() {
-		Iterator<LABLORDDieEntity> iter = repository.findAll()
-				.iterator();
-		List<Resource<LABLORDDieEntity>> resources = new ArrayList<Resource<LABLORDDieEntity>>();
-		while (iter.hasNext()) {
-			resources.add(getDieResource(iter.next()));
-		}
-		iter = null;
-		return resources;
-	}
-	/**
-	 * Gets a list of {@link LABLORDDieEntity}s that share a code.
-	 * @param code the die' code
-	 * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
-	 */
-	@RequestMapping(path = "code/{code}", method = RequestMethod.GET)
-	public List<Resource<LABLORDDieEntity>> getByCode(
-			@PathVariable final String code) {
-		Iterator<LABLORDDieEntity> iter = repository.findByCode(code)
-				.iterator();
-		List<Resource<LABLORDDieEntity>> resources = new ArrayList<Resource<LABLORDDieEntity>>();
-		while (iter.hasNext()) {
-			resources.add(getDieResource(iter.next()));
-		}
-		iter = null;
-		return resources;
-	}
-	/**
-	 * Gets a single {@link LABLORDDieEntity}.
-	 * @param id the event type's id
-	 * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
-	 */
-	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
-	public List<Resource<LABLORDDieEntity>> getById(
-			@PathVariable final Long id) {
-		LABLORDDieEntity entity = repository.findOne(id);
-		List<Resource<LABLORDDieEntity>> resources = new ArrayList<Resource<LABLORDDieEntity>>();
-		resources.add(getDieResource(entity));
-		entity = null;
-		return resources;
-	}
-	/**
-	 * Gets a list of {@link LABLORDDieEntity}s that share a value.
-	 * @param value the die' value
-	 * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
-	 */
-	@RequestMapping(path = "value/{value}", method = RequestMethod.GET)
-	public List<Resource<LABLORDDieEntity>> getByValue(
-			@PathVariable final Long value) {
-		Iterator<LABLORDDieEntity> iter = repository.findByValue(value)
-				.iterator();
-		List<Resource<LABLORDDieEntity>> resources = new ArrayList<Resource<LABLORDDieEntity>>();
-		while (iter.hasNext()) {
-			resources.add(getDieResource(iter.next()));
-		}
-		iter = null;
-		return resources;
-	}
-	/**
-	 * Gets a {@link Resource} instance with links for the
-	 * {@link LABLORDDieEntity}.
-	 * @param entity the {@link LABLORDDieEntity}
-	 * @return {@link Resource}<{@link LABLORDDieEntity}>
-	 */
-	private Resource<LABLORDDieEntity> getDieResource(
-			final LABLORDDieEntity entity) {
-		Resource<LABLORDDieEntity> resource = new Resource<LABLORDDieEntity>(
-				entity);
-		// link to entity
-		resource.add(ControllerLinkBuilder.linkTo(
-				ControllerLinkBuilder.methodOn(getClass()).getById(
-						entity.getId()))
-				.withSelfRel());
-		return resource;
-	}
-	/**
-	 * Saves a single {@link LABLORDDieEntity}.
-	 * @param entity the {@link LABLORDDieEntity} instance
-	 * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public List<Resource<LABLORDDieEntity>> save(
-			@RequestBody final LABLORDDieEntity entity) {
+    /** the static instance of {@link LABLORDDieController}. */
+    private static LABLORDDieController instance;
+    /**
+     * Gets the static instance.
+     * @return {@link LABLORDDieController}
+     */
+    public static LABLORDDieController getInstance() {
+        if (instance == null) {
+            new LABLORDDieController();
+        }
+        return instance;
+    }
+    /** the data repository. */
+    @Autowired
+    private LABLORDDieRepository repository;
+    /** Creates a new instance of {@link LABLORDDieController}. */
+    public LABLORDDieController() {
+        instance = this;
+    }
+    /**
+     * Gets a list of {@link LABLORDDieEntity}s.
+     * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Resource<LABLORDDieEntity>> getAll() {
+        Iterator<LABLORDDieEntity> iter = repository.findAll()
+                .iterator();
+        List<Resource<LABLORDDieEntity>> resources =
+                new ArrayList<Resource<LABLORDDieEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getDieResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link LABLORDDieEntity}s that share a code.
+     * @param code the die' code
+     * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
+     */
+    @RequestMapping(path = "code/{code}", method = RequestMethod.GET)
+    public List<Resource<LABLORDDieEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<LABLORDDieEntity> iter = repository.findByCode(code)
+                .iterator();
+        List<Resource<LABLORDDieEntity>> resources =
+                new ArrayList<Resource<LABLORDDieEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getDieResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a single {@link LABLORDDieEntity}.
+     * @param id the event type's id
+     * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
+     */
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public List<Resource<LABLORDDieEntity>> getById(
+            @PathVariable
+            final Long id) {
+        LABLORDDieEntity entity = repository.findOne(id);
+        List<Resource<LABLORDDieEntity>> resources =
+                new ArrayList<Resource<LABLORDDieEntity>>();
+        resources.add(getDieResource(entity));
+        entity = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link LABLORDDieEntity}s that share a value.
+     * @param value the die' value
+     * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
+     */
+    @RequestMapping(path = "value/{value}", method = RequestMethod.GET)
+    public List<Resource<LABLORDDieEntity>> getByValue(
+            @PathVariable
+            final Long value) {
+        Iterator<LABLORDDieEntity> iter = repository.findByValue(value)
+                .iterator();
+        List<Resource<LABLORDDieEntity>> resources =
+                new ArrayList<Resource<LABLORDDieEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getDieResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a {@link Resource} instance with links for the
+     * {@link LABLORDDieEntity}.
+     * @param entity the {@link LABLORDDieEntity}
+     * @return {@link Resource}<{@link LABLORDDieEntity}>
+     */
+    private Resource<LABLORDDieEntity> getDieResource(
+            final LABLORDDieEntity entity) {
+        Resource<LABLORDDieEntity> resource = new Resource<LABLORDDieEntity>(
+                entity);
+        // link to entity
+        resource.add(ControllerLinkBuilder.linkTo(
+                ControllerLinkBuilder.methodOn(getClass()).getById(
+                        entity.getId()))
+                .withSelfRel());
+        return resource;
+    }
+    /**
+     * Saves a single {@link LABLORDDieEntity}.
+     * @param entity the {@link LABLORDDieEntity} instance
+     * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<LABLORDDieEntity>> save(
+            @RequestBody
+            final LABLORDDieEntity entity) {
 
-		LABLORDDieEntity savedEntity = repository.save(entity);
-		List<Resource<LABLORDDieEntity>> list = getById(savedEntity.getId());
-		savedEntity = null;
-		return list;
-	}
-	/**
-	 * Saves multiple {@link LABLORDDieEntity}s.
-	 * @param entities the list of {@link LABLORDDieEntity} instances
-	 * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
-	 */
-	@RequestMapping(path = "/bulk", method = RequestMethod.POST)
-	public List<Resource<LABLORDDieEntity>> save(
-			@RequestBody final List<LABLORDDieEntity> entities) {
-		List<Resource<LABLORDDieEntity>> resources = new ArrayList<Resource<LABLORDDieEntity>>();
-		Iterator<LABLORDDieEntity> iter = entities.iterator();
-		while (iter.hasNext()) {
-			resources.add(save(iter.next()).get(0));
-		}
-		iter = null;
-		return resources;
-	}
-	/**
-	 * Tries to set the Id for an entity to be saved by locating it in the
-	 * repository.
-	 * @param entity the {@link LABLORDDieEntity} instance
-	 */
-	private void setIdFromRepository(final LABLORDDieEntity entity) {
-		List<LABLORDDieEntity> old = null;
-		try {
-			Method method = null;
-			Field field = null;
-			try {
-				method = repository.getClass().getDeclaredMethod(
-						"findByName", new Class[] { String.class });
-				field = LABLORDDieEntity.class.getDeclaredField("name");
-			} catch (NoSuchMethodException | NoSuchFieldException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (method != null
-					&& field != null) {
-				field.setAccessible(true);
-				if (field.get(entity) != null) {
-					old = (List<LABLORDDieEntity>) method.invoke(
-							repository, (String) field.get(entity));
-				}
-			}
-			if (old == null
-					|| old != null
-							&& old.size() > 1) {
-				try {
-					method = repository.getClass().getDeclaredMethod(
-							"findByCode", new Class[] { String.class });
-					field = LABLORDDieEntity.class.getDeclaredField(
-							"code");
-				} catch (NoSuchMethodException | NoSuchFieldException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (method != null
-						&& field != null) {
-					field.setAccessible(true);
-					if (field.get(entity) != null) {
-						old = (List<LABLORDDieEntity>) method.invoke(
-								repository, (String) field.get(entity));
-					}
-				}
-			}
-			method = null;
-			field = null;
-		} catch (SecurityException | IllegalArgumentException
-				| IllegalAccessException
-				| InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		if (old != null
-				&& old.size() == 1) {
-			entity.setId(old.get(0).getId());
-		}
-		old = null;
-	}
+        LABLORDDieEntity savedEntity = repository.save(entity);
+        List<Resource<LABLORDDieEntity>> list = getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
+     * Saves multiple {@link LABLORDDieEntity}s.
+     * @param entities the list of {@link LABLORDDieEntity} instances
+     * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
+     */
+    @RequestMapping(path = "/bulk", method = RequestMethod.POST)
+    public List<Resource<LABLORDDieEntity>> save(
+            @RequestBody
+            final List<LABLORDDieEntity> entities) {
+        List<Resource<LABLORDDieEntity>> resources =
+                new ArrayList<Resource<LABLORDDieEntity>>();
+        Iterator<LABLORDDieEntity> iter = entities.iterator();
+        while (iter.hasNext()) {
+            resources.add(save(iter.next()).get(0));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Tries to set the Id for an entity to be saved by locating it in the
+     * repository.
+     * @param entity the {@link LABLORDDieEntity} instance
+     */
+    private void setIdFromRepository(final LABLORDDieEntity entity) {
+        List<LABLORDDieEntity> old = null;
+        try {
+            Method method = null;
+            Field field = null;
+            try {
+                method = repository.getClass().getDeclaredMethod(
+                        "findByName", new Class[] { String.class });
+                field = LABLORDDieEntity.class.getDeclaredField("name");
+            } catch (NoSuchMethodException | NoSuchFieldException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            if (method != null
+                    && field != null) {
+                field.setAccessible(true);
+                if (field.get(entity) != null) {
+                    old = (List<LABLORDDieEntity>) method.invoke(
+                            repository, (String) field.get(entity));
+                }
+            }
+            if (old == null
+                    || old != null
+                            && old.size() > 1) {
+                try {
+                    method = repository.getClass().getDeclaredMethod(
+                            "findByCode", new Class[] { String.class });
+                    field = LABLORDDieEntity.class.getDeclaredField(
+                            "code");
+                } catch (NoSuchMethodException | NoSuchFieldException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                if (method != null
+                        && field != null) {
+                    field.setAccessible(true);
+                    if (field.get(entity) != null) {
+                        old = (List<LABLORDDieEntity>) method.invoke(
+                                repository, (String) field.get(entity));
+                    }
+                }
+            }
+            method = null;
+            field = null;
+        } catch (SecurityException | IllegalArgumentException
+                | IllegalAccessException
+                | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        if (old != null
+                && old.size() == 1) {
+            entity.setId(old.get(0).getId());
+        }
+        old = null;
+    }
 
-	/**
-	 * Updates a single {@link LABLORDDieEntity}.
-	 * @param entity the {@link LABLORDDieEntity} instance
-	 * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
-	 */
-	@RequestMapping(method = RequestMethod.PUT)
-	public List<Resource<LABLORDDieEntity>> update(
-			@RequestBody final LABLORDDieEntity entity) {
-		if (entity.getId() == null) {
-			setIdFromRepository(entity);
-		}
+    /**
+     * Updates a single {@link LABLORDDieEntity}.
+     * @param entity the {@link LABLORDDieEntity} instance
+     * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public List<Resource<LABLORDDieEntity>> update(
+            @RequestBody
+            final LABLORDDieEntity entity) {
+        if (entity.getId() == null) {
+            setIdFromRepository(entity);
+        }
 
-		LABLORDDieEntity savedEntity = repository.save(entity);
-		List<Resource<LABLORDDieEntity>> list = getById(
-				savedEntity.getId());
-		savedEntity = null;
-		return list;
-	}
-	/**
-	 * Updates multiple {@link LABLORDDieEntity}s.
-	 * @param entities the list of {@link LABLORDDieEntity} instances
-	 * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
-	 */
-	@RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-	public List<Resource<LABLORDDieEntity>> update(
-			@RequestBody final List<LABLORDDieEntity> entities) {
-		List<Resource<LABLORDDieEntity>> resources = new ArrayList<Resource<LABLORDDieEntity>>();
-		Iterator<LABLORDDieEntity> iter = entities.iterator();
-		while (iter.hasNext()) {
-			resources.add(update(iter.next()).get(0));
-		}
-		iter = null;
-		return resources;
-	}
+        LABLORDDieEntity savedEntity = repository.save(entity);
+        List<Resource<LABLORDDieEntity>> list = getById(
+                savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
+     * Updates multiple {@link LABLORDDieEntity}s.
+     * @param entities the list of {@link LABLORDDieEntity} instances
+     * @return {@link List}<{@link Resource}<{@link LABLORDDieEntity}>>
+     */
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<LABLORDDieEntity>> update(
+            @RequestBody
+            final List<LABLORDDieEntity> entities) {
+        List<Resource<LABLORDDieEntity>> resources =
+                new ArrayList<Resource<LABLORDDieEntity>>();
+        Iterator<LABLORDDieEntity> iter = entities.iterator();
+        while (iter.hasNext()) {
+            resources.add(update(iter.next()).get(0));
+        }
+        iter = null;
+        return resources;
+    }
 }

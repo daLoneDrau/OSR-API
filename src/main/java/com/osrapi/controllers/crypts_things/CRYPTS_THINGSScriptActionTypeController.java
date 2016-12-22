@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osrapi.models.crypts_things.CRYPTS_THINGSScriptActionTypeEntity;
-
 import com.osrapi.repositories.crypts_things.CRYPTS_THINGSScriptActionTypeRepository;
 
 /**
@@ -29,7 +28,9 @@ import com.osrapi.repositories.crypts_things.CRYPTS_THINGSScriptActionTypeReposi
 @RequestMapping(path = "/crypts_things/script_action_types")
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class CRYPTS_THINGSScriptActionTypeController {
-    /** the static instance of {@link CRYPTS_THINGSScriptActionTypeController}. */
+    /**
+     * the static instance of {@link CRYPTS_THINGSScriptActionTypeController}.
+     */
     private static CRYPTS_THINGSScriptActionTypeController instance;
     /**
      * Gets the static instance.
@@ -44,7 +45,10 @@ public class CRYPTS_THINGSScriptActionTypeController {
     /** the data repository. */
     @Autowired
     private CRYPTS_THINGSScriptActionTypeRepository repository;
-    /** Creates a new instance of {@link CRYPTS_THINGSScriptActionTypeController}. */
+    /**
+     * Creates a new instance of
+     * {@link CRYPTS_THINGSScriptActionTypeController}.
+     */
     public CRYPTS_THINGSScriptActionTypeController() {
         instance = this;
     }
@@ -54,8 +58,31 @@ public class CRYPTS_THINGSScriptActionTypeController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> getAll() {
-        Iterator<CRYPTS_THINGSScriptActionTypeEntity> iter = repository.findAll()
-                .iterator();
+        Iterator<CRYPTS_THINGSScriptActionTypeEntity> iter =
+                repository.findAll()
+                        .iterator();
+        List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> resources =
+                new ArrayList<Resource<CRYPTS_THINGSScriptActionTypeEntity>>();
+        while (iter.hasNext()) {
+            resources.add(getScriptActionTypeResource(iter.next()));
+        }
+        iter = null;
+        return resources;
+    }
+    /**
+     * Gets a list of {@link CRYPTS_THINGSScriptActionTypeEntity}s that share a
+     * code.
+     * @param code the script_action_type' code
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSScriptActionTypeEntity}>>
+     */
+    @RequestMapping(path = "code/{code}",
+            method = RequestMethod.GET)
+    public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> getByCode(
+            @PathVariable
+            final String code) {
+        Iterator<CRYPTS_THINGSScriptActionTypeEntity> iter =
+                repository.findByCode(code)
+                        .iterator();
         List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSScriptActionTypeEntity>>();
         while (iter.hasNext()) {
@@ -71,7 +98,8 @@ public class CRYPTS_THINGSScriptActionTypeController {
      */
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> getById(
-            @PathVariable final Long id) {
+            @PathVariable
+            final Long id) {
         CRYPTS_THINGSScriptActionTypeEntity entity = repository.findOne(id);
         List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSScriptActionTypeEntity>>();
@@ -85,11 +113,12 @@ public class CRYPTS_THINGSScriptActionTypeController {
      * @param entity the {@link CRYPTS_THINGSScriptActionTypeEntity}
      * @return {@link Resource}<{@link CRYPTS_THINGSScriptActionTypeEntity}>
      */
-    private Resource<CRYPTS_THINGSScriptActionTypeEntity> getScriptActionTypeResource(
-            final CRYPTS_THINGSScriptActionTypeEntity entity) {
+    private Resource<CRYPTS_THINGSScriptActionTypeEntity>
+            getScriptActionTypeResource(
+                    final CRYPTS_THINGSScriptActionTypeEntity entity) {
         Resource<CRYPTS_THINGSScriptActionTypeEntity> resource =
                 new Resource<CRYPTS_THINGSScriptActionTypeEntity>(
-                entity);
+                        entity);
         // link to entity
         resource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(getClass()).getById(
@@ -98,16 +127,36 @@ public class CRYPTS_THINGSScriptActionTypeController {
         return resource;
     }
     /**
+     * Saves a single {@link CRYPTS_THINGSScriptActionTypeEntity}.
+     * @param entity the {@link CRYPTS_THINGSScriptActionTypeEntity} instance
+     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSScriptActionTypeEntity}>>
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> save(
+            @RequestBody
+            final CRYPTS_THINGSScriptActionTypeEntity entity) {
+
+        CRYPTS_THINGSScriptActionTypeEntity savedEntity =
+                repository.save(entity);
+        List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> list =
+                getById(savedEntity.getId());
+        savedEntity = null;
+        return list;
+    }
+    /**
      * Saves multiple {@link CRYPTS_THINGSScriptActionTypeEntity}s.
-     * @param entities the list of {@link CRYPTS_THINGSScriptActionTypeEntity} instances
+     * @param entities the list of {@link CRYPTS_THINGSScriptActionTypeEntity}
+     *            instances
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSScriptActionTypeEntity}>>
      */
     @RequestMapping(path = "/bulk", method = RequestMethod.POST)
     public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> save(
-            @RequestBody final List<CRYPTS_THINGSScriptActionTypeEntity> entities) {
+            @RequestBody
+            final List<CRYPTS_THINGSScriptActionTypeEntity> entities) {
         List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSScriptActionTypeEntity>>();
-        Iterator<CRYPTS_THINGSScriptActionTypeEntity> iter = entities.iterator();
+        Iterator<CRYPTS_THINGSScriptActionTypeEntity> iter =
+                entities.iterator();
         while (iter.hasNext()) {
             resources.add(save(iter.next()).get(0));
         }
@@ -115,27 +164,12 @@ public class CRYPTS_THINGSScriptActionTypeController {
         return resources;
     }
     /**
-     * Saves a single {@link CRYPTS_THINGSScriptActionTypeEntity}.
-     * @param entity the {@link CRYPTS_THINGSScriptActionTypeEntity} instance
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSScriptActionTypeEntity}>>
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> save(
-            @RequestBody final CRYPTS_THINGSScriptActionTypeEntity entity) {
-    
-    
-        CRYPTS_THINGSScriptActionTypeEntity savedEntity = repository.save(entity);
-        List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> list =
-                getById(savedEntity.getId());
-        savedEntity = null;
-        return list;
-    }
-    /**
      * Tries to set the Id for an entity to be saved by locating it in the
      * repository.
      * @param entity the {@link CRYPTS_THINGSScriptActionTypeEntity} instance
      */
-    private void setIdFromRepository(final CRYPTS_THINGSScriptActionTypeEntity entity) {
+    private void setIdFromRepository(
+            final CRYPTS_THINGSScriptActionTypeEntity entity) {
         List<CRYPTS_THINGSScriptActionTypeEntity> old = null;
         try {
             Method method = null;
@@ -143,7 +177,8 @@ public class CRYPTS_THINGSScriptActionTypeController {
             try {
                 method = repository.getClass().getDeclaredMethod(
                         "findByName", new Class[] { String.class });
-                field = CRYPTS_THINGSScriptActionTypeEntity.class.getDeclaredField("name");
+                field = CRYPTS_THINGSScriptActionTypeEntity.class
+                        .getDeclaredField("name");
             } catch (NoSuchMethodException | NoSuchFieldException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -152,18 +187,20 @@ public class CRYPTS_THINGSScriptActionTypeController {
                     && field != null) {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
-                    old = (List<CRYPTS_THINGSScriptActionTypeEntity>) method.invoke(
-              repository, (String) field.get(entity));
+                    old = (List<CRYPTS_THINGSScriptActionTypeEntity>) method
+                            .invoke(
+                                    repository, (String) field.get(entity));
                 }
             }
             if (old == null
                     || (old != null
-                    && old.size() > 1)) {
+                            && old.size() > 1)) {
                 try {
                     method = repository.getClass().getDeclaredMethod(
                             "findByCode", new Class[] { String.class });
-                    field = CRYPTS_THINGSScriptActionTypeEntity.class.getDeclaredField(
-                            "code");
+                    field = CRYPTS_THINGSScriptActionTypeEntity.class
+                            .getDeclaredField(
+                                    "code");
                 } catch (NoSuchMethodException | NoSuchFieldException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -172,8 +209,9 @@ public class CRYPTS_THINGSScriptActionTypeController {
                         && field != null) {
                     field.setAccessible(true);
                     if (field.get(entity) != null) {
-                        old = (List<CRYPTS_THINGSScriptActionTypeEntity>) method.invoke(
-                                repository, (String) field.get(entity));
+                        old = (List<CRYPTS_THINGSScriptActionTypeEntity>) method
+                                .invoke(
+                                        repository, (String) field.get(entity));
                     }
                 }
             }
@@ -188,23 +226,7 @@ public class CRYPTS_THINGSScriptActionTypeController {
                 && old.size() == 1) {
             entity.setId(old.get(0).getId());
         }
-        old = null;        
-    }
-    /**
-     * Updates multiple {@link CRYPTS_THINGSScriptActionTypeEntity}s.
-     * @param entities the list of {@link CRYPTS_THINGSScriptActionTypeEntity} instances
-     * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSScriptActionTypeEntity}>>
-     */
-    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
-    public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> update(
-            @RequestBody final List<CRYPTS_THINGSScriptActionTypeEntity> entities) {
-        List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> resources = new ArrayList<Resource<CRYPTS_THINGSScriptActionTypeEntity>>();
-        Iterator<CRYPTS_THINGSScriptActionTypeEntity> iter = entities.iterator();
-        while (iter.hasNext()) {
-            resources.add(update(iter.next()).get(0));
-        }
-        iter = null;
-        return resources;
+        old = null;
     }
     /**
      * Updates a single {@link CRYPTS_THINGSScriptActionTypeEntity}.
@@ -213,13 +235,14 @@ public class CRYPTS_THINGSScriptActionTypeController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> update(
-            @RequestBody final CRYPTS_THINGSScriptActionTypeEntity entity) {        
+            @RequestBody
+            final CRYPTS_THINGSScriptActionTypeEntity entity) {
         if (entity.getId() == null) {
             setIdFromRepository(entity);
         }
-    
-    
-        CRYPTS_THINGSScriptActionTypeEntity savedEntity = repository.save(entity);
+
+        CRYPTS_THINGSScriptActionTypeEntity savedEntity =
+                repository.save(entity);
         List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> list = getById(
                 savedEntity.getId());
         savedEntity = null;
@@ -227,20 +250,21 @@ public class CRYPTS_THINGSScriptActionTypeController {
     }
 
     /**
-     * Gets a list of {@link CRYPTS_THINGSScriptActionTypeEntity}s that share a code.
-     * @param code the script_action_type' code
+     * Updates multiple {@link CRYPTS_THINGSScriptActionTypeEntity}s.
+     * @param entities the list of {@link CRYPTS_THINGSScriptActionTypeEntity}
+     *            instances
      * @return {@link List}<{@link Resource}<{@link CRYPTS_THINGSScriptActionTypeEntity}>>
      */
-    @RequestMapping(path = "code/{code}",
-            method = RequestMethod.GET)
-    public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> getByCode(
-            @PathVariable final String code) {
-        Iterator<CRYPTS_THINGSScriptActionTypeEntity> iter = repository.findByCode(code)
-                .iterator();
+    @RequestMapping(path = "/bulk", method = RequestMethod.PUT)
+    public List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> update(
+            @RequestBody
+            final List<CRYPTS_THINGSScriptActionTypeEntity> entities) {
         List<Resource<CRYPTS_THINGSScriptActionTypeEntity>> resources =
                 new ArrayList<Resource<CRYPTS_THINGSScriptActionTypeEntity>>();
+        Iterator<CRYPTS_THINGSScriptActionTypeEntity> iter =
+                entities.iterator();
         while (iter.hasNext()) {
-            resources.add(getScriptActionTypeResource(iter.next()));
+            resources.add(update(iter.next()).get(0));
         }
         iter = null;
         return resources;

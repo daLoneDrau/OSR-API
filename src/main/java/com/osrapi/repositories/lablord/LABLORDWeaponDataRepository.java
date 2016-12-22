@@ -12,11 +12,11 @@ import com.osrapi.models.lablord.LABLORDWeaponDataEntity;
  */
 @Repository
 public interface LABLORDWeaponDataRepository
-		extends CrudRepository<LABLORDWeaponDataEntity, Long> {
-	/**
-	 * Retrieves a list of weapon datas by their code.
-	 * @param code the code
-	 * @return {@link List}<{@link LABLORDWeaponDataEntity}>
-	 */
-	List<LABLORDWeaponDataEntity> findByCode(String code);
+        extends CrudRepository<LABLORDWeaponDataEntity, Long> {
+    /**
+     * Retrieves a list of weapon datas by their code.
+     * @param code the code
+     * @return {@link List}<{@link LABLORDWeaponDataEntity}>
+     */
+    List<LABLORDWeaponDataEntity> findByCode(String code);
 }
