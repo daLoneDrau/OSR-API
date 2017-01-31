@@ -40,11 +40,11 @@ extends CrudRepository<CRYPTS_THINGSIoItemDataEntity, Long> {
 	 */
 	List<CRYPTS_THINGSIoItemDataEntity> findByInternalScript(String internalScript);
 	/**
-	 * Retrieves a list of io item datas by their itemName.
-	 * @param itemName the itemName
+	 * Retrieves a list of io item datas by their name.
+	 * @param name the name
 	 * @return {@link List}<{@link CRYPTS_THINGSIoItemDataEntity}>
 	 */
-	List<CRYPTS_THINGSIoItemDataEntity> findByItemName(String itemName);
+	List<CRYPTS_THINGSIoItemDataEntity> findByName(String name);
 	/**
 	 * Retrieves a list of io item datas by their leftRing.
 	 * @param leftRing the leftRing

@@ -27,4 +27,10 @@ extends CrudRepository<CRYPTS_THINGSDiceEntity, Long> {
 	 * @return {@link List}<{@link CRYPTS_THINGSDiceEntity}>
 	 */
 	List<CRYPTS_THINGSDiceEntity> findByNumber(Long number);
+	/**
+	 * Retrieves a list of dices by their plus.
+	 * @param plus the plus
+	 * @return {@link List}<{@link CRYPTS_THINGSDiceEntity}>
+	 */
+	List<CRYPTS_THINGSDiceEntity> findByPlus(Long plus);
 }

@@ -72,7 +72,11 @@ public final class CRYPTS_THINGSDiceEntity {
     public void setId(final Long val) {
         id = val;
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 564cb3dfaff091331f85436174995f8a895f7bdf
     /** the plus. */
     @Column(name = "plus")
     @JsonProperty("plus")
@@ -92,7 +96,11 @@ public final class CRYPTS_THINGSDiceEntity {
     public void setPlus(final Long val) {
         plus = val;
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 564cb3dfaff091331f85436174995f8a895f7bdf
     /** the number. */
     @Column(name = "number")
     @JsonProperty("number")

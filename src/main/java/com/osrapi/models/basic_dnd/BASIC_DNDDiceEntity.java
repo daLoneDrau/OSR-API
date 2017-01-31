@@ -1,33 +1,17 @@
 package com.osrapi.models.basic_dnd;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -72,7 +56,11 @@ public final class BASIC_DNDDiceEntity {
     public void setId(final Long val) {
         id = val;
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 564cb3dfaff091331f85436174995f8a895f7bdf
     /** the plus. */
     @Column(name = "plus")
     @JsonProperty("plus")
@@ -92,7 +80,11 @@ public final class BASIC_DNDDiceEntity {
     public void setPlus(final Long val) {
         plus = val;
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 564cb3dfaff091331f85436174995f8a895f7bdf
     /** the number. */
     @Column(name = "number")
     @JsonProperty("number")

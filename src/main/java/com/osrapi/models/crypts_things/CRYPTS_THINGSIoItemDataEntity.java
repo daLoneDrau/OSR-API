@@ -232,7 +232,11 @@ public final class CRYPTS_THINGSIoItemDataEntity {
     public void setLeftRing(final Boolean val) {
         leftRing = val;
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 564cb3dfaff091331f85436174995f8a895f7bdf
     /** the name. */
     @Column(name = "name")
     @JsonProperty("name")
@@ -292,7 +296,11 @@ public final class CRYPTS_THINGSIoItemDataEntity {
     public void setFoodValue(final Long val) {
         foodValue = val;
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 564cb3dfaff091331f85436174995f8a895f7bdf
     /** the description. */
     @Column(name = "description")
     @JsonProperty("description")
@@ -312,12 +320,19 @@ public final class CRYPTS_THINGSIoItemDataEntity {
     public void setDescription(final String val) {
         description = val;
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 564cb3dfaff091331f85436174995f8a895f7bdf
     /** the damages. */
     @ManyToOne(targetEntity = CRYPTS_THINGSDiceEntity.class, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "damages")
+<<<<<<< HEAD
     @JsonProperty("dice")
+=======
+>>>>>>> 564cb3dfaff091331f85436174995f8a895f7bdf
   
     private CRYPTS_THINGSDiceEntity    damages;
     /**
@@ -334,7 +349,11 @@ public final class CRYPTS_THINGSIoItemDataEntity {
     public void setDamages(final CRYPTS_THINGSDiceEntity val) {
         damages = val;
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 564cb3dfaff091331f85436174995f8a895f7bdf
     /** the count. */
     @Column(name = "count")
     @JsonProperty("count")
